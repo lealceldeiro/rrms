@@ -1,0 +1,41 @@
+<div class="center-block blocked-2-styled">
+    <form role="form" name="editRoleForm">
+        <div class="row">
+            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                <div class="form-group">
+                    <label for="roleName">Nombre</label>
+                    <input type="text" class="form-control" id="roleName" name="roleName"
+                           placeholder="Escriba el nombre del rol"
+                           data-ng-model="vm.role.label">
+                </div>
+            </div>
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 mrg-t-18">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" class="hand-pointer" data-ng-checked="vm.role.active"> Activo
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                <div class="form-group">
+                    <label for="roleDescription">Descripci&oacute;n</label>
+                    <textarea class="form-control" name="roleDescription" id="roleDescription" cols="30" rows="10"
+                              placeholder="Escriba una breve descripción para este rol"
+                              data-ng-model="vm.role.description"
+                    ></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="form-action">
+            <hr>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <a class="btn btn-default btn-sm" href="" data-ng-click="vm.cancel()">Cancelar</a>
+                    <a class="btn btn-primary btn-sm" href="" data-ng-click="vm.save(editRoleForm)">Guardar</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

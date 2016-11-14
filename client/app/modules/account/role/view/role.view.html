@@ -1,0 +1,40 @@
+<div class="center-block blocked-3-styled">
+    <form role="form" name="viewRoleForm">
+
+        <div class="row">
+            <div class="form-group">
+                <label class="col-xs-3 col-sm-3col-md-3 col-lg-3">Nombre</label>
+                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                    <span data-ng-bind="vm.role.label"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <label class="col-xs-3 col-sm-3col-md-3 col-lg-3">Descripci&oacute;n</label>
+                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                    <span data-ng-bind="vm.role.description"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <label class="col-xs-3 col-sm-3col-md-3 col-lg-3">Activo</label>
+                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                    <span data-ng-bind="vm.role.active | humanReadable"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-action">
+            <hr>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <a class="btn btn-primary btn-sm" href="" data-ng-click="vm.cancel()">Volver</a>
+                    <a class="btn btn-default btn-sm" href="" data-ng-click="vm.edit()">Editar</a>
+                    <a class="btn btn-danger btn-sm" href="" data-ng-click="">Eliminar</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
