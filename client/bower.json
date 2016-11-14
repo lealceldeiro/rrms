@@ -1,0 +1,21 @@
+{
+  "name": "bower.json",
+  "homepage": "https://github.com/lealceldeiro/rrms",
+  "authors": [
+    "Asiel <lealceldeiro@gmail.com>"
+  ],
+  "description": "Frontend dependencies",
+  "main": "",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.1.1"
+  }
+}
