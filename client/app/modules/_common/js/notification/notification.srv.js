@@ -7,6 +7,8 @@
 var notificationSrv = function ($timeout) {
     var vm = this;
 
+    var timmer;
+    var callBack = null;
     const c = {
         'success': 'alert-success',
         'info': 'alert-info',
@@ -24,7 +26,8 @@ var notificationSrv = function ($timeout) {
             WARNING: 'Advertencia: '
         },
 
-        show: fnShow
+        show: fnShow,
+        executeCallBack: fnExecuteCallBack
     };
 
     return vm.service;
@@ -69,21 +72,25 @@ var notificationSrv = function ($timeout) {
 
         //title
         var text = title  ? (title  + ': ') : type;
-        var t = angular.element('<strong>' + text + '</strong><span>' +  message + '.</span>');
+        var t = angular.element('<strong>' + text + '</strong><span>' +  message + '</span>');
 
         notif.addClass(dClass);
         notif.append(t);
         //if call back for taking any action
         if (callbackUndo) {
-            notif.append('&nbsp;&nbsp;');                                                        //todo: execute callback
-            const undo = angular.element('<var><strong><a class="hand-pointer" data-ng-click="' + callbackUndo + '">' + callbackName + '</a></strong></var>');
+            callBack = callbackUndo;
+            notif.append('&nbsp;&nbsp;');
+            const undo = angular.element('<u><strong class=""><a class="hand-pointer text-muted" data-ng-click="nc.executeCallBack()">' + callbackName + '</a></strong></u>');
             notif.append(undo);
         }
 
         const wrapper = angular.element('<div>').append(notif);
         vm.service.htmlContent = wrapper.html();
 
-        $timeout(
+        if (timmer) {
+            $timeout.cancel(timmer);
+        }
+        timmer = $timeout(
             function () {
                 vm.service.htmlContent = null;
                 angular.element( document.querySelector('#notifBadge') ).alert('close');
@@ -93,6 +100,12 @@ var notificationSrv = function ($timeout) {
 
     }
 
+    function fnExecuteCallBack() {
+        if (callBack && angular.isFunction(callBack)) {
+            callBack();
+            angular.element( document.querySelector('#notifBadge') ).alert('close');
+        }
+    }
 };
 
 notificationSrv.$inject = ['$timeout'];

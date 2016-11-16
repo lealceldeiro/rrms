@@ -12,7 +12,8 @@
         vm.wizard = {
             init: fnInit,
             clear: fnClear,
-            getNotificationHtml: getNotificationHtml
+            getNotificationHtml: getNotificationHtml,
+            executeCallBack: fnExecuteCallBack
         };
 
         vm.wizard.init();
@@ -29,6 +30,10 @@
 
         function fnClear() {
             notificationSrv.htmlContent = null;
+        }
+
+        function fnExecuteCallBack() {
+            notificationSrv.executeCallBack()
         }
 
     };
