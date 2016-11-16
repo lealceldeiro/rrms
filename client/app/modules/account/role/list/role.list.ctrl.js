@@ -19,7 +19,6 @@
             search: fnSearch,
             view: fnView,
             remove: fnRemove,
-            undoRemove: fnUndoRemove,
             new: fnNew,
             edit: fnEdit
         };
@@ -80,11 +79,11 @@
         }
 
         function fnRemove() {
-            notificationSrv.show(notificationSrv.type.WARNING, 'Información', 'Elemento eliminado correctamente', 'vm.undoRemove()', "Deshacer");
+            notificationSrv.show(notificationSrv.type.WARNING, 'Información', 'Rol eliminado correctamente.', fnUndoRemove, "Deshacer");
         }
 
         function fnUndoRemove() {
-            alert('whooa!');
+            notificationSrv.show(notificationSrv.type.SUCCESS, 'Información', 'Rol recuperado correctamente.');
         }
 
         function fnChangePage(newPageNumber) {
