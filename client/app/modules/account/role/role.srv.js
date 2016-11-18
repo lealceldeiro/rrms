@@ -4,17 +4,23 @@
 
 'use strict';
 
-var roleSrv = function () {
-    var vm = this;
+var roleSrv = function (systemSrv) {
+    var self = this;
+    var apiurl = systemSrv.getAPIUrl();
 
-
-    vm.service = {
+    self.service = {
+        list: []
     };
 
-    return vm.service;
+    return self.service;
+
+    //
+    function fnGetList() {
+
+    }
 };
 
-roleSrv.$inject = [];
+roleSrv.$inject = ['systemSrv'];
 
 angular.module('rrms')
     .service('roleSrv', roleSrv);
