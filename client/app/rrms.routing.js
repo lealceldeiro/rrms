@@ -93,7 +93,7 @@
             //otherwise
             .otherwise(
                 {
-                    redirectTo: ROUTE.LOGIN
+                    redirectTo: ROUTE.MAIN
                 }
             )
     };
