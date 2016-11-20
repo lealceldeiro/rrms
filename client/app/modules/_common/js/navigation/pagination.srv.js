@@ -5,11 +5,11 @@
 'use strict';
 
 var paginationSrv = function () {
-    var vm = this;
+    var self = this;
 
     const FIRST_STEP = 8;
 
-    vm.core = {
+    self.core = {
         rest: {
             offset: 0
         },
@@ -19,7 +19,7 @@ var paginationSrv = function () {
         maxLinks: 7
     };
 
-    vm.service = {
+    self.service = {
         setItemsPerPage: fnSetItemsPerPage,
         setTotalItems: fnSetTotalItems,
 
@@ -34,23 +34,23 @@ var paginationSrv = function () {
         moveTo: fnMoveTo
     };
 
-    return vm.service;
+    return self.service;
 
     function fnResetPagination() {
-        vm.core.rest.offset = 0;
-        vm.core.totalItems = 0;
+        self.core.rest.offset = 0;
+        self.core.totalItems = 0;
     }
 
     function fnInitialise(totalItems) {
-        vm.core.totalItems = totalItems;
+        self.core.totalItems = totalItems;
     }
 
     function fnSetTotalItems(t) {
         if (typeof t !== 'undefined' && t !== null) {
-            vm.core.totalItems = t;
+            self.core.totalItems = t;
         }
         else{
-            vm.core.totalItems = 0;
+            self.core.totalItems = 0;
         }
     }
 
@@ -60,14 +60,14 @@ var paginationSrv = function () {
      * @param ipp
      */
     function fnSetItemsPerPage(ipp) {
-        if (vm.core.itemsPerPage != ipp) {
-            vm.service.resetPagination();
+        if (self.core.itemsPerPage != ipp) {
+            self.service.resetPagination();
         }
         if (typeof ipp === 'undefined' || ipp === null) {
-            vm.core.itemsPerPage = FIRST_STEP;
+            self.core.itemsPerPage = FIRST_STEP;
         }
         else{
-            vm.core.itemsPerPage = ipp;
+            self.core.itemsPerPage = ipp;
         }
     }
 
@@ -76,18 +76,18 @@ var paginationSrv = function () {
             page = 1;
         }
 
-        vm.core.rest.offset = (page - 1) * vm.core.itemsPerPage;
+        self.core.rest.offset = (page - 1) * self.core.itemsPerPage;
     }
 
     function fnGetItemsPerPageSteps() {
-        var t = vm.core.total <= 50 ? vm.core.total : 50;
+        var t = self.core.total <= 50 ? self.core.total : 50;
         var r = [];
         var i = 0;
         do {
             i += FIRST_STEP;
             r.push({value: i, label: i});
             if (i > 20) {
-                i += FIRST_STEP;    //first step twice
+                i += FIRST_STEP;                //first step twice
             }
             if (i > 40) {
                 i += FIRST_STEP;                //first step three times
@@ -99,16 +99,16 @@ var paginationSrv = function () {
 
     //getters
     function getOffset() {
-        return vm.core.rest.offset;
+        return self.core.rest.offset;
     }
     function getItemsPerPage() {
-        return vm.core.itemsPerPage;
+        return self.core.itemsPerPage;
     }
     function getTotalItems() {
-        return vm.core.totalItems;
+        return self.core.totalItems;
     }
     function getMaxLinks() {
-        return vm.core.maxLinks;
+        return self.core.maxLinks;
     }
 
 };

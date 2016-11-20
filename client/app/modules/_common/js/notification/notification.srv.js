@@ -5,7 +5,7 @@
 'use strict';
 
 var notificationSrv = function ($timeout) {
-    var vm = this;
+    var self = this;
 
     var timmer;
     var callBack = null;
@@ -16,7 +16,7 @@ var notificationSrv = function ($timeout) {
         'danger': 'alert-danger'
     };
 
-    vm.service = {
+    self.service = {
         htmlContent: null,
         type: {
             INFO: 'Información: ',
@@ -26,13 +26,38 @@ var notificationSrv = function ($timeout) {
             WARNING: 'Advertencia: '
         },
 
-        show: fnShow,
+        utilText: {
+            "titleError": {
+                en: "Error: ",
+                es: "Error: "
+            },
+            "titleSccess": {
+                en: "Success: ",
+                es: "Éxito"
+            }
+        },
+
+        showNotif: fnShow,
         executeCallBack: fnExecuteCallBack
     };
 
-    return vm.service;
+    return self.service;
 
-    function fnShow(type, title, message, callbackUndo, callbackName) {
+    /**
+     * Shows a notification
+     * @param message Notification message
+     * @param title (optional) Title for this notification
+     * @param type (optional) Notification type. It must be one of the following: notificationSrv.type.INFO, notificationSrv.type.CONF,
+     * notificationSrv.type.ERROR, notificationSrv.type.SUCCESS or notificationSrv.type.WARNING. If not type is provided,
+     * notificationSrv.type.INFO will be used
+     * @param action (optional) Function to be executed as action presented by a Text
+     * @param actionName (optional) Text which names the action to be executed by the function passes as parameter
+     */
+    function fnShow(message, title, type, action, actionName) {
+
+        if (typeof message === 'undefined' || message === null) {
+            throw new Error('A message must be provided for showing a notification');
+        }
 
         // angular.element( document.querySelector('#notifBadge') ).alert('close'); //close previous
 
@@ -51,21 +76,23 @@ var notificationSrv = function ($timeout) {
         //class (type of alert)
         var dClass = '';
         switch (type) {
-            case vm.service.type.INFO:
+            case self.service.type.INFO:
                 dClass = c.info;
                 break;
-            case vm.service.type.CONF:
+            case self.service.type.CONF:
                 dClass = c.warning;
                 break;
-            case vm.service.type.ERROR:
+            case self.service.type.ERROR:
                 dClass = c.danger;
                 break;
-            case vm.service.type.SUCCESS:
+            case self.service.type.SUCCESS:
                 dClass = c.success;
                 break;
-            case vm.service.type.WARNING:
+            case self.service.type.WARNING:
                 dClass = c.warning;
                 break;
+            default:
+                dClass = c.info;
         }
 
         //todo: add support for showing a smaller notific, mainly intended for mobile devices
@@ -77,22 +104,22 @@ var notificationSrv = function ($timeout) {
         notif.addClass(dClass);
         notif.append(t);
         //if call back for taking any action
-        if (callbackUndo) {
-            callBack = callbackUndo;
+        if (action) {
+            callBack = action;
             notif.append('&nbsp;&nbsp;');
-            const undo = angular.element('<u><strong class=""><a class="hand-pointer text-muted" data-ng-click="nc.executeCallBack()">' + callbackName + '</a></strong></u>');
+            const undo = angular.element('<u><strong class=""><a class="hand-pointer text-muted" data-ng-click="nc.executeCallBack()">' + actionName + '</a></strong></u>');
             notif.append(undo);
         }
 
         const wrapper = angular.element('<div>').append(notif);
-        vm.service.htmlContent = wrapper.html();
+        self.service.htmlContent = wrapper.html();
 
         if (timmer) {
             $timeout.cancel(timmer);
         }
         timmer = $timeout(
             function () {
-                vm.service.htmlContent = null;
+                self.service.htmlContent = null;
                 angular.element( document.querySelector('#notifBadge') ).alert('close');
             },
             5000
