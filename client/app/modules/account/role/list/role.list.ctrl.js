@@ -6,7 +6,7 @@
 
 (function () {
 
-    var roleListCtrl = function (indexSrv, roleSrv, navigationSrv, paginationSrv, ROUTE, notificationSrv) {
+    var roleListCtrl = function (indexSrv, systemSrv, roleSrv, navigationSrv, paginationSrv, ROUTE, notificationSrv) {
         var vm = this;
 
         vm.wizard = {
@@ -33,37 +33,26 @@
             vm.wizard.search();
         }
 
-        //todo: REMOVE
-        function getMockedData(offset, max) {
-            var a = [];
-            var init = offset >= 0 ? offset : 0;
-            for(var i = init; i < 167; i++){
-                if (i - offset == max) {
-                    break;
-                }
-                a.push(
-                    {
-                        id: i,
-                        label: 'Role Mock ' + i,
-                        description: 'Short description of role ' + i,
-                        active: i % 2 === 0
-                    }
-                );
-            }
-            return {
-                list: a,
-                total: 167
-            }
-        }
-
         function fnSearch() {
+            vm.wizard.roles.all = [];
             var offset = paginationSrv.getOffset();
             var max = paginationSrv.getItemsPerPage();
-            var r = getMockedData(offset, max);
 
-            paginationSrv.setTotalItems(r.total);
-            vm.wizard.roles.all = r.list;
-
+            roleSrv.search(offset, max).then(
+                function (data) {
+                    var e = systemSrv.eval(data);
+                    if (!e) {
+                        notificationSrv.showNotif(systemSrv.apiMessage, notificationSrv.utilText.titleError,
+                            notificationSrv.type.ERROR);
+                    }
+                    else{
+                        paginationSrv.setTotalItems(systemSrv.apiTotalCount);
+                        if (systemSrv.apiItems) {
+                            vm.wizard.roles.all = systemSrv.apiItems;
+                        }
+                    }
+                }
+            );
         }
 
         function fnEdit(id) {
@@ -79,11 +68,11 @@
         }
 
         function fnRemove() {
-            notificationSrv.show(notificationSrv.type.WARNING, 'Información', 'Rol eliminado correctamente.', fnUndoRemove, "Deshacer");
+
         }
 
         function fnUndoRemove() {
-            notificationSrv.show(notificationSrv.type.SUCCESS, 'Información', 'Rol recuperado correctamente.');
+
         }
 
         function fnChangePage(newPageNumber) {
@@ -93,7 +82,7 @@
 
     };
 
-    roleListCtrl.$inject = ['indexSrv', 'roleSrv', 'navigationSrv', 'paginationSrv', 'ROUTE', 'notificationSrv'];
+    roleListCtrl.$inject = ['indexSrv', 'systemSrv', 'roleSrv', 'navigationSrv', 'paginationSrv', 'ROUTE', 'notificationSrv'];
 
     angular.module('rrms')
         .controller('roleListCtrl', roleListCtrl);

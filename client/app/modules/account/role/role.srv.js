@@ -4,23 +4,30 @@
 
 'use strict';
 
-var roleSrv = function (systemSrv) {
+var roleSrv = function (systemSrv, $http) {
     var self = this;
-    var apiurl = systemSrv.getAPIUrl();
+    var rolesUrl = systemSrv.APIUrl + 'role/';
 
     self.service = {
-        list: []
+        search: fnSearch
     };
 
     return self.service;
 
     //
-    function fnGetList() {
-
+    function fnSearch() {
+        return $http.get(rolesUrl + 'list/').then(
+            function (res) {
+                return res.data;
+            },
+            function (resOnErr) {
+                return resOnErr.data;
+            }
+        )
     }
 };
 
-roleSrv.$inject = ['systemSrv'];
+roleSrv.$inject = ['systemSrv', '$http'];
 
 angular.module('rrms')
     .service('roleSrv', roleSrv);
