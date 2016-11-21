@@ -2,6 +2,15 @@
  * Created by Asiel on 11/18/2016.
  */
 
+/**
+ * Despite this configuration file contains only optional attributes to be set. It is highly recommended to keep it along
+ * with the project for keeping consistency, due to the fact that in the future any new [required] property can be added
+ * and because by keeping this file it makes easier to configure the system for different environments.
+ *
+ * If none of the property is going to be modified according to the API characteristic, fell free to delete them,
+ * comment them or just leave with the placeholders.
+ */
+
 (
     function (window) {
 
@@ -13,20 +22,31 @@
 
         // API
         window.__env.api = {
-            Url:                    'http://localhost:8085/rrmsrest/', // url for requesting services
-            successFlag:            'success',                         // variable for indicating a successful operation
-            errorMessageFlag:       'errorMessage',                    // variable for indicating an error message
-            successMessageFlag:     'successMessage',                  // variable for indicating a success message
-            totalCountFlag:         'total',                           // variable for indicating a total count of elements
-            itemsFlag:              'items'                            // variable for indicating a list of items
+            Url:                    '<your_api_base_url>', // [optional] - url for requesting services
+                                                                       // [default]  - ""
+
+            successFlag:            '<your_api_success_flag>',                         // [optional] - Variable in which your api response will indicate a successful operation
+                                                                       // [default]  - "success"
+
+            errorMessageFlag:       '<your_api_error_message_flag>',                    // [optional] - Variable  in which your api response will indicate an error message
+                                                                       // [default]  - "errorMessage"
+
+            successMessageFlag:     '<your_api_success_message_flag>',                  // [optional] - Variable  in which your api response will indicate a success message
+                                                                       // [default]  - "successMessage"
+
+            totalCountFlag:         '<your_api_total_count_flag>',                           // [optional] - Variable  in which your api response will indicate a total count of elements
+                                                                       // [default]  - "total"
+
+            itemsFlag:              '<your_api_items_flag>'                            // [optional] - Variable  in which your api response will indicate a list of items
+                                                                       // [default]  - "items"
         };
 
         // Base url
-        window.__env.baseUrl = '/';
+        window.__env.baseUrl =      '<your_app_base_url>';                                // [optional] - Variable for indicating the base url of the application
+                                                                        // [default]  - "/"
 
-        // Whether or not to enable debug mode
-        // Setting this to false will disable console output
-        window.__env.enableDebug = true;
+        window.__env.enableDebug = true;                                // [optional] -  Whether or not to enable debug mode
+                                                                        // [default]  - true
 
 
     }

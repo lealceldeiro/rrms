@@ -11,6 +11,9 @@
     // Import variables if present (from env.js)
     if(window){
         Object.assign(env, window.__env);
+        if (window.__env) {
+            env.found = true;
+        }
     }
 
     var config = function ($logProvider, __env) {
@@ -27,8 +30,8 @@
     angular.module
     ('rrms',
         [
-            'ngRoute',
-            'angularUtils.directives.dirPagination'
+            'ngRoute',                                          //routing
+            'angularUtils.directives.dirPagination'             //pagination
         ]
     )
         .constant('__env', env)         // Register environment in AngularJS as constant

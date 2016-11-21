@@ -9,14 +9,21 @@
             var self = this;
 
             self.service = {
-                urlBase: __env.baseUrl,
+                urlBase:
+                    (__env.baseUrl !== '<your_app_base_url>')? __env.baseUrl || '/' : '/',
                 //api
-                APIUrl: __env.api.Url,
-                successFlag: __env.api.successFlag || 'success',
-                errorMessageFlag: __env.api.errorMessageFlag || 'errorMessage',
-                successMessageFlag: __env.api.successMessageFlag || 'successMessage',
-                totalCountFlag: __env.api.totalCountFlag || 'total',
-                itemsFlag: __env.api.itemsFlag || 'items',
+                APIUrl:
+                    (__env.api.Url !== '<your_api_base_url>')? __env.api.Url || '' : '',
+                successFlag:
+                    (__env.api.successFlag !== '<your_api_success_flag>')? __env.api.successFlag || 'success' : 'success',
+                errorMessageFlag:
+                    (__env.api.errorMessageFlag !== '<your_api_error_message_flag>')? __env.api.errorMessageFlag || 'errorMessage' : 'errorMessage',
+                successMessageFlag:
+                    (__env.api.successMessageFlag !== '<your_api_success_message_flag>')? __env.api.successMessageFlag || 'successMessage' : 'successMessage',
+                totalCountFlag:
+                    (__env.api.totalCountFlag !== '<your_api_total_count_flag>')? __env.api.totalCountFlag || 'total' : 'total',
+                itemsFlag:
+                    (__env.api.itemsFlag !== '<your_api_items_flag>')? __env.api.itemsFlag || 'items' : 'items',
 
                 apiMessage: null,
                 apiTotalCount: null,

@@ -9,6 +9,7 @@
     angular.module('rrms')
         .constant(
             'ROUTE', {
+                CONFIG_ERROR: '/configuration-error',
                 LOGIN: '/login',
                 MAIN: '/main',
 
