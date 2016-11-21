@@ -16,7 +16,7 @@ var roleSrv = function (systemSrv, $http) {
 
     //
     function fnSearch() {
-        return $http.get(rolesUrl + 'list/').then(
+        return $http.get(rolesUrl + 'search/').then(
             function (res) {
                 return res.data;
             },
