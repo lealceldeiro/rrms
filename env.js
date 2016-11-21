@@ -3,7 +3,7 @@
  */
 
 /**
- * Despite this configuration file contains only optional attributes to be set. It is highly recommended to keep it along
+ * Despite this configuration file contains only optional attributes to be set. It is required to keep it along
  * with the project for keeping consistency, due to the fact that in the future any new [required] property can be added
  * and because by keeping this file it makes easier to configure the system for different environments.
  *
@@ -20,7 +20,7 @@
 
         window.__env = window && window.__env ? window.__env : {};
 
-        // API
+        // API vars
         window.__env.api = {
             Url:                    '<your_api_base_url>', // [optional] - url for requesting services
                                                                        // [default]  - ""
