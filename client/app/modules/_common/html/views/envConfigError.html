@@ -1,0 +1,48 @@
+<div class="mrg-top-9-pc">
+    <div class="col-xs-3 col-sm-3 col-md-3col-lg-3"><!--spacer--></div>
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        <div class="panel panel-danger">
+            <div class="panel-heading text-center text-uppercase">
+                Error en la configuraci&oacute;n del sistema
+            </div>
+            <div class="panel-body">
+                Debe verificar que exista en el directrio ra&iacute;z del sistema el archivo <strong>env.js</strong>
+                con la siguientes estructura:
+                <hr>
+                <pre>
+
+(
+    function (window) {
+
+        window.__env = window && window.__env ? window.__env : {};
+
+        // API
+        window.__env.api = {
+        Url:                    'http://localhost:8085/rrmsrest/',
+
+        successFlag:            'success',
+
+        errorMessageFlag:       'errorMessage',
+
+        successMessageFlag:     'successMessage',
+
+        totalCountFlag:         'total',
+
+        itemsFlag:              'items'
+        };
+
+        // Base url
+        window.__env.baseUrl =      '/';
+
+        window.__env.enableDebug = true;
+
+
+    }
+)(this);
+
+                </pre>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-3 col-sm-3 col-md-3col-lg-3"><!--spacer--></div>
+</div>

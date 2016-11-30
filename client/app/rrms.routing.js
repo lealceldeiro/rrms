@@ -10,6 +10,12 @@
 
         $routeProvider
 
+            //error
+            .when(ROUTE.CONFIG_ERROR,{
+                    templateUrl: '_common/html/views/envConfigError.html'
+                }
+            )
+
             //login
             .when(ROUTE.LOGIN,{
                     templateUrl: 'account/login/login.html',

@@ -6,7 +6,7 @@
 
 (function() {
 
-    var runConfig = function ($rootScope, sessionSrv, navigationSrv) {
+    var runConfig = function ($rootScope, sessionSrv, navigationSrv, __env) {
 
         var prevRoute;
 
@@ -15,7 +15,7 @@
                 var route = b.$$route.originalPath;
 
                 /******************************VISUAL ELEMENTS HANDLING************************************************/
-                //add and remove class to active links (nav bars,menus...)
+                    //add and remove class to active links (nav bars,menus...)
                 var s, p;
                 if (prevRoute) {
                     s = prevRoute.substring(1, prevRoute.length);
@@ -48,14 +48,18 @@
                         navigationSrv.goTo(navigationSrv.DEFAULT_PATH);
                     }
                 }
+                //in case configuration file is found and user try to access directly yo error page, redirect to default path
+                else if (route === '/configuration-error' && __env && __env.found){
+                    navigationSrv.goTo(navigationSrv.DEFAULT_PATH);
+                }
             }
         });
 
     };
 
-    runConfig.$inject = ['$rootScope', 'sessionSrv', 'navigationSrv'];
+    runConfig.$inject = ['$rootScope', 'sessionSrv', 'navigationSrv', '__env'];
 
     angular.module('rrms')
-        .run(['$rootScope', 'sessionSrv', 'navigationSrv', runConfig]);
+        .run(['$rootScope', 'sessionSrv', 'navigationSrv', '__env', runConfig]);
 
 })();
