@@ -28,8 +28,8 @@ var notificationSrv = function ($timeout) {
 
         utilText: {
             "titleError": {
-                en: "Error: ",
-                es: "Error: "
+                en: "Error",
+                es: "Error"
             },
             "titleSccess": {
                 en: "Success: ",
