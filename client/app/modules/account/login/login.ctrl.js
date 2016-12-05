@@ -29,11 +29,11 @@
         }
 
         function fnLogin(form) {
-            // if (form && form.$valid) {
+            if (form && form.$valid) {
                 sessionSrv.setCurrentUser({email: vm.wizard.emailOrUsername});//todo js
                 sessionSrv.setSecurityToken('axy');
                 navigationSrv.goTo('/main');
-            // }
+            }
         }
 
         function fnLogout() {

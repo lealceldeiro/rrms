@@ -42,7 +42,7 @@
                 function (data) {
                     var e = systemSrv.eval(data);
                     if (!e) {
-                        notificationSrv.showNotif(systemSrv.apiMessage, notificationSrv.utilText.titleError,
+                        notificationSrv.showNotif(systemSrv.apiMessage, notificationSrv.utilText.titleError.es,
                             notificationSrv.type.ERROR);
                     }
                     else{
