@@ -20,29 +20,29 @@
 
         window.__env = window && window.__env ? window.__env : {};
 
-        // API
+        // API vars
         window.__env.api = {
-            Url:                    'http://localhost:8085/rrmsrest/', // [optional] - url for requesting services
-                                                                       // [default]  - ""
+            Url:                    '<your_api_base_url>',              // [optional] - url for requesting services
+                                                                        // [default]  - ""
 
-            successFlag:            'success',                         // [optional] - Variable in which your api response will indicate a successful operation
-                                                                       // [default]  - "success"
+            successFlag:            '<your_api_success_flag>',          // [optional] - Variable in which your api response will indicate a successful operation
+                                                                        // [default]  - "success"
 
-            errorMessageFlag:       'errorMessage',                    // [optional] - Variable  in which your api response will indicate an error message
-                                                                       // [default]  - "errorMessage"
+            errorMessageFlag:       '<your_api_error_message_flag>',    // [optional] - Variable  in which your api response will indicate an error message
+                                                                        // [default]  - "errorMessage"
 
-            successMessageFlag:     'successMessage',                  // [optional] - Variable  in which your api response will indicate a success message
-                                                                       // [default]  - "successMessage"
+            successMessageFlag:     '<your_api_success_message_flag>',  // [optional] - Variable  in which your api response will indicate a success message
+                                                                        // [default]  - "successMessage"
 
-            totalCountFlag:         'total',                           // [optional] - Variable  in which your api response will indicate a total count of elements
-                                                                       // [default]  - "total"
+            totalCountFlag:         '<your_api_total_count_flag>',      // [optional] - Variable  in which your api response will indicate a total count of elements
+                                                                        // [default]  - "total"
 
-            itemsFlag:              'items'                            // [optional] - Variable  in which your api response will indicate a list of items
-                                                                       // [default]  - "items"
+            itemsFlag:              '<your_api_items_flag>'             // [optional] - Variable  in which your api response will indicate a list of items
+                                                                        // [default]  - "items"
         };
 
         // Base url
-        window.__env.baseUrl =      '/';                                // [optional] - Variable for indicating the base url of the application
+        window.__env.baseUrl =      '<your_app_base_url>';              // [optional] - Variable for indicating the base url of the application
                                                                         // [default]  - "/"
 
         window.__env.enableDebug = true;                                // [optional] -  Whether or not to enable debug mode
