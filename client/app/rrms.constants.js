@@ -14,9 +14,9 @@
                 MAIN: '/main',
 
                 ROLES: '/roles',
-                ROLE_EDIT: '/roles/:id/edit',
+                ROLE_EDIT: '/roles/:id/edit', ROLE_EDIT_PL: ':id',
                 ROLE_NEW: '/roles/new',
-                ROLE_VIEW: '/roles/:id/view',
+                ROLE_VIEW: '/roles/:id/view', ROLE_VIEW_PL: ':id',
 
                 USERS: '/usuarios',
 

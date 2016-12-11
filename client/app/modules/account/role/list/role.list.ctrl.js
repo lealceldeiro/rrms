@@ -56,11 +56,11 @@
         }
 
         function fnEdit(id) {
-            navigationSrv.goTo('/roles/' + id + '/edit');
+            navigationSrv.goTo(ROUTE.ROLE_EDIT, ROUTE.ROLE_EDIT_PL, id);
         }
 
         function fnView(id) {
-            navigationSrv.goTo('/roles/' + id + '/view');
+            navigationSrv.goTo(ROUTE.ROLE_VIEW, ROUTE.ROLE_VIEW_PL, id);
         }
 
         function fnNew() {

@@ -4,7 +4,7 @@
 
 'use strict';
 
-var navigationSrv = function ($location, $route, ROUTE, $window) {
+var navigationSrv = function ($location, $route, ROUTE, $window, stringSrv) {
     var vm = this;
 
 
@@ -21,7 +21,20 @@ var navigationSrv = function ($location, $route, ROUTE, $window) {
 
     return vm.service;
 
-    function fnGoTo(link) {
+    function fnGoTo(link, placeholders, params) {
+        if (placeholders && params) {
+            if (angular.isArray(placeholders) && angular.isArray(params)) {
+                if (placeholders.length != params.length) {
+                    throw new Error('Placeholders and params must be of equal length');
+                }
+                angular.forEach(placeholders, function (obj, idx) {
+                    link = stringSrv.replaceAll(link, obj, params[idx])
+                })
+            }
+            else{
+                link = stringSrv.replaceAll(link, placeholders, params);
+            }
+        }
         if (link){
             if ($location.path() === link){
                 $route.reload();
@@ -46,7 +59,7 @@ var navigationSrv = function ($location, $route, ROUTE, $window) {
 
 };
 
-navigationSrv.$inject = ['$location', '$route', 'ROUTE', '$window'];
+navigationSrv.$inject = ['$location', '$route', 'ROUTE', '$window', 'stringSrv'];
 
 angular.module('rrms')
     .service('navigationSrv', navigationSrv);
