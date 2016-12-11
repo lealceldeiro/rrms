@@ -7,13 +7,20 @@
 var notificationSrv = function ($timeout) {
     var self = this;
 
-    var timmer;
+    var timer;
     var callBack = null;
     const c = {
         'success': 'alert-success',
         'info': 'alert-info',
         'warning': 'alert-warning',
         'danger': 'alert-danger'
+    };
+    const ico = {
+        'success': 'glyphicon-ok-sign',
+        'info': 'glyphicon-info-sign',
+        'warning': 'glyphicon-exclamation-sign',
+        'danger': 'glyphicon-remove-sign'
+
     };
 
     self.service = {
@@ -59,52 +66,58 @@ var notificationSrv = function ($timeout) {
             throw new Error('A message must be provided for showing a notification');
         }
 
-        // angular.element( document.querySelector('#notifBadge') ).alert('close'); //close previous
-
         //div
         const notif = angular.element('<div class="notification alert alert-dismissible fade in" role="alert" id="notifBadge">');
         //close button
         notif.append(
             angular.element(
-                '<button type="button" class="close" data-dismiss="alert">' +
+                '<button type="button" class="hidden-xs hidden-sm close" data-dismiss="alert">' +
                 '   <span aria-hidden="true" data-ng-click="nc.clear()">&times;</span>' +
                 '   <span class="sr-only">Cerrar</span>' +
                 '</button>'
             )
         );
 
-        //class (type of alert)
+        //class (alert type)
         var dClass = '';
+        var iconClass = 'glyphicon ';
         switch (type) {
             case self.service.type.INFO:
-                dClass = c.info;
+                dClass += c.info;
+                iconClass += ico.info;
                 break;
             case self.service.type.CONF:
-                dClass = c.warning;
+                dClass += c.warning;
+                iconClass += ico.warning;
                 break;
             case self.service.type.ERROR:
-                dClass = c.danger;
+                dClass += c.danger;
+                iconClass += ico.danger;
                 break;
             case self.service.type.SUCCESS:
-                dClass = c.success;
+                dClass += c.success;
+                iconClass += ico.success;
                 break;
             case self.service.type.WARNING:
-                dClass = c.warning;
+                dClass += c.warning;
+                iconClass += ico.warning;
                 break;
             default:
-                dClass = c.info;
+                dClass += c.info;
+                iconClass += ico.info;
         }
-
-        //todo: add support for showing a smaller notific, mainly intended for mobile devices
 
         //title
         var text = title  ? (title  + ': ') : type;
-        var t = angular.element('<strong>' + text + '</strong><span>' +  message + '</span>');
+        var t = angular.element('' +
+            '<strong class="hidden-xs hidden-sm">' + text + '</strong><span class="hidden-xs hidden-sm">' +  message + '</span>');
+        var tSM = angular.element('<span class="visible-xs visible-sm"><i class="' + iconClass + '"></i></span>');
 
         notif.addClass(dClass);
         notif.append(t);
+        notif.append(tSM);
         //if call back for taking any action
-        if (action) {
+        if (action) { //only for devices with width > md (bootstrap)
             callBack = action;
             notif.append('&nbsp;&nbsp;');
             const undo = angular.element('<u><strong class=""><a class="hand-pointer text-muted" data-ng-click="nc.executeCallBack()">' + actionName + '</a></strong></u>');
@@ -114,10 +127,10 @@ var notificationSrv = function ($timeout) {
         const wrapper = angular.element('<div>').append(notif);
         self.service.htmlContent = wrapper.html();
 
-        if (timmer) {
-            $timeout.cancel(timmer);
+        if (timer) {
+            $timeout.cancel(timer);
         }
-        timmer = $timeout(
+        timer = $timeout(
             function () {
                 self.service.htmlContent = null;
                 angular.element( document.querySelector('#notifBadge') ).alert('close');

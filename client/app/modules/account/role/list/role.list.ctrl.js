@@ -68,7 +68,8 @@
         }
 
         function fnRemove() {
-
+            notificationSrv.showNotif("test", "message",
+                notificationSrv.type.SUCCESS);
         }
 
         function fnUndoRemove() {
