@@ -4,7 +4,7 @@
 
 'use strict';
 
-var roleSrv = function (systemSrv, $http) {
+var roleSrv = function (systemSrv, $http, valueSrv) {
     var self = this;
     var rolesUrl = systemSrv.APIUrl + 'role/';
 
@@ -15,8 +15,13 @@ var roleSrv = function (systemSrv, $http) {
     return self.service;
 
     //
-    function fnSearch() {
-        return $http.get(rolesUrl + 'search/').then(
+    function fnSearch(offset, max) {
+        var params = valueSrv.nNnN(offset) ? "?offset=" + offset : "";
+        if (valueSrv.nNnN(max)) {
+            params += params === ""? "?max=" + max : "&max=" + max;
+        }
+
+        return $http.get(rolesUrl + 'search/' + params).then(
             function (res) {
                 return res.data;
             },
@@ -27,7 +32,7 @@ var roleSrv = function (systemSrv, $http) {
     }
 };
 
-roleSrv.$inject = ['systemSrv', '$http'];
+roleSrv.$inject = ['systemSrv', '$http', 'valueSrv'];
 
 angular.module('rrms')
     .service('roleSrv', roleSrv);
