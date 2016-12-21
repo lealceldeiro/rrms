@@ -24,6 +24,8 @@
                     (__env.api.totalCountFlag !== '<your_api_total_count_flag>')? __env.api.totalCountFlag || 'total' : 'total',
                 itemsFlag:
                     (__env.api.itemsFlag !== '<your_api_items_flag>')? __env.api.itemsFlag || 'items' : 'items',
+                itemFlag:
+                    (__env.api.itemFlag !== '<your_api_item_flag>')? __env.api.itemFlag || 'item' : 'item',
 
                 apiMessage: null,
                 apiTotalCount: null,
