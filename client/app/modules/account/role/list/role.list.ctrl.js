@@ -6,7 +6,8 @@
 
 (function () {
 
-    var roleListCtrl = function (indexSrv, systemSrv, roleSrv, navigationSrv, paginationSrv, ROUTE, notificationSrv) {
+    var roleListCtrl = function (indexSrv, systemSrv, roleSrv, navigationSrv, paginationSrv, ROUTE, notificationSrv,
+                                 searchSrv) {
         var vm = this;
 
         vm.wizard = {
@@ -67,9 +68,25 @@
             navigationSrv.goTo(ROUTE.ROLE_NEW);
         }
 
-        function fnRemove() {
-            notificationSrv.showNotif("test", "message",
-                notificationSrv.type.SUCCESS);
+        function fnRemove(id) {
+            roleSrv.remove(id).then(
+                function (data) {
+                    var e = systemSrv.eval(data);
+                    if (!e) {
+                        notificationSrv.showNotif(systemSrv.apiMessage, notificationSrv.utilText.titleError.es,
+                            notificationSrv.type.ERROR);
+                    }
+                    else {
+                        notificationSrv.showNotif(systemSrv.apiMessage, notificationSrv.utilText.titleSccess.es,
+                            notificationSrv.type.SUCCESS);
+                        var idx = searchSrv.indexOf(vm.wizard.roles.all, 'id', id);
+                        if (idx !== -1) {
+                            vm.wizard.roles.all.splice(idx,1);
+                            fnSearch();
+                        }
+                    }
+                }
+            )
         }
 
         function fnUndoRemove() {
@@ -83,7 +100,8 @@
 
     };
 
-    roleListCtrl.$inject = ['indexSrv', 'systemSrv', 'roleSrv', 'navigationSrv', 'paginationSrv', 'ROUTE', 'notificationSrv'];
+    roleListCtrl.$inject = ['indexSrv', 'systemSrv', 'roleSrv', 'navigationSrv', 'paginationSrv', 'ROUTE',
+        'notificationSrv', 'searchSrv'];
 
     angular.module('rrms')
         .controller('roleListCtrl', roleListCtrl);

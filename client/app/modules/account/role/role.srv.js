@@ -9,12 +9,18 @@ var roleSrv = function (systemSrv, $http, valueSrv) {
     var rolesUrl = systemSrv.APIUrl + 'role/';
 
     self.service = {
-        search: fnSearch
+        search: fnSearch,
+        remove: fnRemove
     };
 
     return self.service;
 
-    //
+    /**
+     * Search for role
+     * @param offset offset for paging
+     * @param max max offset for paging
+     * @returns {*} Promise
+     */
     function fnSearch(offset, max) {
         var params = valueSrv.nNnN(offset) ? "?offset=" + offset : "";
         if (valueSrv.nNnN(max)) {
@@ -27,6 +33,17 @@ var roleSrv = function (systemSrv, $http, valueSrv) {
             },
             function (resOnErr) {
                 return resOnErr.data;
+            }
+        )
+    }
+
+    function fnRemove(id) {
+        return $http.delete(rolesUrl + 'delete/' + id).then(
+            function (res) {
+                return res.data
+            },
+            function (resOnErr) {
+                return resOnErr.data
             }
         )
     }
