@@ -11,7 +11,8 @@ var roleSrv = function (systemSrv, $http, valueSrv) {
     self.service = {
         search: fnSearch,
         show: fnShow,
-        remove: fnRemove
+        remove: fnRemove,
+        save: fnSave
     };
 
     return self.service;
@@ -56,6 +57,25 @@ var roleSrv = function (systemSrv, $http, valueSrv) {
             },
             function (resOnError) {
                 return resOnError.data
+            }
+        )
+    }
+
+    function fnSave(params, id) {
+        var url = rolesUrl + 'save' + (typeof id !== 'undefined' && id != null && !isNaN(id) ? '/' + id : '');
+        var d = {
+            label: params['label'],
+            description: params['description'],
+            active: params['active']
+
+        };
+
+        return $http.post(url, d).then(
+            function (res) {
+                return res.data;
+            },
+            function (resOnError) {
+                return resOnError.data;
             }
         )
     }

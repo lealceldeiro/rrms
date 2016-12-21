@@ -35,7 +35,6 @@
                     notificationSrv.utilText.titleError.es, notificationSrv.type.ERROR);
                 navigationSrv.goTo(ROUTE.ROLES);
             }
-
         }
 
         function fnLoadData(id) {
@@ -79,7 +78,7 @@
         }
 
         function fnCancel() {
-            navigationSrv.back();
+            navigationSrv.goTo(ROUTE.ROLES);
         }
 
         function fnEdit() {

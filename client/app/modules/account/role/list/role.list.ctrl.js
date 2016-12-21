@@ -31,6 +31,7 @@
         //fn
         function fnInit() {
             indexSrv.siteTile = 'Roles';
+            paginationSrv.resetPagination();
             vm.wizard.search();
         }
 
