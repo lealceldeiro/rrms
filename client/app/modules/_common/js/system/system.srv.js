@@ -30,6 +30,7 @@
                 apiMessage: null,
                 apiTotalCount: null,
                 apiItems: null,
+                apiItem: null,
 
                 eval: fnEvaluateResponseData
             };
