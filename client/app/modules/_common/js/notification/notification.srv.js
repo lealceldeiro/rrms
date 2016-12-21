@@ -41,6 +41,14 @@ var notificationSrv = function ($timeout) {
             "titleSccess": {
                 en: "Success: ",
                 es: "Éxito"
+            },
+            "successfulOperation": {
+                en: "Operation done successfully",
+                es: "Operación terminada correctamente"
+            },
+            "unSuccessfulOperation": {
+                en: "Operation done unsuccessfully",
+                es: "Operación terminada incorrectamente"
             }
         },
 
