@@ -19,8 +19,8 @@ var searchSrv = function () {
     self.service = {
         find: fnFind,
         findConditionally: fnFindConditionally,
-        indexOfConditionally: fnIndexOfConditionally,
-        indexOf: fnIndexOf
+        indexOf: fnIndexOf,
+        indexOfConditionally: fnIndexOfConditionally
     };
 
     return self.service;
@@ -126,7 +126,7 @@ var searchSrv = function () {
      * @param object [Optional] If not key-value are provided, then you can pass and entire object to match against.
      * @returns {*} Index of the object in the collection. -1 If not found.
      */
-    function fnIndexOfConditionally(collection, key, value, object) {
+    function fnIndexOf(collection, key, value, object) {
         //asserts
         //check for key value
         var isKeyValue = (typeof key !== 'undefined' && key !== null) && (typeof value !== 'undefined' && value !== null);
@@ -162,7 +162,7 @@ var searchSrv = function () {
      * @param object [Optional] If the parameter 'conditionals' is not provided, then you can pass and entire object to match against to.
      * @returns {*} Object in the collection. -1 If not found.
      */
-    function fnIndexOf(collection, conditionals, object) {
+    function fnIndexOfConditionally(collection, conditionals, object) {
         //asserts
         //check for conditionals values
         var isConditionals = (typeof conditionals !== 'undefined' && conditionals !== null) && angular.isArray(conditionals);
