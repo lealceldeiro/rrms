@@ -14,7 +14,8 @@
 
             init: fnInit,
             cancel: fnCancel,
-            edit: fnEdit
+            edit: fnEdit,
+            remove: fnRemove
         };
 
         vm.wizard.init();
@@ -57,6 +58,24 @@
                     }
                 }
             );
+        }
+
+        function fnRemove() {
+            roleSrv.remove(vm.id).then(
+                function (data) {
+                    var e = systemSrv.eval(data);
+                    if (!e) {
+                        notificationSrv.showNotif(systemSrv.apiMessage, notificationSrv.utilText.titleError.es,
+                            notificationSrv.type.ERROR);
+                    }
+                    else {
+                        notificationSrv.showNotif(systemSrv.apiMessage, notificationSrv.utilText.titleSccess.es,
+                            notificationSrv.type.SUCCESS);
+                        //custom handling
+                        navigationSrv.goTo(ROUTE.ROLES);
+                    }
+                }
+            )
         }
 
         function fnCancel() {
