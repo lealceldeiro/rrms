@@ -5,7 +5,7 @@
     function () {
         'use strict';
 
-        var systemSrv = function (__env) {
+        var systemSrv = function (__env, notificationSrv) {
             var self = this;
 
             self.service = {
@@ -45,13 +45,13 @@
             function fnEvaluateResponseData(data) {
                 if (data) {
                     if (data[self.service.successFlag]) {
-                        self.service.apiMessage = data[self.service.successMessageFlag];
+                        self.service.apiMessage = data[self.service.successMessageFlag] || notificationSrv.utilText.successfulOperation.es;
                         self.service.apiTotalCount = data[self.service.totalCountFlag];
                         self.service.apiItems = data[self.service.itemsFlag];
                         return true
                     }
                     else {
-                        self.service.apiMessage = data[self.service.errorMessageFlag];
+                        self.service.apiMessage = data[self.service.errorMessageFlag] || notificationSrv.utilText.unSuccessfulOperation.es;
                         return false
                     }
                 }
@@ -61,7 +61,7 @@
 
         };
 
-        systemSrv.$inject = ['__env'];
+        systemSrv.$inject = ['__env', 'notificationSrv'];
 
         angular.module('rrms')
             .service('systemSrv', systemSrv);
