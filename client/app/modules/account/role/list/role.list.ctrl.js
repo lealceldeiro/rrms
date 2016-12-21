@@ -79,6 +79,7 @@
                     else {
                         notificationSrv.showNotif(systemSrv.apiMessage, notificationSrv.utilText.titleSccess.es,
                             notificationSrv.type.SUCCESS);
+                        //custom handling
                         var idx = searchSrv.indexOf(vm.wizard.roles.all, 'id', id);
                         if (idx !== -1) {
                             vm.wizard.roles.all.splice(idx,1);

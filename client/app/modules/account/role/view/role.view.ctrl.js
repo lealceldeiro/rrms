@@ -6,7 +6,7 @@
 
 (function () {
 
-    var roleViewCtrl = function (indexSrv, roleSrv, navigationSrv) {
+    var roleViewCtrl = function (ROUTE, indexSrv, roleSrv, navigationSrv, notificationSrv, systemSrv) {
         var vm = this;
 
         vm.wizard = {
@@ -30,18 +30,33 @@
                 indexSrv.siteTile = 'Ver Rol';
             }
             else{
-                //todo inform error
-                fnCancel();
+                notificationSrv.showNotif(notificationSrv.utilText.mustSelectElement.es,
+                    notificationSrv.utilText.titleError.es, notificationSrv.type.ERROR);
+                navigationSrv.goTo(ROUTE.ROLES);
             }
 
         }
 
         function fnLoadData(id) {
             //get info
-
-            //if doesn't exist, inform error
-            //todo: remove next line
-            vm.wizard.role = {id: id, label: "Example Role Label",  description: "Example Role Description", active: true};
+            roleSrv.show(id).then(
+                function (data) {
+                    var e = systemSrv.eval(data);
+                    if (!e) {
+                        notificationSrv.showNotif(systemSrv.apiMessage, notificationSrv.utilText.titleError.es,
+                            notificationSrv.type.ERROR);
+                    }
+                    else {
+                        if (systemSrv.apiItem) {
+                            vm.wizard.role = {
+                                label: systemSrv.apiItem.label,
+                                description: systemSrv.apiItem.description,
+                                active: systemSrv.apiItem.active
+                            }
+                        }
+                    }
+                }
+            );
         }
 
         function fnCancel() {
@@ -49,12 +64,12 @@
         }
 
         function fnEdit() {
-            navigationSrv.goTo('/roles/' + vm.id + '/edit');
+            navigationSrv.goTo(ROUTE.ROLE_EDIT, ROUTE.ROLE_EDIT_PL, vm.id);
         }
 
     };
 
-    roleViewCtrl.$inject = ['indexSrv', 'roleSrv', 'navigationSrv'];
+    roleViewCtrl.$inject = ['ROUTE', 'indexSrv', 'roleSrv', 'navigationSrv', 'notificationSrv', 'systemSrv'];
 
     angular.module('rrms')
         .controller('roleViewCtrl', roleViewCtrl);

@@ -49,6 +49,10 @@ var notificationSrv = function ($timeout) {
             "unSuccessfulOperation": {
                 en: "Operation done unsuccessfully",
                 es: "Operación terminada incorrectamente"
+            },
+            "mustSelectElement": {
+                en: "You must select an element in order to proceed",
+                es: "Usted debe seleccionar un elemento para continuar"
             }
         },
 

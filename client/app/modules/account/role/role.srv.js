@@ -10,6 +10,7 @@ var roleSrv = function (systemSrv, $http, valueSrv) {
 
     self.service = {
         search: fnSearch,
+        show: fnShow,
         remove: fnRemove
     };
 
@@ -44,6 +45,17 @@ var roleSrv = function (systemSrv, $http, valueSrv) {
             },
             function (resOnErr) {
                 return resOnErr.data
+            }
+        )
+    }
+
+    function fnShow(id) {
+        return $http.get(rolesUrl + "show/" + id).then(
+            function (res) {
+                return res.data
+            },
+            function (resOnError) {
+                return resOnError.data
             }
         )
     }
