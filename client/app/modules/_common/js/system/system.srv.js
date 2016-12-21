@@ -50,6 +50,7 @@
                         self.service.apiMessage = data[self.service.successMessageFlag] || notificationSrv.utilText.successfulOperation.es;
                         self.service.apiTotalCount = data[self.service.totalCountFlag];
                         self.service.apiItems = data[self.service.itemsFlag];
+                        self.service.apiItem = data[self.service.itemFlag];
                         return true
                     }
                     else {
