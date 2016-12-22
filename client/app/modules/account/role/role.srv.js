@@ -4,7 +4,7 @@
 
 'use strict';
 
-var roleSrv = function (systemSrv, $http, valueSrv) {
+var roleSrv = function (systemSrv, $http, valueSrv, dataSrv) {
     var self = this;
     var rolesUrl = systemSrv.APIUrl + 'role/';
 
@@ -63,12 +63,7 @@ var roleSrv = function (systemSrv, $http, valueSrv) {
 
     function fnSave(params, id) {
         var url = rolesUrl + 'save' + (typeof id !== 'undefined' && id != null && !isNaN(id) ? '/' + id : '');
-        var d = {
-            label: params['label'],
-            description: params['description'],
-            active: params['active']
-
-        };
+        var d = dataSrv.processParamsAsObject(params);
 
         return $http.post(url, d).then(
             function (res) {
@@ -81,7 +76,7 @@ var roleSrv = function (systemSrv, $http, valueSrv) {
     }
 };
 
-roleSrv.$inject = ['systemSrv', '$http', 'valueSrv'];
+roleSrv.$inject = ['systemSrv', '$http', 'valueSrv', 'dataSrv'];
 
 angular.module('rrms')
     .service('roleSrv', roleSrv);
