@@ -94,7 +94,7 @@
         }
 
         function fnEdit() {
-            //navigationSrv.goTo(ROUTE.ROLE_EDIT, ROUTE.ROLE_EDIT_PL, vm.id);
+            navigationSrv.goTo(ROUTE.USER_EDIT, ROUTE.USER_EDIT_PL, vm.id);
         }
 
     };

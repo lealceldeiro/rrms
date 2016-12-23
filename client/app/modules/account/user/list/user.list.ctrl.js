@@ -58,7 +58,7 @@
         }
 
         function fnEdit(id) {
-            navigationSrv.goTo(ROUTE.ROLE_EDIT, ROUTE.ROLE_EDIT_PL, id);
+            navigationSrv.goTo(ROUTE.USER_EDIT, ROUTE.USER_EDIT_PL, id);
         }
 
         function fnView(id) {
@@ -66,11 +66,11 @@
         }
 
         function fnNew() {
-            navigationSrv.goTo(ROUTE.ROLE_NEW);
+            navigationSrv.goTo(ROUTE.USER_NEW);
         }
 
         function fnRemove(id) {
-            roleSrv.remove(id).then(
+            userSrv.remove(id).then(
                 function (data) {
                     var e = systemSrv.eval(data);
                     if (!e) {
