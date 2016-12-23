@@ -50,7 +50,7 @@ var navigationSrv = function ($location, $route, ROUTE, $window, stringSrv) {
     }
 
     function fnCurrentParams() {
-        return $route.current.params;
+        return $route && $route.current ? $route.current.params : null;
     }
 
     function fnBack() {
