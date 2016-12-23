@@ -58,10 +58,10 @@ var f = function (systemSrv, $http, valueSrv, dataSrv) {
     }
 
     function fnSave(params, id) {
-        var url = url + 'save' + (typeof id !== 'undefined' && id != null && !isNaN(id) ? '/' + id : '');
+        var murl = url + 'save' + (typeof id !== 'undefined' && id != null && !isNaN(id) ? '/' + id : '');
         var d = dataSrv.processParamsAsObject(params);
 
-        return $http.post(url, d).then(
+        return $http.post(murl, d).then(
             function (res) {
                 return res.data;
             },

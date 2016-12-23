@@ -1,0 +1,63 @@
+<div class="center-block blocked-2-styled">
+    <form role="form" name="editUserForm">
+        <!--username-->
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    <label for="userUserName">Usuario</label>
+                    <input type="text" class="form-control" id="userUserName" name="userUserName"
+                           placeholder="Escriba el usuario"
+                           data-ng-model="vm.entity.username">
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    <label for="userPass">Contrase&ntilde;a</label>
+                    <input type="password" class="form-control" id="userPass" name="userPass"
+                           placeholder="Escriba la contraseña"
+                           data-ng-model="vm.entity.password">
+                </div>
+            </div>
+        </div>
+        <!--name and roles-->
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    <label for="userName">Nombre</label>
+                    <input type="text" class="form-control" id="userName" name="userName"
+                           placeholder="Escriba el nombre del usuario"
+                           data-ng-model="vm.entity.name">
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    <label for="userPass2">Cofirmar ontrase&ntilde;a</label>
+                    <input type="password" class="form-control" id="userPass2" name="userPass2"
+                           placeholder="Escriba la contraseña de nuevo"
+                           data-ng-model="vm.entity.password2">
+                </div>
+            </div>
+        </div>
+        <!--email-->
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    <label for="userEmail">Email</label>
+                    <input type="text" class="form-control" id="userEmail" name="userEmail"
+                           placeholder="Escriba el correo electrónico"
+                           data-ng-model="vm.entity.email">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-action">
+            <hr>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <a class="btn btn-primary btn-sm" href="" data-ng-click="vm.save(editUserForm)">Guardar</a>
+                    <a class="btn btn-default btn-sm" href="" data-ng-click="vm.cancel()">Cancelar</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
