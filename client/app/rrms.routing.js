@@ -58,8 +58,8 @@
 
             //users
             .when(ROUTE.USERS,{
-                    templateUrl: 'main/main.html',
-                    controller: 'mainCtrl',
+                    templateUrl: 'account/user/list/user.list.html',
+                    controller: 'userListCtrl',
                     controllerAs: 'vm'
                 }
             )
