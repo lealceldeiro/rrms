@@ -63,6 +63,24 @@
                     controllerAs: 'vm'
                 }
             )
+            .when(ROUTE.USER_EDIT,{
+                    templateUrl: 'account/user/edit/user.edit.html',
+                    controller: 'userEditCtrl',
+                    controllerAs: 'vm'
+                }
+            )
+            .when(ROUTE.USER_NEW,{
+                    templateUrl: 'account/user/edit/user.edit.html',
+                    controller: 'userEditCtrl',
+                    controllerAs: 'vm'
+                }
+            )
+            .when(ROUTE.USER_VIEW,{
+                    templateUrl: 'account/user/view/user.view.html',
+                    controller: 'userViewCtrl',
+                    controllerAs: 'vm'
+                }
+            )
 
             //houses
             .when(ROUTE.HOUSES,{

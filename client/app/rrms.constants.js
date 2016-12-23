@@ -19,6 +19,9 @@
                 ROLE_VIEW: '/roles/:id/view', ROLE_VIEW_PL: ':id',
 
                 USERS: '/usuarios',
+                USER_EDIT: '/usuarios/:id/edit', USER_EDIT_PL: ':id',
+                USER_NEW: '/usuarios/new',
+                USER_VIEW: '/usuarios/:id/view', USER_VIEW_PL: ':id',
 
                 HOUSES: '/casas',
 

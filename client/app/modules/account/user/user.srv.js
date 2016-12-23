@@ -12,7 +12,9 @@ var f = function (systemSrv, $http, valueSrv, dataSrv) {
         search: fnSearch,
         show: fnShow,
         remove: fnRemove,
-        save: fnSave
+        save: fnSave,
+
+        rolesByUser: fnRolesByUser
     };
 
     return self.service;
@@ -65,6 +67,22 @@ var f = function (systemSrv, $http, valueSrv, dataSrv) {
             },
             function (resOnError) {
                 return resOnError.data;
+            }
+        )
+    }
+
+    function fnRolesByUser(id, offset, max) {
+        var params = valueSrv.nNnN(offset) ? "?offset=" + offset : "";
+        if (valueSrv.nNnN(max)) {
+            params += params === ""? "?max=" + max : "&max=" + max;
+        }
+
+        return $http.get(url + 'roles/' + id + params).then(
+            function (res) {
+                return res.data;
+            },
+            function (resOnErr) {
+                return resOnErr.data;
             }
         )
     }

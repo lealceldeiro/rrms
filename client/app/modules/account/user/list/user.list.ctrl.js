@@ -62,7 +62,7 @@
         }
 
         function fnView(id) {
-            navigationSrv.goTo(ROUTE.ROLE_VIEW, ROUTE.ROLE_VIEW_PL, id);
+            navigationSrv.goTo(ROUTE.USER_VIEW, ROUTE.USER_VIEW_PL, id);
         }
 
         function fnNew() {
