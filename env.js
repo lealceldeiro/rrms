@@ -39,6 +39,9 @@
 
             itemsFlag:              '<your_api_items_flag>'             // [optional] - Variable  in which your api response will indicate a list of items
                                                                         // [default]  - "items"
+
+            itemFlag:               '<your_api_item_flag>'              // [optional] - Variable  in which your api response will indicate the item
+                                                                        // [default]  - "item"
         };
 
         // Base url
