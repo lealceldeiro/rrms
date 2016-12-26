@@ -20,6 +20,10 @@
     <link rel="stylesheet" href="_common/css/styles1.css">
     <link rel="stylesheet" href="_common/css/custombootstrap.css">
 
+    <!--**libs**-->
+    <!--uiSelect-->
+    <link rel="stylesheet" href="../../bower_components/uiSelect/select.min.css"><!--todo: replace for bower imported component-->
+
 </head>
 <body data-ng-controller="sessionCtrl as sCtrl" data-ng-model-options="{allowInvalid: true}">
 
@@ -53,6 +57,11 @@
 <!--todo<script src="../../bower_components/angular-route/angular-route.min.js.map"></script>-->
 <!--dirPaginate-->
 <script src="../../bower_components/angularUtils-pagination/dirPagination.js"></script>
+<!--uiSelect-->
+<script src="../../bower_components/uiSelect/select.min.js"></script><!--todo: replace for bower imported component-->
+<!--ngSanitize-->
+<script src="../../bower_components/angular-sanitize/angular-sanitize.js"></script><!--todo: replace for bower imported component-->
+<!--todo: add jQuery when finished for older browser support in ui-select-->
 
 <!--custom js-->
 <script src="../../_customjs/bootstrapper.js"></script>
@@ -99,6 +108,7 @@
 <!--notification-->
 <script src="_common/js/notification/notification.srv.js"></script>
 <script src="_common/js/notification/notification.ctrl.js"></script>
+<script src="_common/js/notification/alert.drtv.js"></script>
 <!--validation-->
 <script src="_common/js/validation/field.validation.drtv.js"></script>
 <!--system-->

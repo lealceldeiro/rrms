@@ -3,7 +3,7 @@
 
         <div class="row">
             <div class="form-group">
-                <label class="col-xs-3 col-sm-3col-md-3 col-lg-3">Usuario</label>
+                <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3">Usuario</label>
                 <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                     <span data-ng-bind="vm.entity.username"></span>
                 </div>
@@ -11,7 +11,7 @@
         </div>
         <div class="row">
             <div class="form-group">
-                <label class="col-xs-3 col-sm-3col-md-3 col-lg-3">Nombre</label>
+                <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3">Nombre</label>
                 <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                     <span data-ng-bind="vm.entity.name"></span>
                 </div>
@@ -19,39 +19,43 @@
         </div>
         <div class="row">
             <div class="form-group">
-                <label class="col-xs-3 col-sm-3col-md-3 col-lg-3">Email</label>
+                <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3">Email</label>
                 <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                     <span data-ng-bind="vm.entity.email"></span>
                 </div>
             </div>
         </div>
-        <div class="row" ng-show="vm.roles.total">
+        <div class="row">
             <div class="form-group">
-                <label class="col-xs-3 col-sm-3col-md-3 col-lg-3">Roles</label>
+                <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3">Roles</label>
+                <div class="mrg-l-m-3 col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                    <div ng-show="vm.roles.total">
+                        <table class="table table-responsive table-striped table-bordered" id="userRolesTable">
+                            <thead>
+                            </thead>
+                            <tbody>
+                            <tr data-dir-paginate="it in vm.roles.all | itemsPerPage:vm.roles.itemsPerPage"
+                                data-total-items="vm.roles.total"
+                                data-pagination-id="userRolesList">
+                                <td><span data-ng-bind="it.label"></span></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <nav class="text-center">
+                            <dir-pagination-controls
+                                    pagination-id="userRolesList"
+                                    on-page-change="vm.changePage(newPageNumber)"
+                                    max-size="5"
+                            >
+                            </dir-pagination-controls>
+                        </nav>
+                    </div>
+                    <div ng-hide="vm.roles.total">
+                        <div class="rrmsAlert" data-type="warning"
+                             data-message="No hay roles asociados a este usuario todavía"></div>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-1" style="width: 2%"><!--filler--></div>
-            <div class="col-md-10" style="width: 96%">
-                <table class="table table-responsive table-striped" id="userRolesTable">
-                    <thead>
-                    </thead>
-                    <tbody>
-                    <tr data-dir-paginate="it in vm.roles.all | itemsPerPage:vm.roles.itemsPerPage"
-                        data-total-items="vm.roles.total"
-                        data-pagination-id="userRolesList">
-                        <td><span data-ng-bind="it.label"></span></td>
-                    </tr>
-                    </tbody>
-                </table>
-                <nav class="text-center">
-                    <dir-pagination-controls
-                            pagination-id="userRolesList"
-                            on-page-change="vm.changePage(newPageNumber)"
-                            max-size="5"
-                    >
-                    </dir-pagination-controls>
-                </nav>
-            </div>
-            <div class="col-md-1" style="width: 2%"><!--filler--></div>
         </div>
 
         <div class="form-action">

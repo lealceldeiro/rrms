@@ -31,6 +31,8 @@
     ('rrms',
         [
             'ngRoute',                                          //routing
+            'ngSanitize',                                       //ngSanitize module (for ui-select)
+            'ui.select',                                        //ui-select component for select options
             'angularUtils.directives.dirPagination'             //pagination
         ]
     )

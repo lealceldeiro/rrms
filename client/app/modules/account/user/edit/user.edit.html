@@ -49,7 +49,21 @@
                 </div>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                <!--todo: place ui-select here-->
+                <div class="form-group">
+                    <label class="control-label">Roles</label>
+                    <ui-select multiple ng-model="vm.roles.selected" name="roles"
+                               ng-keypress="vm.setIsSearching(true)"
+                               on-select="vm.setIsSearching(false)">
+                        <ui-select-match placeholder=" Seleccione los roles">
+                            <span data-ng-bind="$item.label"></span>
+                        </ui-select-match>
+                        <ui-select-choices repeat="item in vm.roles.all"
+                                           refresh="vm.searchRoles($select.search)"
+                                           refresh-delay="500">
+                            <span data-ng-bind="item.label"></span>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
             </div>
         </div>
 
