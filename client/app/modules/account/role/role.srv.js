@@ -23,10 +23,13 @@ var roleSrv = function (systemSrv, $http, valueSrv, dataSrv) {
      * @param max max offset for paging
      * @returns {*} Promise
      */
-    function fnSearch(offset, max) {
+    function fnSearch(offset, max, criteria) {
         var params = valueSrv.nNnN(offset) ? "?offset=" + offset : "";
         if (valueSrv.nNnN(max)) {
             params += params === ""? "?max=" + max : "&max=" + max;
+        }
+        if (valueSrv.nNnN(criteria)) {
+            params += params === ""? "?q=" + criteria : "&q=" + criteria;
         }
 
         return $http.get(rolesUrl + 'search' + params).then(
