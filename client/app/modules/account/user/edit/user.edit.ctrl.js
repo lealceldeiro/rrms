@@ -10,6 +10,7 @@
         var vm = this;
 
         var flagSearch = false;
+        var rolesLoadedAlready = false;
 
         vm.wizard = {
             entity: null,
@@ -100,19 +101,23 @@
             navigationSrv.goTo(ROUTE.USERS);
         }
 
-        function _loadRoles(id) {
+        function _loadRoles(id, criteria) {
             vm.wizard.roles.all = [];
-            vm.wizard.roles.selected = null;
-            roleSrv.search(vm.wizard.roles.offset, vm.wizard.roles.max).then(
+            if (!rolesLoadedAlready) {
+                vm.wizard.roles.selected = null;
+            }
+
+            roleSrv.search(vm.wizard.roles.offset, vm.wizard.roles.max, criteria).then(
                 function (data) {
                     var e = systemSrv.eval(data, false, true);
                     if (e) {
                         vm.wizard.roles.all = systemSrv.apiItems;
-                        if (valueSrv.nNnN(id)) {
+                        if (valueSrv.nNnN(id) && !rolesLoadedAlready) {
                             userSrv.rolesByUser(id, vm.wizard.roles.offset, vm.wizard.roles.max).then(
                                 function (data) {
                                     e = systemSrv.eval(data, false, true);
                                     if (e) {
+                                        rolesLoadedAlready = true;
                                         vm.wizard.roles.selected = systemSrv.apiItems;
                                     }
                                 }
@@ -124,11 +129,16 @@
         }
 
         function fnSearchRoles(criteria) {
-
+            if (flagSearch) {
+                _loadRoles(vm.id, criteria);
+            }
         }
 
         function fnSetIsSearching(s) {
             flagSearch = s === true;
+            if (!flagSearch) {
+                _loadRoles(vm.id);
+            }
         }
     };
 
