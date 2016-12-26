@@ -103,7 +103,7 @@
 
         function _loadRoles(id, criteria) {
             vm.wizard.roles.all = [];
-            if (!rolesLoadedAlready) {
+            if (!rolesLoadedAlready && valueSrv.nNnN(id)) {
                 vm.wizard.roles.selected = null;
             }
 
