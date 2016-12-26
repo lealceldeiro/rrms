@@ -74,6 +74,10 @@
                     }
                 }
                 self.service.apiMessage = 'There was not data provided';
+                if (notifiyOnUnSuccess) {
+                    notificationSrv.showNotif(self.service.apiMessage, notificationSrv.utilText.titleError.es,
+                        notificationSrv.type.ERROR);
+                }
                 return false
             }
 
