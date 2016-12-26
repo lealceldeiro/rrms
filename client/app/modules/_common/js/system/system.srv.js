@@ -43,19 +43,33 @@
              * successful or not it is said if, for instance, there was not business rules violated and the operations
              * finished properly.
              * @param data data to be evaluated
+             * @param notifyOnSuccess Whether a notification should be shown or not on success result
+             * @param notifiyOnUnSuccess Whether a notification should be shown or not on non-success result
+             * @param callback A callback to be shown in the notification as an action to be taken by the user
              * @returns {boolean} true if success, false otherwise
              */
-            function fnEvaluateResponseData(data) {
+            function fnEvaluateResponseData(data, notifyOnSuccess, notifiyOnUnSuccess, callback) {
                 if (data) {
                     if (data[self.service.successFlag]) {
                         self.service.apiMessage = data[self.service.successMessageFlag] || notificationSrv.utilText.successfulOperation.es;
                         self.service.apiTotalCount = data[self.service.totalCountFlag];
                         self.service.apiItems = data[self.service.itemsFlag];
                         self.service.apiItem = data[self.service.itemFlag];
+                        if (notifyOnSuccess) {
+                            notificationSrv.showNotif(self.service.apiMessage, notificationSrv.utilText.titleSuccess.es,
+                                notificationSrv.type.SUCCESS);
+                        }
+
                         return true
                     }
                     else {
                         self.service.apiMessage = data[self.service.errorMessageFlag] || notificationSrv.utilText.unSuccessfulOperation.es;
+
+                        if (notifiyOnUnSuccess) {
+                            notificationSrv.showNotif(self.service.apiMessage, notificationSrv.utilText.titleError.es,
+                                notificationSrv.type.ERROR);
+                        }
+
                         return false
                     }
                 }

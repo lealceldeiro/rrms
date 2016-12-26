@@ -45,12 +45,8 @@
             //get info
             roleSrv.show(id).then(
                 function (data) {
-                    var e = systemSrv.eval(data);
-                    if (!e) {
-                        notificationSrv.showNotif(systemSrv.apiMessage, notificationSrv.utilText.titleError.es,
-                            notificationSrv.type.ERROR);
-                    }
-                    else {
+                    var e = systemSrv.eval(data, false, true);
+                    if (e) {
                         if (systemSrv.apiItem) {
                             vm.wizard.role = {
                                 label: systemSrv.apiItem.label,
@@ -73,14 +69,8 @@
 
                 roleSrv.save(params, vm.id).then(
                     function (data) {
-                        var e = systemSrv.eval(data);
-                        if (!e) {
-                            notificationSrv.showNotif(systemSrv.apiMessage, notificationSrv.utilText.titleError.es,
-                                notificationSrv.type.ERROR);
-                        }
-                        else {
-                            notificationSrv.showNotif(systemSrv.apiMessage, notificationSrv.utilText.titleSccess.es,
-                                notificationSrv.type.SUCCESS);
+                        var e = systemSrv.eval(data, true, true);
+                        if (e) {
                             fnCancel();
                         }
                     }

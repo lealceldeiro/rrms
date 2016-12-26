@@ -38,7 +38,7 @@ var notificationSrv = function ($timeout) {
                 en: "Error",
                 es: "Error"
             },
-            "titleSccess": {
+            "titleSuccess": {
                 en: "Success: ",
                 es: "Éxito"
             },

@@ -6,8 +6,7 @@
 
 (function () {
 
-    var roleListCtrl = function (indexSrv, systemSrv, roleSrv, navigationSrv, paginationSrv, ROUTE, notificationSrv,
-                                 searchSrv) {
+    var roleListCtrl = function (indexSrv, systemSrv, roleSrv, navigationSrv, paginationSrv, ROUTE, searchSrv) {
         var vm = this;
 
         vm.wizard = {
@@ -42,12 +41,8 @@
 
             roleSrv.search(offset, max).then(
                 function (data) {
-                    var e = systemSrv.eval(data);
-                    if (!e) {
-                        notificationSrv.showNotif(systemSrv.apiMessage, notificationSrv.utilText.titleError.es,
-                            notificationSrv.type.ERROR);
-                    }
-                    else{
+                    var e = systemSrv.eval(data, false, true);
+                    if (e) {
                         paginationSrv.setTotalItems(systemSrv.apiTotalCount);
                         if (systemSrv.apiItems) {
                             vm.wizard.roles.all = systemSrv.apiItems;
@@ -72,15 +67,8 @@
         function fnRemove(id) {
             roleSrv.remove(id).then(
                 function (data) {
-                    var e = systemSrv.eval(data);
-                    if (!e) {
-                        notificationSrv.showNotif(systemSrv.apiMessage, notificationSrv.utilText.titleError.es,
-                            notificationSrv.type.ERROR);
-                    }
-                    else {
-                        notificationSrv.showNotif(systemSrv.apiMessage, notificationSrv.utilText.titleSccess.es,
-                            notificationSrv.type.SUCCESS);
-                        //custom handling
+                    var e = systemSrv.eval(data, true, true);
+                    if (e) {
                         var idx = searchSrv.indexOf(vm.wizard.roles.all, 'id', id);
                         if (idx !== -1) {
                             vm.wizard.roles.all.splice(idx,1);
@@ -102,8 +90,7 @@
 
     };
 
-    roleListCtrl.$inject = ['indexSrv', 'systemSrv', 'roleSrv', 'navigationSrv', 'paginationSrv', 'ROUTE',
-        'notificationSrv', 'searchSrv'];
+    roleListCtrl.$inject = ['indexSrv', 'systemSrv', 'roleSrv', 'navigationSrv', 'paginationSrv', 'ROUTE', 'searchSrv'];
 
     angular.module('rrms')
         .controller('roleListCtrl', roleListCtrl);

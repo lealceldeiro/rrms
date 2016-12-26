@@ -45,12 +45,8 @@
             //get info
             userSrv.show(id).then(
                 function (data) {
-                    var e = systemSrv.eval(data);
-                    if (!e) {
-                        notificationSrv.showNotif(systemSrv.apiMessage, notificationSrv.utilText.titleError.es,
-                            notificationSrv.type.ERROR);
-                    }
-                    else {
+                    var e = systemSrv.eval(data, false, true);
+                    if (e) {
                         vm.wizard.entity = systemSrv.apiItem
                     }
                 }
@@ -60,7 +56,7 @@
         function fnSave(form) {
             if (form && form.$valid) {
                 var params = {
-                    username : vm.wizard.entity.username, //readonly right now
+                    username : vm.wizard.entity.username,
                     name : vm.wizard.entity.name,
                     email : vm.wizard.entity.email,
                     password : vm.wizard.entity.password
@@ -69,14 +65,8 @@
 
                 userSrv.save(params, vm.id).then(
                     function (data) {
-                        var e = systemSrv.eval(data);
-                        if (!e) {
-                            notificationSrv.showNotif(systemSrv.apiMessage, notificationSrv.utilText.titleError.es,
-                                notificationSrv.type.ERROR);
-                        }
-                        else {
-                            notificationSrv.showNotif(systemSrv.apiMessage, notificationSrv.utilText.titleSccess.es,
-                                notificationSrv.type.SUCCESS);
+                        var e = systemSrv.eval(data, true, true);
+                        if (e) {
                             fnCancel();
                         }
                     }

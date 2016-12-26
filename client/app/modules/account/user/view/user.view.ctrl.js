@@ -46,21 +46,13 @@
             //get info
             userSrv.show(id).then(
                 function (data) {
-                    var e = systemSrv.eval(data);
-                    if (!e) {
-                        notificationSrv.showNotif(systemSrv.apiMessage, notificationSrv.utilText.titleError.es,
-                            notificationSrv.type.ERROR);
-                    }
-                    else {
+                    var e = systemSrv.eval(data, false, true);
+                    if (e) {
                         vm.wizard.entity = systemSrv.apiItem;
                         userSrv.rolesByUser(id).then(
                             function (data) {
-                                var e = systemSrv.eval(data);
-                                if (!e) {
-                                    notificationSrv.showNotif(systemSrv.apiMessage, notificationSrv.utilText.titleError.es,
-                                        notificationSrv.type.ERROR);
-                                }
-                                else {
+                                var e = systemSrv.eval(data, false, true);
+                                if (e) {
                                     vm.wizard.roles.all = systemSrv.apiItems;
                                     vm.wizard.roles.total = systemSrv.apiTotalCount;
                                 }
@@ -74,15 +66,8 @@
         function fnRemove() {
             userSrv.remove(vm.id).then(
                 function (data) {
-                    var e = systemSrv.eval(data);
-                    if (!e) {
-                        notificationSrv.showNotif(systemSrv.apiMessage, notificationSrv.utilText.titleError.es,
-                            notificationSrv.type.ERROR);
-                    }
-                    else {
-                        notificationSrv.showNotif(systemSrv.apiMessage, notificationSrv.utilText.titleSccess.es,
-                            notificationSrv.type.SUCCESS);
-                        //custom handling
+                    var e = systemSrv.eval(data, true, true);
+                    if (e) {
                         navigationSrv.goTo(ROUTE.USERS);
                     }
                 }

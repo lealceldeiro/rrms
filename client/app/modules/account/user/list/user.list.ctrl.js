@@ -6,8 +6,7 @@
 
 (function () {
 
-    var f = function (indexSrv, systemSrv, userSrv, navigationSrv, paginationSrv, ROUTE, notificationSrv,
-                                 searchSrv) {
+    var f = function (indexSrv, systemSrv, userSrv, navigationSrv, paginationSrv, ROUTE, searchSrv) {
         var vm = this;
 
         vm.wizard = {
@@ -42,12 +41,8 @@
 
             userSrv.search(offset, max).then(
                 function (data) {
-                    var e = systemSrv.eval(data);
-                    if (!e) {
-                        notificationSrv.showNotif(systemSrv.apiMessage, notificationSrv.utilText.titleError.es,
-                            notificationSrv.type.ERROR);
-                    }
-                    else{
+                    var e = systemSrv.eval(data, false, true);
+                    if (e) {
                         paginationSrv.setTotalItems(systemSrv.apiTotalCount);
                         if (systemSrv.apiItems) {
                             vm.wizard.entities.all = systemSrv.apiItems;
@@ -72,15 +67,8 @@
         function fnRemove(id) {
             userSrv.remove(id).then(
                 function (data) {
-                    var e = systemSrv.eval(data);
-                    if (!e) {
-                        notificationSrv.showNotif(systemSrv.apiMessage, notificationSrv.utilText.titleError.es,
-                            notificationSrv.type.ERROR);
-                    }
-                    else {
-                        notificationSrv.showNotif(systemSrv.apiMessage, notificationSrv.utilText.titleSccess.es,
-                            notificationSrv.type.SUCCESS);
-                        //custom handling
+                    var e = systemSrv.eval(data, true, true);
+                    if (e) {
                         var idx = searchSrv.indexOf(vm.wizard.entities.all, 'id', id);
                         if (idx !== -1) {
                             vm.wizard.entities.all.splice(idx,1);
@@ -102,8 +90,7 @@
 
     };
 
-    f.$inject = ['indexSrv', 'systemSrv', 'userSrv', 'navigationSrv', 'paginationSrv', 'ROUTE',
-        'notificationSrv', 'searchSrv'];
+    f.$inject = ['indexSrv', 'systemSrv', 'userSrv', 'navigationSrv', 'paginationSrv', 'ROUTE', 'searchSrv'];
 
     angular.module('rrms')
         .controller('userListCtrl', f);

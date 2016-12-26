@@ -1,6 +1,6 @@
 <div class="center-block blocked-2-styled">
     <form role="form" name="editUserForm">
-        <!--username-->
+        <!--username and password-->
         <div class="row">
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                 <div class="form-group">
@@ -19,7 +19,7 @@
                 </div>
             </div>
         </div>
-        <!--name and roles-->
+        <!--name and repeat password-->
         <div class="row">
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                 <div class="form-group">
@@ -38,7 +38,7 @@
                 </div>
             </div>
         </div>
-        <!--email-->
+        <!--email and roles-->
         <div class="row">
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                 <div class="form-group">
@@ -47,6 +47,9 @@
                            placeholder="Escriba el correo electrónico"
                            data-ng-model="vm.entity.email">
                 </div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <!--todo: place ui-select here-->
             </div>
         </div>
 
