@@ -4,7 +4,7 @@
 
 'use strict';
 
-var f = function (systemSrv, $http, valueSrv, dataSrv) {
+var f = function (systemSrv, $http, valueSrv, dataSrv, baseSrv) {
     var self = this;
     var url = systemSrv.APIUrl + 'user/';
 
@@ -25,50 +25,26 @@ var f = function (systemSrv, $http, valueSrv, dataSrv) {
             params += params === ""? "?max=" + max : "&max=" + max;
         }
 
-        return $http.get(url + 'search' + params).then(
-            function (res) {
-                return res.data;
-            },
-            function (resOnErr) {
-                return resOnErr.data;
-            }
-        )
+        var def = $http.get(url + 'search' + params);
+        return baseSrv.resolveDeferred(def);
     }
 
     function fnRemove(id) {
-        return $http.delete(url + 'delete/' + id).then(
-            function (res) {
-                return res.data
-            },
-            function (resOnErr) {
-                return resOnErr.data
-            }
-        )
+        var def = $http.delete(url + 'delete/' + id);
+        return baseSrv.resolveDeferred(def);
     }
 
     function fnShow(id) {
-        return $http.get(url + "show/" + id).then(
-            function (res) {
-                return res.data
-            },
-            function (resOnError) {
-                return resOnError.data
-            }
-        )
+        var def = $http.get(url + "show/" + id);
+        return baseSrv.resolveDeferred(def);
     }
 
     function fnSave(params, id) {
         var murl = url + 'save' + (typeof id !== 'undefined' && id != null && !isNaN(id) ? '/' + id : '');
         var d = dataSrv.processParamsAsObject(params);
 
-        return $http.post(murl, d).then(
-            function (res) {
-                return res.data;
-            },
-            function (resOnError) {
-                return resOnError.data;
-            }
-        )
+        var def = $http.post(murl, d);
+        return baseSrv.resolveDeferred(def);
     }
 
     function fnRolesByUser(id, offset, max) {
@@ -77,18 +53,12 @@ var f = function (systemSrv, $http, valueSrv, dataSrv) {
             params += params === ""? "?max=" + max : "&max=" + max;
         }
 
-        return $http.get(url + 'roles/' + id + params).then(
-            function (res) {
-                return res.data;
-            },
-            function (resOnErr) {
-                return resOnErr.data;
-            }
-        )
+        var def = $http.get(url + 'roles/' + id + params);
+        return baseSrv.resolveDeferred(def);
     }
 };
 
-f.$inject = ['systemSrv', '$http', 'valueSrv', 'dataSrv'];
+f.$inject = ['systemSrv', '$http', 'valueSrv', 'dataSrv', 'baseSrv'];
 
 angular.module('rrms')
     .service('userSrv', f);

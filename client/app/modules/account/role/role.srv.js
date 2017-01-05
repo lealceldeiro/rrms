@@ -4,7 +4,7 @@
 
 'use strict';
 
-var roleSrv = function (systemSrv, $http, valueSrv, dataSrv) {
+var roleSrv = function (systemSrv, $http, valueSrv, dataSrv, baseSrv) {
     var self = this;
     var rolesUrl = systemSrv.APIUrl + 'role/';
 
@@ -32,54 +32,30 @@ var roleSrv = function (systemSrv, $http, valueSrv, dataSrv) {
             params += params === ""? "?q=" + criteria : "&q=" + criteria;
         }
 
-        return $http.get(rolesUrl + 'search' + params).then(
-            function (res) {
-                return res.data;
-            },
-            function (resOnErr) {
-                return resOnErr.data;
-            }
-        )
+        var def =  $http.get(rolesUrl + 'search' + params);
+        return baseSrv.resolveDeferred(def);
     }
 
     function fnRemove(id) {
-        return $http.delete(rolesUrl + 'delete/' + id).then(
-            function (res) {
-                return res.data
-            },
-            function (resOnErr) {
-                return resOnErr.data
-            }
-        )
+        var def = $http.delete(rolesUrl + 'delete/' + id);
+        return baseSrv.resolveDeferred(def);
     }
 
     function fnShow(id) {
-        return $http.get(rolesUrl + "show/" + id).then(
-            function (res) {
-                return res.data
-            },
-            function (resOnError) {
-                return resOnError.data
-            }
-        )
+        var def = $http.get(rolesUrl + "show/" + id);
+        return baseSrv.resolveDeferred(def);
     }
 
     function fnSave(params, id) {
         var url = rolesUrl + 'save' + (typeof id !== 'undefined' && id != null && !isNaN(id) ? '/' + id : '');
         var d = dataSrv.processParamsAsObject(params);
 
-        return $http.post(url, d).then(
-            function (res) {
-                return res.data;
-            },
-            function (resOnError) {
-                return resOnError.data;
-            }
-        )
+        var def = $http.post(url, d);
+        return baseSrv.resolveDeferred(def);
     }
 };
 
-roleSrv.$inject = ['systemSrv', '$http', 'valueSrv', 'dataSrv'];
+roleSrv.$inject = ['systemSrv', '$http', 'valueSrv', 'dataSrv', 'baseSrv'];
 
 angular.module('rrms')
     .service('roleSrv', roleSrv);
