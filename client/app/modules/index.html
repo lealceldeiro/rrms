@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title data-ng-bind="idxCtrl.siteTitle() ? 'Sistema de Gestión de Casas de Rentas | ' + idxCtrl.siteTitle()
-     : 'Sistema de Gestión de Casas de Rentas'"></title>
+    <title data-ng-bind="idxCtrl.siteTitle() ? 'Rent Room Management System | ' + idxCtrl.siteTitle()
+     : 'Rent Room Management System'"></title>
 
     <!----CSS---->
 
@@ -22,7 +22,7 @@
 
     <!--**libs**-->
     <!--uiSelect-->
-    <link rel="stylesheet" href="../../bower_components/uiSelect/select.min.css"><!--todo: replace for bower imported component-->
+    <link rel="stylesheet" href="../../bower_components/angular-ui-select/dist/select.min.css">
 
 </head>
 <body data-ng-controller="sessionCtrl as sCtrl" data-ng-model-options="{allowInvalid: true}">
@@ -50,18 +50,14 @@
 <!--**AngularJS**-->
 <script src="../../bower_components/angular/angular.js"></script>
 <!--todo<script src="../../bower_components/angular/angular.min.js"></script>-->
-<!--todo<script src="../../bower_components/angular/angular.min.js.map"></script>-->
 <!--ngRoute-->
-<script src="../../bower_components/angular-route/angular-route.js"></script>
-<!--todo<script src="../../bower_components/angular-route/angular-route.min.js"></script>-->
-<!--todo<script src="../../bower_components/angular-route/angular-route.min.js.map"></script>-->
+<<script src="../../bower_components/angular-route/angular-route.min.js"></script>
 <!--dirPaginate-->
 <script src="../../bower_components/angularUtils-pagination/dirPagination.js"></script>
 <!--uiSelect-->
-<script src="../../bower_components/uiSelect/select.min.js"></script><!--todo: replace for bower imported component-->
+<script src="../../bower_components/angular-ui-select/dist/select.min.js"></script>
 <!--ngSanitize-->
-<script src="../../bower_components/angular-sanitize/angular-sanitize.js"></script><!--todo: replace for bower imported component-->
-<!--todo: add jQuery when finished for older browser support in ui-select-->
+<script src="../../bower_components/angular-sanitize/angular-sanitize.min.js"></script>
 
 <!--custom js-->
 <script src="../../_customjs/bootstrapper.js"></script>
