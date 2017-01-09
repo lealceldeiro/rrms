@@ -48,9 +48,8 @@ var roleSrv = function (systemSrv, $http, valueSrv, dataSrv, baseSrv) {
 
     function fnSave(params, id) {
         var url = rolesUrl + 'save' + (typeof id !== 'undefined' && id != null && !isNaN(id) ? '/' + id : '');
-        var d = dataSrv.processParamsAsObject(params);
 
-        var def = $http.post(url, d);
+        var def = $http.post(url, params);
         return baseSrv.resolveDeferred(def);
     }
 };
