@@ -8,6 +8,7 @@
 
     var roleViewCtrl = function (ROUTE, indexSrv, roleSrv, navigationSrv, notificationSrv, systemSrv) {
         var vm = this;
+        const keyP = 'ROLE_VIEW';
 
         vm.wizard = {
             role: null,
@@ -38,16 +39,18 @@
         }
 
         function fnLoadData(id) {
+            var fnKey = keyP + "fnLoadData";
             //get info
             roleSrv.show(id).then(
                 function (data) {
-                    var e = systemSrv.eval(data, false, true);
+                    var e = systemSrv.eval(data, fnKey, false, true);
                     if (e) {
-                        if (systemSrv.apiItem) {
+                        var it = systemSrv.getItem(fnKey);
+                        if (it) {
                             vm.wizard.role = {
-                                label: systemSrv.apiItem.label,
-                                description: systemSrv.apiItem.description,
-                                active: systemSrv.apiItem.active
+                                label: it.label,
+                                description: it.description,
+                                active: it.active
                             }
                         }
                     }
@@ -56,9 +59,10 @@
         }
 
         function fnRemove() {
+            var fnKey = keyP + "fnRemove";
             roleSrv.remove(vm.id).then(
                 function (data) {
-                    var e = systemSrv.eval(data, true, true);
+                    var e = systemSrv.eval(data, fnKey, true, true);
                     if (e) {
                         navigationSrv.goTo(ROUTE.ROLES);
                     }

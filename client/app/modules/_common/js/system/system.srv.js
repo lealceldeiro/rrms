@@ -9,6 +9,8 @@
             var self = this;
 
             self.service = {
+
+                // accessible from outside, but not recommended to do so, internal service usage
                 urlBase:
                     (__env.baseUrl !== '<your_app_base_url>')? __env.baseUrl || '/' : '/',
                 //api
@@ -27,12 +29,19 @@
                 itemFlag:
                     (__env.api.itemFlag !== '<your_api_item_flag>')? __env.api.itemFlag || 'item' : 'item',
 
-                apiMessage: null,
-                apiTotalCount: null,
-                apiItems: null,
-                apiItem: null,
+                // accessible from outside, but not recommended to do so, internal service usage
+                apiMessage: {},
+                apiTotalCount: {},
+                apiItems: {},
+                apiItem: {},
 
-                eval: fnEvaluateResponseData
+
+                eval: fnEvaluateResponseData,
+
+                getMessage: fnGetMessage,
+                getTotal: fnGetTotalCount,
+                getItems: fnGetItems,
+                getItem: fnGetItem
             };
 
             return self.service;
@@ -43,42 +52,70 @@
              * successful or not it is said if, for instance, there was not business rules violated and the operations
              * finished properly.
              * @param data data to be evaluated
+             * @param storeKey key under which the data will be store
              * @param notifyOnSuccess Whether a notification should be shown or not on success result
              * @param notifiyOnUnSuccess Whether a notification should be shown or not on non-success result
              * @param callback A callback to be shown in the notification as an action to be taken by the user
              * @returns {boolean} true if success, false otherwise
              */
-            function fnEvaluateResponseData(data, notifyOnSuccess, notifiyOnUnSuccess, callback) {
+            function fnEvaluateResponseData(data, storeKey, notifyOnSuccess, notifiyOnUnSuccess, callback) {
+                validate(storeKey);
                 if (data) {
                     if (data[self.service.successFlag]) {
-                        self.service.apiMessage = data[self.service.successMessageFlag] || notificationSrv.utilText.successfulOperation.es;
-                        self.service.apiTotalCount = data[self.service.totalCountFlag];
-                        self.service.apiItems = data[self.service.itemsFlag];
-                        self.service.apiItem = data[self.service.itemFlag];
+                        self.service.apiMessage[storeKey] = data[self.service.successMessageFlag] || notificationSrv.utilText.successfulOperation.es;
+                        self.service.apiTotalCount[storeKey] = data[self.service.totalCountFlag];
+                        self.service.apiItems[storeKey] = data[self.service.itemsFlag];
+                        self.service.apiItem[storeKey] = data[self.service.itemFlag];
                         if (notifyOnSuccess) {
-                            notificationSrv.showNotif(self.service.apiMessage, notificationSrv.utilText.titleSuccess.es,
+                            notificationSrv.showNotif(self.service.apiMessage[storeKey], notificationSrv.utilText.titleSuccess.es,
                                 notificationSrv.type.SUCCESS);
                         }
 
                         return true
                     }
                     else {
-                        self.service.apiMessage = data[self.service.errorMessageFlag] || notificationSrv.utilText.unSuccessfulOperation.es;
+                        self.service.apiMessage[storeKey] = data[self.service.errorMessageFlag] || notificationSrv.utilText.unSuccessfulOperation.es;
 
                         if (notifiyOnUnSuccess) {
-                            notificationSrv.showNotif(self.service.apiMessage, notificationSrv.utilText.titleError.es,
+                            notificationSrv.showNotif(self.service.apiMessage[storeKey], notificationSrv.utilText.titleError.es,
                                 notificationSrv.type.ERROR);
                         }
 
                         return false
                     }
                 }
-                self.service.apiMessage = 'There was not data provided';
+                self.service.apiMessage[storeKey] = 'There was not data provided for request with key "' + storeKey + '"';
                 if (notifiyOnUnSuccess) {
-                    notificationSrv.showNotif(self.service.apiMessage, notificationSrv.utilText.titleError.es,
+                    notificationSrv.showNotif(self.service.apiMessage[storeKey], notificationSrv.utilText.titleError.es,
                         notificationSrv.type.ERROR);
                 }
                 return false
+            }
+
+            function fnGetMessage(key) {
+                validate(key);
+                return self.service.apiMessage[key]
+            }
+
+            function fnGetTotalCount(key) {
+                validate(key);
+                return self.service.apiTotalCount[key]
+            }
+
+            function fnGetItems(key) {
+                validate(key);
+                return self.service.apiItems[key]
+            }
+
+            function fnGetItem(key) {
+                validate(key);
+                return self.service.apiItem[key]
+            }
+
+            function validate(key) {
+                if (typeof key === 'undefined' || key === null) {
+                    throw Error('A Key must be provided in order to store the server response')
+                }
             }
 
         };

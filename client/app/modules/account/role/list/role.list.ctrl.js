@@ -8,6 +8,7 @@
 
     var roleListCtrl = function (indexSrv, systemSrv, roleSrv, navigationSrv, paginationSrv, ROUTE, searchSrv) {
         var vm = this;
+        const keyP = 'ROLE_LIST';
 
         vm.wizard = {
             roles: {
@@ -39,13 +40,16 @@
             var offset = paginationSrv.getOffset();
             var max = paginationSrv.getItemsPerPage();
 
+            var fnKey = keyP + "fnSearch";
+
             roleSrv.search(offset, max).then(
                 function (data) {
-                    var e = systemSrv.eval(data, false, true);
+                    var e = systemSrv.eval(data, fnKey, false, true);
                     if (e) {
-                        paginationSrv.setTotalItems(systemSrv.apiTotalCount);
-                        if (systemSrv.apiItems) {
-                            vm.wizard.roles.all = systemSrv.apiItems;
+                        paginationSrv.setTotalItems(systemSrv.getTotal(fnKey));
+                        var it = systemSrv.getItems(fnKey);
+                        if (it) {
+                            vm.wizard.roles.all = it;
                         }
                     }
                 }
@@ -65,9 +69,10 @@
         }
 
         function fnRemove(id) {
+            var fnKey = keyP + "fnRemove";
             roleSrv.remove(id).then(
                 function (data) {
-                    var e = systemSrv.eval(data, true, true);
+                    var e = systemSrv.eval(data, fnKey, true, true);
                     if (e) {
                         var idx = searchSrv.indexOf(vm.wizard.roles.all, 'id', id);
                         if (idx !== -1) {

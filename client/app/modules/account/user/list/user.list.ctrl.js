@@ -8,6 +8,7 @@
 
     var f = function (indexSrv, systemSrv, userSrv, navigationSrv, paginationSrv, ROUTE, searchSrv) {
         var vm = this;
+        const keyP = 'USER_LIST';
 
         vm.wizard = {
             entities: {
@@ -39,13 +40,16 @@
             var offset = paginationSrv.getOffset();
             var max = paginationSrv.getItemsPerPage();
 
+            var fnKey = keyP + "fnSearch";
+
             userSrv.search(offset, max).then(
                 function (data) {
-                    var e = systemSrv.eval(data, false, true);
+                    var e = systemSrv.eval(data, fnKey, false, true);
                     if (e) {
-                        paginationSrv.setTotalItems(systemSrv.apiTotalCount);
-                        if (systemSrv.apiItems) {
-                            vm.wizard.entities.all = systemSrv.apiItems;
+                        paginationSrv.setTotalItems(systemSrv.getTotal(fnKey));
+                        var it = systemSrv.getItems(fnKey);
+                        if (it) {
+                            vm.wizard.entities.all = it;
                         }
                     }
                 }
@@ -65,9 +69,10 @@
         }
 
         function fnRemove(id) {
+            var fnKey = keyP + "fnRemove";
             userSrv.remove(id).then(
                 function (data) {
-                    var e = systemSrv.eval(data, true, true);
+                    var e = systemSrv.eval(data, fnKey, true, true);
                     if (e) {
                         var idx = searchSrv.indexOf(vm.wizard.entities.all, 'id', id);
                         if (idx !== -1) {

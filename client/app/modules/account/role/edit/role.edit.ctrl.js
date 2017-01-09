@@ -8,6 +8,7 @@
 
     var roleEditCtrl = function (indexSrv, roleSrv, navigationSrv, ROUTE, systemSrv, notificationSrv) {
         var vm = this;
+        const keyP = 'ROLE_EDIT';
 
         vm.wizard = {
             role: null,
@@ -42,16 +43,18 @@
         }
 
         function fnLoadData(id) {
+            var fnKey = keyP + "fnLoadData";
             //get info
             roleSrv.show(id).then(
                 function (data) {
-                    var e = systemSrv.eval(data, false, true);
+                    var e = systemSrv.eval(data, fnKey,  false, true);
                     if (e) {
-                        if (systemSrv.apiItem) {
+                        var it = systemSrv.getItem(fnKey);
+                        if (it) {
                             vm.wizard.role = {
-                                label: systemSrv.apiItem.label,
-                                description: systemSrv.apiItem.description,
-                                active: systemSrv.apiItem.active
+                                label: it.label,
+                                description: it.description,
+                                active: it.active
                             }
                         }
                     }
@@ -67,9 +70,10 @@
                     active : vm.wizard.role.active
                 };
 
+                var fnKey = keyP + "fnSave";
                 roleSrv.save(params, vm.id).then(
                     function (data) {
-                        var e = systemSrv.eval(data, true, true);
+                        var e = systemSrv.eval(data, fnKey, true, true);
                         if (e) {
                             fnCancel();
                         }

@@ -8,6 +8,7 @@
 
     var f = function (indexSrv, userSrv, navigationSrv, ROUTE, systemSrv, notificationSrv, valueSrv, roleSrv) {
         var vm = this;
+        const keyP = 'USER_EDIT';
 
         var flagSearch = false;
         var rolesLoadedAlready = false;
@@ -60,17 +61,17 @@
         }
 
         function fnLoadData(id) {
+            var fnKey = keyP + "fnLoadData";
             //get info
             userSrv.show(id).then(
                 function (data) {
-                    var e = systemSrv.eval(data, false, true);
+                    var e = systemSrv.eval(data, fnKey, false, true);
                     if (e) {
-                        vm.wizard.entity = systemSrv.apiItem;
-
-                        _loadRoles(id);
+                        vm.wizard.entity = systemSrv.getItem(fnKey);
                     }
                 }
             );
+            _loadRoles(id);
         }
 
         function fnSave(form) {
@@ -82,13 +83,14 @@
                     password : vm.wizard.entity.password,
                     roles: []
                 };
+                var fnKey = keyP + "fnSave";
                 angular.forEach(vm.wizard.roles.selected, function (element) {
                     params.roles.push(element.id)
                 });
 
                 userSrv.save(params, vm.id).then(
                     function (data) {
-                        var e = systemSrv.eval(data, true, true);
+                        var e = systemSrv.eval(data, fnKey, true, true);
                         if (e) {
                             fnCancel();
                         }
@@ -107,22 +109,27 @@
                 vm.wizard.roles.selected = null;
             }
 
+            var fnKey = keyP + "_loadRoles";
+
             roleSrv.search(vm.wizard.roles.offset, vm.wizard.roles.max, criteria).then(
                 function (data) {
-                    var e = systemSrv.eval(data, false, true);
+                    var e = systemSrv.eval(data, fnKey, false, true);
                     if (e) {
-                        vm.wizard.roles.all = systemSrv.apiItems;
+                        vm.wizard.roles.all = systemSrv.getItems(fnKey);
+
                         if (valueSrv.nNnN(id) && !rolesLoadedAlready) {
                             userSrv.rolesByUser(id, vm.wizard.roles.offset, vm.wizard.roles.max).then(
                                 function (data) {
-                                    e = systemSrv.eval(data, false, true);
+                                    var fnKey2 = fnKey + "2";
+                                    e = systemSrv.eval(data, fnKey2, false, true);
                                     if (e) {
                                         rolesLoadedAlready = true;
-                                        vm.wizard.roles.selected = systemSrv.apiItems;
+                                        vm.wizard.roles.selected = systemSrv.getItems(fnKey2);
                                     }
                                 }
                             )
                         }
+
                     }
                 }
             )

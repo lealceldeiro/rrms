@@ -8,6 +8,7 @@
 
     var f = function (ROUTE, indexSrv, userSrv, navigationSrv, notificationSrv, systemSrv) {
         var vm = this;
+        const keyP = 'USER_VIEW';
 
         vm.wizard = {
             entity: null,
@@ -43,30 +44,33 @@
         }
 
         function fnLoadData(id) {
+            var fnKey = keyP + "fnLoadData1";
+            var fnKey2 = keyP + "fnLoadData2";
             //get info
             userSrv.show(id).then(
                 function (data) {
-                    var e = systemSrv.eval(data, false, true);
+                    var e = systemSrv.eval(data, fnKey, false, true);
                     if (e) {
-                        vm.wizard.entity = systemSrv.apiItem;
-                        userSrv.rolesByUser(id).then(
-                            function (data) {
-                                var e = systemSrv.eval(data, false, true);
-                                if (e) {
-                                    vm.wizard.roles.all = systemSrv.apiItems;
-                                    vm.wizard.roles.total = systemSrv.apiTotalCount;
-                                }
-                            }
-                        )
+                        vm.wizard.entity = systemSrv.getItem(fnKey);
                     }
                 }
             );
+            userSrv.rolesByUser(id).then(
+                function (data) {
+                    var e = systemSrv.eval(data, fnKey2, false, true);
+                    if (e) {
+                        vm.wizard.roles.all = systemSrv.getItems(fnKey2);
+                        vm.wizard.roles.total = systemSrv.getTotal(fnKey2);
+                    }
+                }
+            )
         }
 
         function fnRemove() {
+            var fnKey = keyP + "fnRemove";
             userSrv.remove(vm.id).then(
                 function (data) {
-                    var e = systemSrv.eval(data, true, true);
+                    var e = systemSrv.eval(data, fnKey, true, true);
                     if (e) {
                         navigationSrv.goTo(ROUTE.USERS);
                     }
