@@ -9,7 +9,7 @@ var f = function () {
         templateUrl: '_components/screenLoader/screen.loader.tpl.html',
         transclude: true,
         restrict: 'EAC',
-        scope: {screenType: '@' || 0}
+        scope: {screenType: '@'}
     }
 };
 

@@ -37,6 +37,11 @@
     >
 
     </div>
+
+    <div data-ng-controller="blockCtrl as blockCtrl">
+        <div data-ng-show="blockCtrl.blocked" class="rrms-screen-loader" data-screen-type="0">
+        </div>
+    </div>
 </div>
 
 <!-- Environment variables -->
@@ -101,6 +106,8 @@
 
 <!--**_components**-->
 <script src="_components/screenLoader/screen.loader.drtv.js"></script>
+<script src="_components/screenBlocker/blockS.srv.js"></script>
+<script src="_components/screenBlocker/blockS.ctrl.js"></script>
 
 <!--**_common**-->
 <!--navigation-->
