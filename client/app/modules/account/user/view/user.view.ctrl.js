@@ -55,6 +55,7 @@
                     }
                 }
             );
+            vm.wizard.roles.loading = true;
             userSrv.rolesByUser(id).then(
                 function (data) {
                     var e = systemSrv.eval(data, fnKey2, false, true);

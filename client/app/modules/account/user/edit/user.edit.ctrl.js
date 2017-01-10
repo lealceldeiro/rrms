@@ -14,7 +14,7 @@
         var rolesLoadedAlready = false;
 
         vm.wizard = {
-            entity: null,
+            entity: {},
 
             roles: {
 
@@ -46,6 +46,7 @@
                 _loadRoles();
             }
             else {
+                vm.wizard.entity = null;
                 var p = navigationSrv.currentParams();
                 if (p && null !== p.id && typeof p.id !== 'undefined' && p.id != 'undefined'&& p.id != 'null') {
                     vm.id = p.id;

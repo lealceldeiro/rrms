@@ -11,7 +11,7 @@
         const keyP = 'ROLE_EDIT';
 
         vm.wizard = {
-            role: null,
+            role: {},
 
             init: fnInit,
             cancel: fnCancel,
@@ -28,6 +28,7 @@
                 indexSrv.siteTile = 'Nuevo Rol';
             }
             else {
+                vm.wizard.role = null;
                 var p = navigationSrv.currentParams();
                 if (p && null !== p.id && typeof p.id !== 'undefined' && p.id != 'undefined'&& p.id != 'null') {
                     vm.id = p.id;
