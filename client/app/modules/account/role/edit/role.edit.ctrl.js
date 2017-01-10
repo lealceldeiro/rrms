@@ -6,7 +6,7 @@
 
 (function () {
 
-    var roleEditCtrl = function (indexSrv, roleSrv, navigationSrv, ROUTE, systemSrv, notificationSrv) {
+    var roleEditCtrl = function (indexSrv, roleSrv, navigationSrv, ROUTE, systemSrv, notificationSrv, blockSrv) {
         var vm = this;
         const keyP = 'ROLE_EDIT';
 
@@ -65,6 +65,7 @@
 
         function fnSave(form) {
             if (form && form.$valid) {
+                blockSrv.block();
                 var params = {
                     label : vm.wizard.role.label,
                     description : vm.wizard.role.description,
@@ -74,6 +75,7 @@
                 var fnKey = keyP + "fnSave";
                 roleSrv.save(params, vm.id).then(
                     function (data) {
+                        blockSrv.unBlock();
                         var e = systemSrv.eval(data, fnKey, true, true);
                         if (e) {
                             fnCancel();
@@ -90,7 +92,7 @@
 
     };
 
-    roleEditCtrl.$inject = ['indexSrv', 'roleSrv', 'navigationSrv', 'ROUTE', 'systemSrv', 'notificationSrv'];
+    roleEditCtrl.$inject = ['indexSrv', 'roleSrv', 'navigationSrv', 'ROUTE', 'systemSrv', 'notificationSrv', 'blockSrv'];
 
     angular.module('rrms')
         .controller('roleEditCtrl', roleEditCtrl);

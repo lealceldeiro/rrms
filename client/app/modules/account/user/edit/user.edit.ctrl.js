@@ -6,7 +6,7 @@
 
 (function () {
 
-    var f = function (indexSrv, userSrv, navigationSrv, ROUTE, systemSrv, notificationSrv, valueSrv, roleSrv) {
+    var f = function (indexSrv, userSrv, navigationSrv, ROUTE, systemSrv, notificationSrv, valueSrv, roleSrv, blockSrv) {
         var vm = this;
         const keyP = 'USER_EDIT';
 
@@ -77,6 +77,7 @@
 
         function fnSave(form) {
             if (form && form.$valid) {
+                blockSrv.block();
                 var params = {
                     username : vm.wizard.entity.username,
                     name : vm.wizard.entity.name,
@@ -91,6 +92,7 @@
 
                 userSrv.save(params, vm.id).then(
                     function (data) {
+                        blockSrv.unBlock();
                         var e = systemSrv.eval(data, fnKey, true, true);
                         if (e) {
                             fnCancel();
@@ -150,7 +152,8 @@
         }
     };
 
-    f.$inject = ['indexSrv', 'userSrv', 'navigationSrv', 'ROUTE', 'systemSrv', 'notificationSrv', 'valueSrv', 'roleSrv'];
+    f.$inject = ['indexSrv', 'userSrv', 'navigationSrv', 'ROUTE', 'systemSrv', 'notificationSrv', 'valueSrv', 'roleSrv',
+        'blockSrv'];
 
     angular.module('rrms')
         .controller('userEditCtrl', f);
