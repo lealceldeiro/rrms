@@ -42,17 +42,16 @@
     </tbody>
 </table>
 
-<nav class="text-center">
+<nav class="text-center" data-ng-show="!vm.roles.loading && vm.roles.all.length">
     <dir-pagination-controls
             pagination-id="roleList"
             on-page-change="vm.changePage(newPageNumber)"
             max-size="pc.getMaxLinks()"
     >
     </dir-pagination-controls>
-
-    <div data-ng-hide="!vm.roles.loading">
-        <div class="rrms-screen-loader" data-screen-type="2">
-        </div>
-    </div>
-
 </nav>
+
+<div data-ng-hide="!vm.roles.loading">
+    <div class="rrms-screen-loader" data-screen-type="2">
+    </div>
+</div>

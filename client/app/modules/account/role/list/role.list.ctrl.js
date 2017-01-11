@@ -6,7 +6,7 @@
 
 (function () {
 
-    var roleListCtrl = function (indexSrv, systemSrv, roleSrv, navigationSrv, paginationSrv, ROUTE, searchSrv) {
+    var roleListCtrl = function (indexSrv, systemSrv, roleSrv, navigationSrv, paginationSrv, ROUTE, searchSrv, blockSrv) {
         var vm = this;
         const keyP = 'ROLE_LIST';
 
@@ -41,11 +41,11 @@
             var max = paginationSrv.getItemsPerPage();
 
             var fnKey = keyP + "fnSearch";
-            vm.wizard.roles.loading = true;
+            blockSrv.setIsLoading(vm.wizard.roles, true);
             roleSrv.search(offset, max).then(
                 function (data) {
                     var e = systemSrv.eval(data, fnKey, false, true);
-                    vm.wizard.roles.loading = false;
+                    blockSrv.setIsLoading(vm.wizard.roles);
                     if (e) {
                         paginationSrv.setTotalItems(systemSrv.getTotal(fnKey));
                         var it = systemSrv.getItems(fnKey);
@@ -54,7 +54,8 @@
                         }
                     }
                 }
-            );
+            )
+
         }
 
         function fnEdit(id) {
@@ -96,7 +97,8 @@
 
     };
 
-    roleListCtrl.$inject = ['indexSrv', 'systemSrv', 'roleSrv', 'navigationSrv', 'paginationSrv', 'ROUTE', 'searchSrv'];
+    roleListCtrl.$inject = ['indexSrv', 'systemSrv', 'roleSrv', 'navigationSrv', 'paginationSrv', 'ROUTE', 'searchSrv',
+        'blockSrv'];
 
     angular.module('rrms')
         .controller('roleListCtrl', roleListCtrl);

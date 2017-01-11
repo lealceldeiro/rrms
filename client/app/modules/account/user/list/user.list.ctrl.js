@@ -6,7 +6,7 @@
 
 (function () {
 
-    var f = function (indexSrv, systemSrv, userSrv, navigationSrv, paginationSrv, ROUTE, searchSrv) {
+    var f = function (indexSrv, systemSrv, userSrv, navigationSrv, paginationSrv, ROUTE, searchSrv, blockSrv) {
         var vm = this;
         const keyP = 'USER_LIST';
 
@@ -42,11 +42,11 @@
 
             var fnKey = keyP + "fnSearch";
 
-            vm.wizard.entities.loading = true;
+            blockSrv.setIsLoading(vm.wizard.entities, true);
             userSrv.search(offset, max).then(
                 function (data) {
                     var e = systemSrv.eval(data, fnKey, false, true);
-                    vm.wizard.entities.loading = false;
+                    blockSrv.setIsLoading(vm.wizard.entities);
                     if (e) {
                         paginationSrv.setTotalItems(systemSrv.getTotal(fnKey));
                         var it = systemSrv.getItems(fnKey);
@@ -97,7 +97,7 @@
 
     };
 
-    f.$inject = ['indexSrv', 'systemSrv', 'userSrv', 'navigationSrv', 'paginationSrv', 'ROUTE', 'searchSrv'];
+    f.$inject = ['indexSrv', 'systemSrv', 'userSrv', 'navigationSrv', 'paginationSrv', 'ROUTE', 'searchSrv', 'blockSrv'];
 
     angular.module('rrms')
         .controller('userListCtrl', f);
