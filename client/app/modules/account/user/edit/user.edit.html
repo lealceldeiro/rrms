@@ -59,8 +59,7 @@
                         </ui-select-match>
                         <ui-select-choices repeat="item in vm.roles.all"
                                            refresh="vm.searchRoles($select.search)"
-                                           refresh-delay="500"
-                                           minimum-input-length="2">
+                                           refresh-delay="500">
                             <span data-ng-bind="item.label"></span>
                             <br/>
                             <small>
