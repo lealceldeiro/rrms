@@ -9,18 +9,26 @@
         var f = function ($timeout) {
             var self = this;
 
-            var timer;
+            var timer, miniTimer;
 
             var blocked = false;
 
             self.service = {
                 block: fnBlock,
                 unBlock: fnUnBlock,
-                isBlocked: fnIsBlocked
+                isBlocked: fnIsBlocked,
+
+                setIsLoading: fnSetIsLoading
             };
 
             return self.service;
 
+            /**
+             * Blocks the entire screen with a loading image
+             * @param message Message to be shown
+             * @param instantly Whether the screen blocking should be done instantly or not. It is recommended to leave
+             * this parameters as <code>false</code>.
+             */
             function fnBlock(message, instantly) {
                 var t = 500;
                 if (instantly) {
@@ -31,9 +39,36 @@
                     blocked = true;
                 },t);
             }
+
+            /**
+             * Unblocks the entire screen from the loader image
+             */
             function fnUnBlock() {
                 $timeout.cancel(timer);
                 blocked = false;
+            }
+
+            /**
+             * Marks as loading or unloading an object element byb setting a property in it as "loading"
+             * <code>false</code> or <code>true</code>
+             * @param varToBeSet Var to be set as loading or not
+             * @param isLoading Whether the var should be blocked or unblocked
+             */
+            function fnSetIsLoading(varToBeSet, isLoading) {
+                if (angular.isDefined(varToBeSet)) {
+                    if (angular.isObject(varToBeSet) || angular.isArray(varToBeSet)) {
+                        $timeout.cancel(miniTimer);
+                        //if is unblock, do it immediately
+                        if (!isLoading) {
+                            varToBeSet['loading'] = false;
+                        }
+                        else{
+                            miniTimer = $timeout(function () {
+                                varToBeSet['loading'] = true;
+                            }, 500)
+                        }
+                    }
+                }
             }
 
             function fnIsBlocked() {
