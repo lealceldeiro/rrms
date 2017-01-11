@@ -9,19 +9,23 @@
     var f = function (ROUTE, indexSrv, userSrv, navigationSrv, notificationSrv, systemSrv) {
         var vm = this;
         const keyP = 'USER_VIEW';
+        var eid;
 
         vm.wizard = {
             entity: null,
 
             roles: {
                 itemsPerPage: 5,
-                total: 0
+                total: 0,
+                offset: 0
             },
 
             init: fnInit,
             cancel: fnCancel,
             edit: fnEdit,
-            remove: fnRemove
+            remove: fnRemove,
+
+            changePage: fnChangePage
         };
 
         vm.wizard.init();
@@ -44,8 +48,8 @@
         }
 
         function fnLoadData(id) {
+            eid = id;
             var fnKey = keyP + "fnLoadData1";
-            var fnKey2 = keyP + "fnLoadData2";
             //get info
             userSrv.show(id).then(
                 function (data) {
@@ -55,17 +59,7 @@
                     }
                 }
             );
-            vm.wizard.roles.loading = true;
-            userSrv.rolesByUser(id).then(
-                function (data) {
-                    vm.wizard.roles.loading = false;
-                    var e = systemSrv.eval(data, fnKey2, false, true);
-                    if (e) {
-                        vm.wizard.roles.all = systemSrv.getItems(fnKey2);
-                        vm.wizard.roles.total = systemSrv.getTotal(fnKey2);
-                    }
-                }
-            )
+            _loadRoles(id);
         }
 
         function fnRemove() {
@@ -86,6 +80,33 @@
 
         function fnEdit() {
             navigationSrv.goTo(ROUTE.USER_EDIT, ROUTE.USER_EDIT_PL, vm.id);
+        }
+
+        function _loadRoles(id) {
+            var fnKey2 = keyP + "_loadRoles";
+            var offset = vm.wizard.roles.offset;
+            var max = vm.wizard.roles.itemsPerPage;
+
+            vm.wizard.roles.loading = true;
+            userSrv.rolesByUser(id, offset, max).then(
+                function (data) {
+                    vm.wizard.roles.loading = false;
+                    var e = systemSrv.eval(data, fnKey2, false, true);
+                    if (e) {
+                        vm.wizard.roles.all = systemSrv.getItems(fnKey2);
+                        vm.wizard.roles.total = systemSrv.getTotal(fnKey2);
+                    }
+                }
+            )
+        }
+
+        function fnChangePage(newPageNumber) {
+            if (typeof newPageNumber == 'undefined' || newPageNumber < 1 || newPageNumber == null) {
+                newPageNumber = 1;
+            }
+            vm.wizard.roles.offset = (newPageNumber - 1) * vm.wizard.roles.itemsPerPage;
+
+            _loadRoles(eid);
         }
 
     };
