@@ -42,9 +42,11 @@
 
             var fnKey = keyP + "fnSearch";
 
+            vm.wizard.entities.loading = true;
             userSrv.search(offset, max).then(
                 function (data) {
                     var e = systemSrv.eval(data, fnKey, false, true);
+                    vm.wizard.entities.loading = false;
                     if (e) {
                         paginationSrv.setTotalItems(systemSrv.getTotal(fnKey));
                         var it = systemSrv.getItems(fnKey);

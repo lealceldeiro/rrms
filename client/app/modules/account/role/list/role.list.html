@@ -50,7 +50,7 @@
     >
     </dir-pagination-controls>
 
-    <div data-ng-hide="vm.roles.all && vm.roles.all.length">
+    <div data-ng-hide="!vm.roles.loading">
         <div class="rrms-screen-loader" data-screen-type="2">
         </div>
     </div>

@@ -41,10 +41,11 @@
             var max = paginationSrv.getItemsPerPage();
 
             var fnKey = keyP + "fnSearch";
-
+            vm.wizard.roles.loading = true;
             roleSrv.search(offset, max).then(
                 function (data) {
                     var e = systemSrv.eval(data, fnKey, false, true);
+                    vm.wizard.roles.loading = false;
                     if (e) {
                         paginationSrv.setTotalItems(systemSrv.getTotal(fnKey));
                         var it = systemSrv.getItems(fnKey);

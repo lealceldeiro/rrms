@@ -58,6 +58,7 @@
             vm.wizard.roles.loading = true;
             userSrv.rolesByUser(id).then(
                 function (data) {
+                    vm.wizard.roles.loading = false;
                     var e = systemSrv.eval(data, fnKey2, false, true);
                     if (e) {
                         vm.wizard.roles.all = systemSrv.getItems(fnKey2);
