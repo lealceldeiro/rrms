@@ -18,7 +18,6 @@
                     return blockSrv.isBlocked();
                 },
                 function (newVal) {
-                    console.log(newVal);
                     vm.wizard.blocked = newVal
                 }
             );

@@ -6,8 +6,10 @@
     function () {
         'use strict';
 
-        var f = function () {
+        var f = function ($timeout) {
             var self = this;
+
+            var timer;
 
             var blocked = false;
 
@@ -19,10 +21,18 @@
 
             return self.service;
 
-            function fnBlock(message) {
-                blocked = true;
+            function fnBlock(message, instantly) {
+                var t = 500;
+                if (instantly) {
+                    t = 0;
+                }
+                $timeout.cancel(timer);
+                timer = $timeout(function () {
+                    blocked = true;
+                },t);
             }
             function fnUnBlock() {
+                $timeout.cancel(timer);
                 blocked = false;
             }
 
@@ -31,7 +41,7 @@
             }
         };
 
-        f.$inject = [];
+        f.$inject = ['$timeout'];
 
         angular.module('rrms')
             .service('blockSrv', f);
