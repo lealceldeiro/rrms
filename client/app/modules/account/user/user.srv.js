@@ -25,24 +25,31 @@ var f = function (systemSrv, $http, valueSrv, dataSrv, baseSrv) {
             params += params === ""? "?max=" + max : "&max=" + max;
         }
 
-        var def = $http.get(url + 'search' + params);
+        var def = $http.get(url + params);
         return baseSrv.resolveDeferred(def);
     }
 
     function fnRemove(id) {
-        var def = $http.delete(url + 'delete/' + id);
+        var def = $http.delete(url + id);
         return baseSrv.resolveDeferred(def);
     }
 
     function fnShow(id) {
-        var def = $http.get(url + "show/" + id);
+        var def = $http.get(url + id);
         return baseSrv.resolveDeferred(def);
     }
 
     function fnSave(params, id) {
-        var murl = url + 'save' + (typeof id !== 'undefined' && id != null && !isNaN(id) ? '/' + id : '');
+        var mUrl = url;
 
-        var def = $http.post(murl, params);
+        if (typeof id !== 'undefined' && id != null && !isNaN(id)) {//update?
+            mUrl = url + 'update/' + id ;
+            var def = $http.post(mUrl, params);
+        }
+        else {//create?
+            def = $http.put(mUrl, params);
+        }
+
         return baseSrv.resolveDeferred(def);
     }
 
@@ -52,7 +59,7 @@ var f = function (systemSrv, $http, valueSrv, dataSrv, baseSrv) {
             params += params === ""? "?max=" + max : "&max=" + max;
         }
 
-        var def = $http.get(url + 'roles/' + id + params);
+        var def = $http.get(url + id + 'roles/' + params);
         return baseSrv.resolveDeferred(def);
     }
 };

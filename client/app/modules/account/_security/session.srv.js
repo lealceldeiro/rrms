@@ -4,22 +4,38 @@
 
 'use strict';
 
-var sessionSrv = function () {
-    var vm = this;
+var sessionSrv = function (baseSrv, systemSrv, localStorageService) {
+    var self = this;
+    const lsPrefix = "gMS_localS_";
+
     var sToken = null;
     var currentUser = null;
 
-    vm.service = {
+    var url = systemSrv.APIUrl;
+    var userVar = systemSrv.userAuthFlag;
+    var passVar = systemSrv.userAuthFlag;
+
+    self.service = {
         isLogged: fnIsLogged,
         securityToken: fnSecurityToken,
         setSecurityToken: fnSetSecurityToken,
         setCurrentUser: fnSetCurrentUser,
-        getCurrentUser: fnGetCurrentUser
+        getCurrentUser: fnGetCurrentUser,
+
+        login: fnDoLogin
     };
 
-    return vm.service;
+    return self.service;
+
+    function fnDoLogin(username, password) {
+        var data = {};
+        data[userVar] = username;
+        data[passVar] = password;
+        return baseSrv.resolveDeferred($http.post(url + "login", data));
+    }
 
     function fnIsLogged() {
+        sToken = localStorageService.get(lsPrefix + "AuthToken");
         return (typeof sToken !== 'undefined' && sToken !== null);
     }
 
@@ -29,6 +45,7 @@ var sessionSrv = function () {
 
     function fnSetSecurityToken(token) {
         sToken = token;
+        localStorageService.set(lsPrefix + "AuthToken", token)
     }
 
     function fnSetCurrentUser(u) {
@@ -40,7 +57,7 @@ var sessionSrv = function () {
 
 };
 
-sessionSrv.$inject = [];
+sessionSrv.$inject = ['baseSrv', 'systemSrv', 'localStorageService'];
 
 angular.module('rrms')
     .service('sessionSrv', sessionSrv);

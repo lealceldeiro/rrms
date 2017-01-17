@@ -6,8 +6,9 @@
 
 (function () {
 
-    var loginCtrl = function (indexSrv, sessionSrv, navigationSrv) {
+    var loginCtrl = function (indexSrv, sessionSrv, navigationSrv, systemSrv) {
         var vm = this;
+        const keyP = 'LOGIN';
 
         vm.wizard = {
 
@@ -30,9 +31,19 @@
 
         function fnLogin(form) {
             if (form && form.$valid) {
-                sessionSrv.setCurrentUser({email: vm.wizard.emailOrUsername});//todo js
-                sessionSrv.setSecurityToken('axy');
-                navigationSrv.goTo('/main');
+                var fnKey = keyP + "fnLogin";
+                sessionSrv.login(vm.wizard.emailOrUsername, vm.wizard.password).then(
+                    function (data) {
+                        var e = systemSrv.eval(data, fnKey, false, false);
+                        if (e) {
+                            sessionSrv.setCurrentUser({
+                                username: systemSrv.getAuthUser(fnKey)
+                            });
+                            sessionSrv.setSecurityToken(systemSrv.getAuthToken(fnKey));
+                            navigationSrv.goTo('/main');
+                        }
+                    }
+                );
             }
         }
 
@@ -43,7 +54,7 @@
 
     };
 
-    loginCtrl.$inject = ['indexSrv', 'sessionSrv', 'navigationSrv'];
+    loginCtrl.$inject = ['indexSrv', 'sessionSrv', 'navigationSrv', 'systemSrv'];
 
     angular.module('rrms')
         .controller('loginCtrl', loginCtrl);

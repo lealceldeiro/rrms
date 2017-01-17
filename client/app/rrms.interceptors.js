@@ -7,9 +7,14 @@
 var envValidityChecker = function (__env, $location, ROUTE) {
 
     function request(req) {
+        //VALIDITY OF CONFIGURATIONS
         if (!__env.found) { //env file not found
             $location.path(ROUTE.CONFIG_ERROR);
         }
+        //token auth
+        //todo: get headers and put custom header for sending the token along with request
+
+
         return req
     }
     

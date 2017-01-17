@@ -21,6 +21,7 @@ var roleSrv = function (systemSrv, $http, valueSrv, dataSrv, baseSrv) {
      * Search for role
      * @param offset offset for paging
      * @param max max offset for paging
+     * @param criteria criteria for searching
      * @returns {*} Promise
      */
     function fnSearch(offset, max, criteria) {
@@ -32,24 +33,30 @@ var roleSrv = function (systemSrv, $http, valueSrv, dataSrv, baseSrv) {
             params += params === ""? "?q=" + criteria : "&q=" + criteria;
         }
 
-        var def =  $http.get(rolesUrl + 'search' + params);
+        var def =  $http.get(rolesUrl + params);
         return baseSrv.resolveDeferred(def);
     }
 
     function fnRemove(id) {
-        var def = $http.delete(rolesUrl + 'delete/' + id);
+        var def = $http.delete(rolesUrl + id);
         return baseSrv.resolveDeferred(def);
     }
 
     function fnShow(id) {
-        var def = $http.get(rolesUrl + "show/" + id);
+        var def = $http.get(rolesUrl + id);
         return baseSrv.resolveDeferred(def);
     }
 
     function fnSave(params, id) {
-        var url = rolesUrl + 'save' + (typeof id !== 'undefined' && id != null && !isNaN(id) ? '/' + id : '');
+        var url = rolesUrl;
 
-        var def = $http.post(url, params);
+        if (typeof id !== 'undefined' && id != null && !isNaN(id)) {//update?
+            url = rolesUrl + 'update/' + id ;
+            var def = $http.post(url, params);
+        }
+        else {//create?
+            def = $http.put(url, params);
+        }
         return baseSrv.resolveDeferred(def);
     }
 };

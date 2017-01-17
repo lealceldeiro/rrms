@@ -54,14 +54,21 @@
 
             headerAuthTokenFlag:     '<your_api_header_token_flag>',      // [optional] - Variable for sending the auth token in the request header
                                                                           // [default]  - "Authorization"
+
             headerStartAuthTokenFlag:'<your_api_header_start_token_flag>',// [optional] - Variable which represents the string at the beginning of the auth token
                                                                           // [default]  - "Bearer " - Note the space at the end of the text
+
+            itemTokenFlag:           '<your_api_item_token_flag>',        // [optional] - Variable in which your api response will indicate the access token
+                                                                          // [default]  - "access_token"
 
             userAuthFlag:            '<your_api_user_login_flag>',        // [optional] - Variable for sending the auth username in the request header and sending the request when do login
                                                                           // [default]  - "usrnm"
 
-            passwordAuthFlag:        '<your_api_password_login_flag>'     // [optional] - Variable for sending the auth password in the request header and sending the request when do login
+            passwordAuthFlag:        '<your_api_password_login_flag>',     // [optional] - Variable for sending the auth password in the request header and sending the request when do login
                                                                           // [default]  - "pswrd"
+
+            userAuthResponseFlag:    '<your_user_auth_response_flag>'     // [optional] - Variable for sending the auth password in the request header and sending the request when do login
+                                                                          // [default]  - "username"
 
 
             /**

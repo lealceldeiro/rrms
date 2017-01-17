@@ -16,15 +16,15 @@
         }
     }
 
-    var config = function ($logProvider, __env) {
-        $logProvider.debugEnabled(__env.enableDebug);
+    var config = function ($logProvider) {
+        $logProvider.debugEnabled(true);
     };
 
     var run = function () {
 
     };
 
-    config.$inject = ['$logProvider', '__env'];
+    config.$inject = ['$logProvider'];
     run.$inject = [];
 
     angular.module
@@ -33,7 +33,8 @@
             'ngRoute',                                          //routing
             'ngSanitize',                                       //ngSanitize module (for ui-select)
             'ui.select',                                        //ui-select component for select options
-            'angularUtils.directives.dirPagination'             //pagination
+            'angularUtils.directives.dirPagination',            //pagination
+            'LocalStorageModule'                                //local storage module, used for instance for storing auth token
         ]
     )
         .constant('__env', env)         // Register environment in AngularJS as constant
