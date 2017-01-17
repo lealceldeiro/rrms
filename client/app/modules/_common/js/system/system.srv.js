@@ -9,13 +9,9 @@
             var self = this;
 
             self.service = {
-
-                // accessible from outside, but not recommended to do so, internal service usage
-                urlBase:
-                    (__env.baseUrl !== '<your_app_base_url>')? __env.baseUrl || '/' : '/',
                 //api
                 APIUrl:
-                    (__env.api.Url !== '<your_api_base_url>')? __env.api.Url || '' : '',
+                    (__env.api.Url !== '<your_api_base_url>')? __env.api.Url || '/api/' : '/api/',
                 successFlag:
                     (__env.api.successFlag !== '<your_api_success_flag>')? __env.api.successFlag || 'success' : 'success',
                 errorMessageFlag:
@@ -29,11 +25,33 @@
                 itemFlag:
                     (__env.api.itemFlag !== '<your_api_item_flag>')? __env.api.itemFlag || 'item' : 'item',
 
+                //auth
+                headerAuthToken:
+                    (__env.api.headerAuthTokenFlag !== '<your_api_header_token_flag>')? __env.api.headerAuthTokenFlag
+                        || 'Authorization' : 'Authorization',
+                headerStartAuthTokenFlag:
+                    (__env.api.headerStartAuthTokenFlag !== '<your_api_header_start_token_flag>')? __env.api.headerStartAuthTokenFlag
+                        || 'Bearer ' : 'Bearer ', //important the space at the end of the text
+                itemTokenFlag:
+                    (__env.api.itemTokenFlag !== '<your_api_item_token_flag>')? __env.api.itemTokenFlag
+                        || 'access_token' : 'access_token',
+                userAuthFlag:
+                    (__env.api.userAuthFlag !== '<your_api_user_login_flag>')? __env.api.userAuthFlag
+                        || 'usrnm' : 'usrnm',
+                passwordAuthFlag:
+                    (__env.api.passwordAuthFlag !== '<your_api_password_login_flag>')? __env.api.passwordAuthFlag
+                        || 'pswrd' : 'pswrd',
+                userAuthResponseFlag:
+                    (__env.api.userAuthResponseFlag !== '<your_user_auth_response_flag>')? __env.api.userAuthResponseFlag
+                        || 'username' : 'username',
+
                 // accessible from outside, but not recommended to do so, internal service usage
                 apiMessage: {},
                 apiTotalCount: {},
                 apiItems: {},
                 apiItem: {},
+                userAuthResponse: {},
+                itemToken: {},
 
 
                 eval: fnEvaluateResponseData,
@@ -41,7 +59,9 @@
                 getMessage: fnGetMessage,
                 getTotal: fnGetTotalCount,
                 getItems: fnGetItems,
-                getItem: fnGetItem
+                getItem: fnGetItem,
+                getAuthToken: fnGetAuthToken,
+                getAuthUser: fnGetAuthUser
             };
 
             return self.service;
@@ -66,6 +86,8 @@
                         self.service.apiTotalCount[storeKey] = data[self.service.totalCountFlag];
                         self.service.apiItems[storeKey] = data[self.service.itemsFlag];
                         self.service.apiItem[storeKey] = data[self.service.itemFlag];
+                        self.service.userAuthResponse[storeKey] = data[self.service.userAuthResponseFlag];
+                        self.service.itemToken[storeKey] = data[self.service.itemTokenFlag];
                         if (notifyOnSuccess) {
                             notificationSrv.showNotif(self.service.apiMessage[storeKey], notificationSrv.utilText.titleSuccess.es,
                                 notificationSrv.type.SUCCESS);
@@ -105,6 +127,16 @@
             function fnGetItems(key) {
                 validate(key);
                 return self.service.apiItems[key]
+            }
+
+            function fnGetAuthUser(key) {
+                validate(key);
+                return self.service.userAuthResponse[key]
+            }
+
+            function fnGetAuthToken(key) {
+                validate(key);
+                return self.service.itemToken[key]
             }
 
             function fnGetItem(key) {
