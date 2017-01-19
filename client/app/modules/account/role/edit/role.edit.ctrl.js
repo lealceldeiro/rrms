@@ -55,7 +55,7 @@
                             vm.wizard.role = {
                                 label: it.label,
                                 description: it.description,
-                                active: it.active
+                                enabled: it.enabled
                             }
                         }
                     }
@@ -69,7 +69,7 @@
                 var params = {
                     label : vm.wizard.role.label,
                     description : vm.wizard.role.description,
-                    active : vm.wizard.role.active
+                    enabled : vm.wizard.role.enabled
                 };
 
                 var fnKey = keyP + "fnSave";

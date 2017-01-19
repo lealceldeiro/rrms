@@ -50,7 +50,7 @@
                             vm.wizard.role = {
                                 label: it.label,
                                 description: it.description,
-                                active: it.active
+                                enabled: it.enabled
                             }
                         }
                     }

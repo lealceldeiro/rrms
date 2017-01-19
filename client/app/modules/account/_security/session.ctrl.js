@@ -6,7 +6,7 @@
 
 (function () {
 
-    var sessionCtrl = function (sessionSrv, navigationSrv) {
+    var sessionCtrl = function (sessionSrv, navigationSrv, ROUTE, loginSrv) {
         var vm = this;
 
         vm.wizard = {
@@ -28,8 +28,17 @@
         }
 
         function fnLogout() {
-            sessionSrv.setSecurityToken(null);
-            navigationSrv.goTo('/login');
+            sessionSrv.clearSession();
+            navigationSrv.goTo(ROUTE.LOGIN);
+
+            /*loginSrv.logout().then(
+                function (data) {
+                    var e = true;//todo
+                    if (e) {
+                    }
+                }
+            );
+            */
         }
 
         function fnIsLogged() {
@@ -37,7 +46,7 @@
         }
 
         function fnUser() {
-            return sessionSrv.getCurrentUser();
+            return sessionSrv.currentUser();
         }
 
         function goTo(r) {
@@ -46,7 +55,7 @@
 
     };
 
-    sessionCtrl.$inject = ['sessionSrv', 'navigationSrv'];
+    sessionCtrl.$inject = ['sessionSrv', 'navigationSrv', 'ROUTE', 'loginSrv'];
 
     angular.module('rrms')
         .controller('sessionCtrl', sessionCtrl);

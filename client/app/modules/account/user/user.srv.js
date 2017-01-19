@@ -43,7 +43,7 @@ var f = function (systemSrv, $http, valueSrv, dataSrv, baseSrv) {
         var mUrl = url;
 
         if (typeof id !== 'undefined' && id != null && !isNaN(id)) {//update?
-            mUrl = url + 'update/' + id ;
+            mUrl = url + id ;
             var def = $http.post(mUrl, params);
         }
         else {//create?
@@ -59,7 +59,7 @@ var f = function (systemSrv, $http, valueSrv, dataSrv, baseSrv) {
             params += params === ""? "?max=" + max : "&max=" + max;
         }
 
-        var def = $http.get(url + id + 'roles/' + params);
+        var def = $http.get(url + id + '/roles/' + params);
         return baseSrv.resolveDeferred(def);
     }
 };

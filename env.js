@@ -29,46 +29,55 @@
 
 
 
-            Url:                     '<your_api_base_url>',               // [optional] - url for requesting services
-                                                                          // [default]  - "/api/"
+            Url:                    'http://localhost:8085/rrmsrest/api/',               // - url for requesting services
+                                                                                    // [default]  - "http://127.0.0.1/api/"
 
-            successFlag:             '<your_api_success_flag>',           // [optional] - Variable in which your api response will indicate a successful operation
-                                                                          // [default]  - "success"
+            successFlag:                    '<your_api_success_flag>',              // - Variable in which your api response will indicate a successful operation
+                                                                                    // [default]  - "success"
 
-            errorMessageFlag:        '<your_api_error_message_flag>',     // [optional] - Variable in which your api response will indicate an error message
-                                                                          // [default]  - "errorMessage"
+            errorMessageFlag:               '<your_api_error_message_flag>',        // - Variable in which your api response will indicate an error message
+                                                                                    // [default]  - "errorMessage"
 
-            successMessageFlag:      '<your_api_success_message_flag>',   // [optional] - Variable in which your api response will indicate a success message
-                                                                          // [default]  - "successMessage"
+            successMessageFlag:             '<your_api_success_message_flag>',      // - Variable in which your api response will indicate a success message
+                                                                                    // [default]  - "successMessage"
 
-            totalCountFlag:          '<your_api_total_count_flag>',       // [optional] - Variable in which your api response will indicate a total count of elements
-                                                                          // [default]  - "total"
+            totalCountFlag:                 '<your_api_total_count_flag>',          // - Variable in which your api response will indicate a total count of elements
+                                                                                    // [default]  - "total"
 
-            itemsFlag:               '<your_api_items_flag>',             // [optional] - Variable in which your api response will indicate a list of items
-                                                                          // [default]  - "items"
+            itemsFlag:                      '<your_api_items_flag>',                // - Variable in which your api response will indicate a list of items
+                                                                                    // [default]  - "items"
 
-            itemFlag:                '<your_api_item_flag>',              // [optional] - Variable in which your api response will indicate the item
-                                                                          // [default]  - "item"
+            itemFlag:                       '<your_api_item_flag>',                 // - Variable in which your api response will indicate the item
+                                                                                    // [default]  - "item"
 
             //related to authentication
 
-            headerAuthTokenFlag:     '<your_api_header_token_flag>',      // [optional] - Variable for sending the auth token in the request header
-                                                                          // [default]  - "Authorization"
+            headerAuthTokenFlag:            '<your_api_header_token_flag>',         // - Variable for sending the auth token in the request header
+                                                                                    // [default]  - "Authorization"
 
-            headerStartAuthTokenFlag:'<your_api_header_start_token_flag>',// [optional] - Variable which represents the string at the beginning of the auth token
-                                                                          // [default]  - "Bearer " - Note the space at the end of the text
+            headerUnAuthTokenFlag:          '<your_api_header_unAuth_flag>',        // - Variable for sending the auth token in the request header for loggin out
+                                                                                    // [default]  - "X-Auth-Token"
 
-            itemTokenFlag:           '<your_api_item_token_flag>',        // [optional] - Variable in which your api response will indicate the access token
-                                                                          // [default]  - "access_token"
+            headerAuthBearerFlag:           '<your_api_header_auth_bearer_flag>',   // - Variable which represents the string at the beginning of the auth token (bearer type of the token)
+                                                                                    // [default]  - "Bearer " - Note the space at the end of the text
 
-            userAuthFlag:            '<your_api_user_login_flag>',        // [optional] - Variable for sending the auth username in the request header and sending the request when do login
-                                                                          // [default]  - "usrnm"
+            itemTokenFlag:                  '<your_api_item_token_flag>',           // - Variable in which your api response will indicate the access token
+                                                                                    // [default]  - "access_token"
 
-            passwordAuthFlag:        '<your_api_password_login_flag>',     // [optional] - Variable for sending the auth password in the request header and sending the request when do login
-                                                                          // [default]  - "pswrd"
+            itemRefreshTokenFlag:           '<your_api_item_refresh_token_flag>',   // - Variable in which your api response will indicate the access refresh token
+                                                                                    // [default]  - "refresh_token"
 
-            userAuthResponseFlag:    '<your_user_auth_response_flag>'     // [optional] - Variable for sending the auth password in the request header and sending the request when do login
-                                                                          // [default]  - "username"
+            userAuthFlag:                   '<your_api_user_login_flag>',           // - Variable for sending the auth username in the request header and sending the request when do login
+                                                                                    // [default]  - "usrnm"
+
+            passwordAuthFlag:               '<your_api_password_login_flag>',       // - Variable for sending the auth password in the request header and sending the request when do login
+                                                                                    // [default]  - "pswrd"
+
+            userAuthResponseFlag:           '<your_user_auth_response_flag>',       // - Variable for sending the auth password in the request header and sending the request when do login
+                                                                                    // [default]  - "username"
+
+            unauthorizedResponseCodeFlag:   '<your_user_auth_response_flag>'        // - Response code sent by server when request is unauthorized
+                                                                                    // [default]  - "401"
 
 
             /**

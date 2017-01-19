@@ -53,6 +53,14 @@ var notificationSrv = function ($timeout) {
             "mustSelectElement": {
                 en: "You must select an element in order to proceed",
                 es: "Usted debe seleccionar un elemento para continuar"
+            },
+            "unauthorized":{
+                en: "You aren't authorized to do this :(",
+                es: "No estás autorizado a hacer esto :("
+            },
+            "userAndPasswordIncorrect":{
+                en: "The user or password provided by you are incorrect :(",
+                es: "El usuario o la contraseña proporcionados son incorrectos :("
             }
         },
 
@@ -79,7 +87,7 @@ var notificationSrv = function ($timeout) {
         }
 
         //div
-        const notif = angular.element('<div class="notification alert alert-dismissible fade in" role="alert" id="notifBadge">');
+        const notif = angular.element('<div class="text-center notification alert alert-dismissible fade in" role="alert" id="notifBadge">');
         //close button
         notif.append(
             angular.element(

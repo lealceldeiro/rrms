@@ -18,10 +18,10 @@
                 if (deferred.then) {
                     return deferred.then(
                         function (res) {
-                            return res.data;
+                            return res ? res.data : null;
                         },
                         function (resOnErr) {
-                            return resOnErr.data;
+                            return resOnErr ? resOnErr.data : null;
                         }
                     )
                 }

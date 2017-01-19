@@ -6,9 +6,8 @@
 
 (function () {
 
-    var loginCtrl = function (indexSrv, sessionSrv, navigationSrv, systemSrv) {
+    var loginCtrl = function (indexSrv, sessionSrv, navigationSrv, systemSrv, loginSrv, ROUTE) {
         var vm = this;
-        const keyP = 'LOGIN';
 
         vm.wizard = {
 
@@ -16,8 +15,7 @@
             password: null,
 
             init: fnInit,
-            login: fnLogin,
-            logout: fnLogout
+            login: fnLogin
         };
 
         vm.wizard.init();
@@ -31,30 +29,25 @@
 
         function fnLogin(form) {
             if (form && form.$valid) {
-                var fnKey = keyP + "fnLogin";
-                sessionSrv.login(vm.wizard.emailOrUsername, vm.wizard.password).then(
+                loginSrv.login(vm.wizard.emailOrUsername, vm.wizard.password).then(
                     function (data) {
-                        var e = systemSrv.eval(data, fnKey, false, false);
+                        var e = systemSrv.evalAuth(data, false, false);
                         if (e) {
                             sessionSrv.setCurrentUser({
-                                username: systemSrv.getAuthUser(fnKey)
+                                username: systemSrv.getAuthUser()
                             });
-                            sessionSrv.setSecurityToken(systemSrv.getAuthToken(fnKey));
-                            navigationSrv.goTo('/main');
+                            sessionSrv.setSecurityToken(systemSrv.getAuthToken());
+                            sessionSrv.setSecurityRefreshToken(systemSrv.getAuthRefreshToken());
+                            navigationSrv.goTo(ROUTE.MAIN);
                         }
                     }
                 );
             }
         }
 
-        function fnLogout() {
-            sessionSrv.setSecurityToken(null);
-            navigationSrv.goTo('/login');
-        }
-
     };
 
-    loginCtrl.$inject = ['indexSrv', 'sessionSrv', 'navigationSrv', 'systemSrv'];
+    loginCtrl.$inject = ['indexSrv', 'sessionSrv', 'navigationSrv', 'systemSrv', 'loginSrv', 'ROUTE'];
 
     angular.module('rrms')
         .controller('loginCtrl', loginCtrl);

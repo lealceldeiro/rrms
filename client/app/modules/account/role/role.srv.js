@@ -51,7 +51,7 @@ var roleSrv = function (systemSrv, $http, valueSrv, dataSrv, baseSrv) {
         var url = rolesUrl;
 
         if (typeof id !== 'undefined' && id != null && !isNaN(id)) {//update?
-            url = rolesUrl + 'update/' + id ;
+            url = rolesUrl + id ;
             var def = $http.post(url, params);
         }
         else {//create?
