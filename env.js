@@ -29,10 +29,10 @@
 
 
 
-            BaseUrl:                    'http://localhost:8085/rrmsrest',          // - server base url for requesting services
+            BaseUrl:                        '<your_api_base_url>',                  // - server base url for requesting services
                                                                                     // [default]  - "http://127.0.0.1"
 
-            ApiRelativeUrl:                 '/api/',                                 // - relative url for requesting services via api
+            ApiRelativeUrl:                 '<your_api_relative_url>',                                 // - relative url for requesting services via api
                                                                                     // [default]  - "/api/"
 
             successFlag:                    '<your_api_success_flag>',              // - Variable in which your api response will indicate a successful operation
