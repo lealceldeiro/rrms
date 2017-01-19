@@ -10,8 +10,10 @@
 
             self.service = {
                 //api
-                APIUrl:
-                    (__env.api.Url !== '<your_api_base_url>')? __env.api.Url || 'http://127.0.0.1/api' : 'http://127.0.0.1/api',
+                BaseUrl:
+                    (__env.api.BaseUrl !== '<your_api_base_url>')? __env.api.BaseUrl || 'http://127.0.0.1' : 'http://127.0.0.1',
+                ApiUrl:
+                    (__env.api.ApiRelativeUrl !== '<your_api_relative_url>')? __env.api.ApiRelativeUrl || '/api/' : '/api/',
                 successFlag:
                     (__env.api.successFlag !== '<your_api_success_flag>')? __env.api.successFlag || 'success' : 'success',
                 errorMessageFlag:
@@ -41,6 +43,9 @@
                 itemRefreshTokenFlag:
                     (__env.api.itemRefreshTokenFlag !== '<your_api_item_refresh_token_flag>')? __env.api.itemRefreshTokenFlag
                         || 'refresh_token' : 'refresh_token',
+                newTokenRequesterFlag:
+                    (__env.api.newTokenRequesterFlag !== '<your_api_new_token_requester_flag>')? __env.api.newTokenRequesterFlag
+                        || 'grant_type' : 'grant_type',
                 userAuthFlag:
                     (__env.api.userAuthFlag !== '<your_api_user_login_flag>')? __env.api.userAuthFlag
                         || 'usrnm' : 'usrnm',
@@ -75,6 +80,8 @@
                 getAuthRefreshToken: fnGetAuthRefreshToken,
                 getAuthUser: fnGetAuthUser
             };
+
+            self.service.APIAbsoluteUrl = self.service.BaseUrl + self.service.ApiUrl;
 
             return self.service;
 

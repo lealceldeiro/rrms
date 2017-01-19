@@ -25,6 +25,45 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="form-group">
+                <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3">Permissions</label>
+                <div class="mrg-l-m-3 col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                    <div ng-show="vm.permissions.total">
+                        <table class="table table-responsive table-striped table-bordered" id="rolePermissionsTable">
+                            <thead>
+                            </thead>
+                            <tbody>
+                            <tr data-dir-paginate="it in vm.permissions.all | itemsPerPage:vm.permissions.itemsPerPage"
+                                data-total-items="vm.permissions.total"
+                                data-pagination-id="rolePermissionsId">
+                                <td><span data-ng-bind="it.label"></span></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <nav class="text-center">
+                            <dir-pagination-controls
+                                    pagination-id="rolePermissionsId"
+                                    on-page-change="vm.changePage(newPageNumber)"
+                                    max-size="5"
+                            >
+                            </dir-pagination-controls>
+                        </nav>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" data-ng-show="vm.permissions.loading">
+                        <div class="rrms-screen-loader" data-screen-type="2">
+                        </div>
+                    </div>
+
+                    <div ng-hide=" vm.permissions.loading || vm.permissions.total">
+                        <div class="rrmsAlert" data-type="warning"
+                             data-message="No hay permisos asociados a este rol todavía"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
         <div class="form-action">
             <hr>

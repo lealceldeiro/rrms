@@ -6,7 +6,7 @@
 
 var f = function (systemSrv, $http, valueSrv, dataSrv, baseSrv) {
     var self = this;
-    var url = systemSrv.APIUrl + 'user/';
+    var url = systemSrv.APIAbsoluteUrl + 'user/';
 
     self.service = {
         search: fnSearch,

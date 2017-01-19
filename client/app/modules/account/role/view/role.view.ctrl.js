@@ -13,10 +13,19 @@
         vm.wizard = {
             role: null,
 
+
+            permissions: {
+                itemsPerPage: 5,
+                total: 0,
+                offset: 0
+            },
+
             init: fnInit,
             cancel: fnCancel,
             edit: fnEdit,
-            remove: fnRemove
+            remove: fnRemove,
+
+            changePage: fnChangePage
         };
 
         vm.wizard.init();
@@ -45,17 +54,12 @@
                 function (data) {
                     var e = systemSrv.eval(data, fnKey, false, true);
                     if (e) {
-                        var it = systemSrv.getItem(fnKey);
-                        if (it) {
-                            vm.wizard.role = {
-                                label: it.label,
-                                description: it.description,
-                                enabled: it.enabled
-                            }
-                        }
+                        vm.wizard.role = systemSrv.getItem(fnKey);
                     }
                 }
             );
+
+            _loadPermissions(id);
         }
 
         function fnRemove() {
@@ -76,6 +80,34 @@
 
         function fnEdit() {
             navigationSrv.goTo(ROUTE.ROLE_EDIT, ROUTE.ROLE_EDIT_PL, vm.id);
+        }
+
+        function _loadPermissions(id) {
+            var fnKey2 = keyP + "_loadPermissions";
+            var offset = vm.wizard.permissions.offset;
+            var max = vm.wizard.permissions.itemsPerPage;
+
+            vm.wizard.permissions.loading = true;
+            roleSrv.permissionsByUser(id, offset, max).then(
+                function (data) {
+                    vm.wizard.permissions.loading = false;
+                    var e = systemSrv.eval(data, fnKey2, false, true);
+                    if (e) {
+                        vm.wizard.permissions.all = systemSrv.getItems(fnKey2);
+                        vm.wizard.permissions.total = systemSrv.getTotal(fnKey2);
+                    }
+                }
+            )
+        }
+
+
+        function fnChangePage(newPageNumber) {
+            if (typeof newPageNumber == 'undefined' || newPageNumber < 1 || newPageNumber == null) {
+                newPageNumber = 1;
+            }
+            vm.wizard.permissions.offset = (newPageNumber - 1) * vm.wizard.permissions.itemsPerPage;
+
+            _loadPermissions(vm.id);
         }
 
     };

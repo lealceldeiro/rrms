@@ -4,7 +4,7 @@
 
 'use strict';
 
-var f = function (__env, $location, ROUTE, sessionSrv, systemSrv, notificationSrv) {
+var f = function (__env, $location, ROUTE, sessionSrv, systemSrv, notificationSrv, $rootScope) {
 
     function request(req) {
         //VALIDITY OF CONFIGURATIONS
@@ -26,7 +26,11 @@ var f = function (__env, $location, ROUTE, sessionSrv, systemSrv, notificationSr
         if(rejection.status === systemSrv.unauthorizedResponseCodeFlag){
             notificationSrv.showNotif(notificationSrv.utilText.unauthorized.es,
                 notificationSrv.utilText.titleError.es, notificationSrv.type.ERROR);
-            //navigationSrv.goTo(ROUTE.MAIN);
+
+            if (sessionSrv.isLogged()) {
+                $rootScope.$broadcast('REFRESH_TOKEN');
+            }
+
         }
     }
 
@@ -41,7 +45,7 @@ var conf = function ($httpProvider) {
     $httpProvider['interceptors'].push('envValidityChecker');
 };
 
-f.$inject = ['__env', '$location', 'ROUTE', 'sessionSrv', 'systemSrv', 'notificationSrv'];
+f.$inject = ['__env', '$location', 'ROUTE', 'sessionSrv', 'systemSrv', 'notificationSrv', '$rootScope'];
 conf.$inject = ['$httpProvider'];
 
 angular

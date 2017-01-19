@@ -29,8 +29,11 @@
 
 
 
-            Url:                    'http://localhost:8085/rrmsrest/api/',               // - url for requesting services
-                                                                                    // [default]  - "http://127.0.0.1/api/"
+            BaseUrl:                    'http://localhost:8085/rrmsrest',          // - server base url for requesting services
+                                                                                    // [default]  - "http://127.0.0.1"
+
+            ApiRelativeUrl:                 '/api/',                                 // - relative url for requesting services via api
+                                                                                    // [default]  - "/api/"
 
             successFlag:                    '<your_api_success_flag>',              // - Variable in which your api response will indicate a successful operation
                                                                                     // [default]  - "success"
@@ -66,6 +69,9 @@
 
             itemRefreshTokenFlag:           '<your_api_item_refresh_token_flag>',   // - Variable in which your api response will indicate the access refresh token
                                                                                     // [default]  - "refresh_token"
+
+            newTokenRequesterFlag:          '<your_api_new_token_requester_flag>',  // - Variable in which you will indicate the name of the var for indicating the type for requesting a new token
+                                                                                    // [default]  - "grant_type"
 
             userAuthFlag:                   '<your_api_user_login_flag>',           // - Variable for sending the auth username in the request header and sending the request when do login
                                                                                     // [default]  - "usrnm"

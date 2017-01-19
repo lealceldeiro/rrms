@@ -6,13 +6,15 @@
 
 var roleSrv = function (systemSrv, $http, valueSrv, dataSrv, baseSrv) {
     var self = this;
-    var rolesUrl = systemSrv.APIUrl + 'role/';
+    var rolesUrl = systemSrv.APIAbsoluteUrl + 'role/';
 
     self.service = {
         search: fnSearch,
         show: fnShow,
         remove: fnRemove,
-        save: fnSave
+        save: fnSave,
+
+        permissionsByUser: fnPermissionsByUser
     };
 
     return self.service;
@@ -57,6 +59,16 @@ var roleSrv = function (systemSrv, $http, valueSrv, dataSrv, baseSrv) {
         else {//create?
             def = $http.put(url, params);
         }
+        return baseSrv.resolveDeferred(def);
+    }
+
+    function fnPermissionsByUser(id, offset, max) {
+        var params = valueSrv.nNnN(offset) ? "?offset=" + offset : "";
+        if (valueSrv.nNnN(max)) {
+            params += params === ""? "?max=" + max : "&max=" + max;
+        }
+
+        var def = $http.get(rolesUrl + id + '/permissions/' + params);
         return baseSrv.resolveDeferred(def);
     }
 };

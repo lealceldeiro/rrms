@@ -55,8 +55,8 @@ var notificationSrv = function ($timeout) {
                 es: "Usted debe seleccionar un elemento para continuar"
             },
             "unauthorized":{
-                en: "You aren't authorized to do this :(",
-                es: "No estás autorizado a hacer esto :("
+                en: "You either aren't authorized to do this or you session expired :(",
+                es: "No estás autorizado a hacer esto o tu sessión expiró:("
             },
             "userAndPasswordIncorrect":{
                 en: "The user or password provided by you are incorrect :(",

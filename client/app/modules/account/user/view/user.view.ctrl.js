@@ -9,7 +9,6 @@
     var f = function (ROUTE, indexSrv, userSrv, navigationSrv, notificationSrv, systemSrv) {
         var vm = this;
         const keyP = 'USER_VIEW';
-        var eid;
 
         vm.wizard = {
             entity: null,
@@ -48,7 +47,6 @@
         }
 
         function fnLoadData(id) {
-            eid = id;
             var fnKey = keyP + "fnLoadData1";
             //get info
             userSrv.show(id).then(
@@ -106,7 +104,7 @@
             }
             vm.wizard.roles.offset = (newPageNumber - 1) * vm.wizard.roles.itemsPerPage;
 
-            _loadRoles(eid);
+            _loadRoles(vm.id);
         }
 
     };
