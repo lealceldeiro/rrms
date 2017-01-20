@@ -36,6 +36,7 @@
                             sessionSrv.setCurrentUser({
                                 username: systemSrv.getAuthUser()
                             });
+                            sessionSrv.setPermissions(systemSrv.gtAuthPermissions());
                             sessionSrv.setSecurityToken(systemSrv.getAuthToken());
                             sessionSrv.setSecurityRefreshToken(systemSrv.getAuthRefreshToken());
                             navigationSrv.goTo(ROUTE.MAIN);

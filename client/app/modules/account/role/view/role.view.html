@@ -37,7 +37,7 @@
                             <tr data-dir-paginate="it in vm.permissions.all | itemsPerPage:vm.permissions.itemsPerPage"
                                 data-total-items="vm.permissions.total"
                                 data-pagination-id="rolePermissionsId">
-                                <td><span data-ng-bind="it.label"></span></td>
+                                <td><span data-ng-bind="it.label | caser"></span></td>
                             </tr>
                             </tbody>
                         </table>

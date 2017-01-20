@@ -11,10 +11,12 @@ var sessionSrv = function (baseSrv, systemSrv, localStorageService) {
     const refreshTKey = lsPrefix + "RefreshToken";
     const tokenKey =  lsPrefix + "AuthToken";
     const currentUKey =  lsPrefix + "CurrentUsr";
+    const permissionsKey =  lsPrefix + "uPermissions";
 
     var sToken = null;
     var rToken = null;
     var currentUser = null;
+    var permissions = null;
 
     var logged;
 
@@ -29,6 +31,9 @@ var sessionSrv = function (baseSrv, systemSrv, localStorageService) {
 
         currentUser: fnGetCurrentUser,
         setCurrentUser: fnSetCurrentUser,
+
+        setPermissions: fnSetPermissions,
+        getPermissions: fnGetPermissions,
 
         clearSession: fnClearSession
 
@@ -75,10 +80,12 @@ var sessionSrv = function (baseSrv, systemSrv, localStorageService) {
         localStorageService.remove(tokenKey);
         localStorageService.remove(refreshTKey);
         localStorageService.remove(currentUKey);
+        localStorageService.remove(permissionsKey);
 
         sToken = null;
         rToken = null;
         currentUser = null;
+        permissions = null;
     }
 
 
@@ -116,6 +123,24 @@ var sessionSrv = function (baseSrv, systemSrv, localStorageService) {
             }
         }
         return currentUser;
+    }
+
+
+    function fnSetPermissions(uPermissions) {
+        permissions = uPermissions;
+        localStorageService.set(permissionsKey, permissions);
+    }
+
+    function fnGetPermissions() {
+        if (!permissions) {
+            permissions = localStorageService.get(permissionsKey);
+        }
+        else{
+            if(!localStorageService.get(permissionsKey)){
+                fnSetPermissions(permissions)
+            }
+        }
+        return permissions;
     }
 
 };

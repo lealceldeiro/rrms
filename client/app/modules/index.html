@@ -28,11 +28,11 @@
     <link rel="stylesheet" href="../../bower_components/angular-ui-select/dist/select.min.css">
 
 </head>
-<body data-ng-controller="sessionCtrl as sCtrl" data-ng-model-options="{allowInvalid: true}">
+<body data-ng-model-options="{allowInvalid: true}">
 
 <div class="container-fluid">
     <div
-            data-ng-include="sCtrl.isLogged() ? '_common/html/templates/logged/template1.html' :
+            data-ng-include="idxCtrl.isLogged() ? '_common/html/templates/logged/template1.html' :
                  '_common/html/templates/notLogged/template1.html'"
     >
 
@@ -45,14 +45,15 @@
     </div>
 </div>
 
-<!-- Environment variables -->
-<script src="../../../env.js"></script>
-
 <!----JAVASCRIPT---->
 
 <!--****libs****-->
 <!--**jQuery**-->
 <script src="../../bower_components/jquery/dist/jquery.min.js"></script>
+
+<!-- Environment variables -->
+<script src="../../../env.js"></script>
+
 <!--**bootstrap**-->
 <script src="../../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 

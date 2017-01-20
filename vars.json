@@ -1,0 +1,41 @@
+{
+  
+  "BaseUrl": "http://127.0.0.1:8085/rrmsrest",
+
+  "ApiRelativeUrl": "<your_api_relative_url>",
+
+  "successFlag": "<your_api_success_flag>",
+
+  "errorMessageFlag": "<your_api_error_message_flag>",
+
+  "successMessageFlag": "<your_api_success_message_flag>",
+
+  "totalCountFlag": "<your_api_total_count_flag>",
+
+  "itemsFlag": "<your_api_items_flag>",
+
+  "itemFlag": "<your_api_item_flag>",
+
+  "headerAuthTokenFlag": "<your_api_header_token_flag>",
+
+  "headerUnAuthTokenFlag": "<your_api_header_unAuth_flag>",
+
+  "headerAuthBearerFlag": "<your_api_header_auth_bearer_flag>",
+
+  "itemTokenFlag": "<your_api_item_token_flag>",
+
+  "itemRefreshTokenFlag": "<your_api_item_refresh_token_flag>",
+
+  "newTokenRequesterFlag": "<your_api_new_token_requester_flag>",
+
+  "userAuthFlag": "<your_api_user_login_flag>",
+
+  "passwordAuthFlag": "<your_api_password_login_flag>",
+
+  "userAuthResponseFlag": "<your_user_auth_response_flag>",
+
+  "authPermissionsFlag": "<your_auth_permissions_flag>",
+
+  "unauthorizedResponseCodeFlag": "<your_user_auth_response_flag>"
+
+}

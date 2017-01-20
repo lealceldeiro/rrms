@@ -55,6 +55,9 @@
                 userAuthResponseFlag:
                     (__env.api.userAuthResponseFlag !== '<your_user_auth_response_flag>')? __env.api.userAuthResponseFlag
                         || 'username' : 'username',
+                authPermissionsFlag:
+                    (__env.api.authPermissionsFlag !== '<your_auth_permissions_flag>')? __env.api.authPermissionsFlag
+                        || 'permissions' : 'permissions',
                 unauthorizedResponseCodeFlag:
                     (__env.api.unauthorizedResponseCodeFlag !== '<your_user_auth_response_flag>')? __env.api.unauthorizedResponseCodeFlag
                         || 401 : 401,
@@ -76,9 +79,12 @@
                 getTotal: fnGetTotalCount,
                 getItems: fnGetItems,
                 getItem: fnGetItem,
+
                 getAuthToken: fnGetAuthToken,
                 getAuthRefreshToken: fnGetAuthRefreshToken,
-                getAuthUser: fnGetAuthUser
+                getAuthUser: fnGetAuthUser,
+                getAuthPermissions: fnGetAuthUser,
+                gtAuthPermissions: fnGetAuthPermissions
             };
 
             self.service.APIAbsoluteUrl = self.service.BaseUrl + self.service.ApiUrl;
@@ -149,6 +155,7 @@
                         self.service.userAuthResponse = data[self.service.userAuthResponseFlag];
                         self.service.itemToken = data[self.service.itemTokenFlag];
                         self.service.itemRefreshToken = data[self.service.itemRefreshTokenFlag];
+                        self.service.authPermissions = data[self.service.authPermissionsFlag];
                         if (notifyOnSuccess) {
                             //todo
                         }
@@ -200,6 +207,10 @@
 
             function fnGetAuthRefreshToken() {
                 return self.service.itemRefreshToken
+            }
+
+            function fnGetAuthPermissions() {
+                return self.service.authPermissions
             }
 
 
