@@ -106,10 +106,10 @@
                 }
             )
 
-            //actions by roles
-            .when(ROUTE.ACTIONS_BY_ROLES,{
-                    templateUrl: 'main/main.html',
-                    controller: 'mainCtrl',
+            //permissions
+            .when(ROUTE.PERMISSIONS,{
+                    templateUrl: 'account/permission/list/permission.list.html',
+                    controller: 'permissionCtrl',
                     controllerAs: 'vm'
                 }
             )

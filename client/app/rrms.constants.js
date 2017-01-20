@@ -29,7 +29,7 @@
 
                 RESERVATIONS: '/reservaciones',
 
-                ACTIONS_BY_ROLES: '/acciones-por-roles'
+                PERMISSIONS: '/permisos'
             }
         )
 })();

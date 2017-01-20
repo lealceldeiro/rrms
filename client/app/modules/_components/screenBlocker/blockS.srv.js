@@ -58,7 +58,7 @@
                 if (angular.isDefined(varToBeSet)) {
                     if (angular.isObject(varToBeSet) || angular.isArray(varToBeSet)) {
                         $timeout.cancel(miniTimer);
-                        //if is unblock, do it immediately
+                        //if it is unblock, do it immediately
                         if (!isLoading) {
                             varToBeSet['loading'] = false;
                         }

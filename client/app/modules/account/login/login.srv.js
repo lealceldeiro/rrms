@@ -25,7 +25,7 @@ var loginSrv = function ($http, systemSrv, baseSrv, sessionSrv, $rootScope) {
                 if (e) {
                     sessionSrv.setSecurityToken(systemSrv.getAuthToken());
                     sessionSrv.setSecurityRefreshToken(systemSrv.getAuthRefreshToken());
-                    navigationSrv.goTo(ROUTE.MAIN);
+                    $rootScope.$broadcast('REFRESHED_TOKEN');
                 }
             }
         )

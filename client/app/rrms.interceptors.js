@@ -24,11 +24,12 @@ var f = function (__env, $location, ROUTE, sessionSrv, systemSrv, notificationSr
 
     function responseError(rejection) {
         if(rejection.status === systemSrv.unauthorizedResponseCodeFlag){
-            notificationSrv.showNotif(notificationSrv.utilText.unauthorized.es,
-                notificationSrv.utilText.titleError.es, notificationSrv.type.ERROR);
-
             if (sessionSrv.isLogged()) {
                 $rootScope.$broadcast('REFRESH_TOKEN');
+            }
+            else {
+                notificationSrv.showNotif(notificationSrv.utilText.unauthorized.es,
+                    notificationSrv.utilText.titleError.es, notificationSrv.type.ERROR);
             }
 
         }

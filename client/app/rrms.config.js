@@ -55,6 +55,12 @@
             }
         });
 
+        //triggered when a new token was retrieved since the old one expired, so we need to refresh the last requested
+        //view, since it wasn't resolved due to the forbidden backend response
+        $rootScope.$on('REFRESHED_TOKEN', function () {
+            navigationSrv.goTo(prevRoute);
+        });
+
     };
 
     runConfig.$inject = ['$rootScope', 'sessionSrv', 'navigationSrv', '__env'];

@@ -43,11 +43,8 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li class="roles">
-                    <a href="" data-ng-click="sCtrl.go('/roles')"><span class="glyphicon glyphicon-bullhorn"></span> Roles</a>
-                </li>
-                <li class="usuarios">
-                    <a href="" data-ng-click="sCtrl.go('/usuarios')"><span class="glyphicon glyphicon-user"></span> Usuarios</a>
+                <li class="reservaciones">
+                    <a href=""  data-ng-click="sCtrl.go('/reservaciones')"><span class="glyphicon glyphicon-list-alt"></span> Reservaciones</a>
                 </li>
                 <li class="casas">
                     <a href="" data-ng-click="sCtrl.go('/casas')"><span class="glyphicon glyphicon-home"></span> Casas</a>
@@ -55,15 +52,20 @@
                 <li class="ubicaciones">
                     <a href="" data-ng-click="sCtrl.go('/ubicaciones')"><span class="glyphicon glyphicon-map-marker"></span> Ubicaciones</a>
                 </li>
-                <li class="reservaciones">
-                    <a href=""  data-ng-click="sCtrl.go('/reservaciones')"><span class="glyphicon glyphicon-list-alt"></span> Reservaciones</a>
-                </li>
                 <li class="acciones-por-roles dropdown">
                     <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                         <span class="glyphicon glyphicon-tasks"></span> Ajustes <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                        <li class="acciones-por-roles"><a href=""  data-ng-click="sCtrl.go('/acciones-por-roles')">Acciones por roles</a></li>
+                        <li class="usuarios">
+                            <a href="" data-ng-click="sCtrl.go('/usuarios')"><span class="glyphicon glyphicon-user"></span> Usuarios</a>
+                        </li>
+                        <li class="roles">
+                            <a href="" data-ng-click="sCtrl.go('/roles')"><span class="glyphicon glyphicon-bullhorn"></span> Roles</a>
+                        </li>
+                        <li class="permisos">
+                            <a href="" data-ng-click="sCtrl.go('/permisos')"><span class="glyphicon glyphicon-th-large"></span> Permisos</a>
+                        </li>
                     </ul>
                 </li>
             </ul>
