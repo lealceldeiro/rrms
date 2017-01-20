@@ -5,11 +5,13 @@
     function () {
         'use strict';
 
-        var f = function () {
+        var f = function (valueSrv) {
             var self = this;
 
             self.service = {
-                resolveDeferred: fnResolveDeferred
+                resolveDeferred: fnResolveDeferred,
+
+                getParams: fnGetParams
             };
 
             return self.service;
@@ -26,9 +28,21 @@
                     )
                 }
             }
+
+            function fnGetParams(offset, max, criteria) {
+                var params = valueSrv.nNnN(offset) ? "?offset=" + offset : "";
+                if (valueSrv.nNnN(max)) {
+                    params += params === ""? "?max=" + max : "&max=" + max;
+                }
+                if (valueSrv.nNnN(criteria)) {
+                    params += params === ""? "?q=" + criteria : "&q=" + criteria;
+                }
+
+                return params;
+            }
         };
 
-        f.$inject = [];
+        f.$inject = ['valueSrv'];
 
         angular.module('rrms')
             .service('baseSrv', f);

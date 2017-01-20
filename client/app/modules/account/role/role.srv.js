@@ -27,13 +27,7 @@ var roleSrv = function (systemSrv, $http, valueSrv, dataSrv, baseSrv) {
      * @returns {*} Promise
      */
     function fnSearch(offset, max, criteria) {
-        var params = valueSrv.nNnN(offset) ? "?offset=" + offset : "";
-        if (valueSrv.nNnN(max)) {
-            params += params === ""? "?max=" + max : "&max=" + max;
-        }
-        if (valueSrv.nNnN(criteria)) {
-            params += params === ""? "?q=" + criteria : "&q=" + criteria;
-        }
+        var params = baseSrv.getParams(offset, max, criteria);
 
         var def =  $http.get(rolesUrl + params);
         return baseSrv.resolveDeferred(def);

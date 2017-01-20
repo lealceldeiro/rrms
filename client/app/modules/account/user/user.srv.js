@@ -19,11 +19,8 @@ var f = function (systemSrv, $http, valueSrv, dataSrv, baseSrv) {
 
     return self.service;
 
-    function fnSearch(offset, max) {
-        var params = valueSrv.nNnN(offset) ? "?offset=" + offset : "";
-        if (valueSrv.nNnN(max)) {
-            params += params === ""? "?max=" + max : "&max=" + max;
-        }
+    function fnSearch(offset, max, criteria) {
+        var params = baseSrv.getParams(offset, max, criteria);
 
         var def = $http.get(url + params);
         return baseSrv.resolveDeferred(def);

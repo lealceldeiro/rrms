@@ -6,7 +6,7 @@
 
 (function () {
 
-    var f = function (indexSrv, userSrv, navigationSrv, ROUTE, systemSrv, notificationSrv, valueSrv, roleSrv, blockSrv) {
+    var f = function (indexSrv, userSrv, navigationSrv, ROUTE, systemSrv, notificationSrv, roleSrv, blockSrv) {
         var vm = this;
         const keyP = 'USER_EDIT';
 
@@ -72,7 +72,7 @@
                     }
                 }
             );
-            _loadRoles(id);
+            _loadRolesInitial(id);
         }
 
         function fnSave(form) {
@@ -106,33 +106,41 @@
             navigationSrv.goTo(ROUTE.USERS);
         }
 
-        function _loadRoles(id, criteria) {
+        function _loadRoles(criteria) {
             vm.wizard.roles.all = [];
-            if (!rolesLoadedAlready && valueSrv.nNnN(id)) {
-                vm.wizard.roles.selected = null;
-            }
 
             var fnKey = keyP + "_loadRoles";
 
-            roleSrv.search(vm.wizard.roles.offset, vm.wizard.roles.max, criteria).then(
+            roleSrv.search(0, 0, criteria).then(
                 function (data) {
                     var e = systemSrv.eval(data, fnKey, false, true);
                     if (e) {
                         vm.wizard.roles.all = systemSrv.getItems(fnKey);
+                    }
+                }
+            )
+        }
 
-                        if (valueSrv.nNnN(id) && !rolesLoadedAlready) {
-                            userSrv.rolesByUser(id, vm.wizard.roles.offset, vm.wizard.roles.max).then(
-                                function (data) {
-                                    var fnKey2 = fnKey + "2";
-                                    e = systemSrv.eval(data, fnKey2, false, true);
-                                    if (e) {
-                                        rolesLoadedAlready = true;
-                                        vm.wizard.roles.selected = systemSrv.getItems(fnKey2);
-                                    }
+        function _loadRolesInitial(id, criteria) {
+            vm.wizard.roles.all = [];
+            var fnKey = keyP + "_loadRolesInitial";
+
+            userSrv.rolesByUser(id, vm.wizard.roles.offset, vm.wizard.roles.max).then(
+                function (data) {
+                    var fnKey2 = fnKey + "2";
+                    var e = systemSrv.eval(data, fnKey2, false, true);
+                    if (e) {
+                        rolesLoadedAlready = true;
+                        vm.wizard.roles.selected = systemSrv.getItems(fnKey2);
+
+                        roleSrv.search(0, 0, criteria).then(    //zero for avoiding issue with ui-select filtering
+                            function (data) {
+                                var e = systemSrv.eval(data, fnKey, false, true);
+                                if (e) {
+                                    vm.wizard.roles.all = systemSrv.getItems(fnKey);
                                 }
-                            )
-                        }
-
+                            }
+                        )
                     }
                 }
             )
@@ -140,19 +148,19 @@
 
         function fnSearchRoles(criteria) {
             if (flagSearch) {
-                _loadRoles(vm.id, criteria);
+                _loadRoles(criteria);
             }
         }
 
         function fnSetIsSearching(s) {
             flagSearch = s === true;
             if (!flagSearch) {
-                _loadRoles(vm.id);
+                _loadRoles();
             }
         }
     };
 
-    f.$inject = ['indexSrv', 'userSrv', 'navigationSrv', 'ROUTE', 'systemSrv', 'notificationSrv', 'valueSrv', 'roleSrv',
+    f.$inject = ['indexSrv', 'userSrv', 'navigationSrv', 'ROUTE', 'systemSrv', 'notificationSrv', 'roleSrv',
         'blockSrv'];
 
     angular.module('rrms')
