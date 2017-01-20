@@ -1,6 +1,6 @@
 {
   
-  "BaseUrl": "http://127.0.0.1:8085/rrmsrest",
+  "BaseUrl": "<your_api_base_url>",
 
   "ApiRelativeUrl": "<your_api_relative_url>",
 
