@@ -57,7 +57,6 @@ Optionals fields are marked with the <span style="font-style: italic;">[optional
             <td style="border: 1px solid;">Variable for sending the auth password when doing login</td>
             <td style="border: 1px solid;"><code>pswrd</code></td>
         </tr>
-        <tr><td colspan="3"></td></tr>
         <tr>
             <td colspan="3" style="text-align: center; font-style: italic;"><small>Variable used for making requests to the api and receiving data from it</small></td>
         </tr>
@@ -66,7 +65,6 @@ Optionals fields are marked with the <span style="font-style: italic;">[optional
             <td style="border: 1px solid;">Variable in which your api response will indicate the access refresh token</td>
             <td style="border: 1px solid;"><code>refresh_token</code></td>
         </tr>
-        <tr><td colspan="3"></td></tr>
         <tr>
             <td colspan="3" style="text-align: center; font-style: italic;"><small>Variables used for receiving data from the api</small></td>
         </tr>
