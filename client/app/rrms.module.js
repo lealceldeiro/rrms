@@ -6,15 +6,24 @@
 
 (function() {
 
-    var env = {};
+    var env = {
+        api: {},
+        permissions: {}
+    };
 
-    // Import variables if present (from env.js)
-    if(window){
-        Object.assign(env, window.__env);
-        if (window.__env) {
-            env.found = true;
+    // Import variables if present (from vars.js)
+    $.getJSON("/vars.json", function(json) {
+        if (json) {
+            Object.assign(env.api, json);
+            env.varsFound = true;
         }
-    }
+    });
+    // Import permissions
+    $.getJSON("/permissions.json", function(json) {
+        if (json) {
+            Object.assign(env.permissions, json);
+        }
+    });
 
     var config = function ($logProvider) {
         $logProvider.debugEnabled(true);

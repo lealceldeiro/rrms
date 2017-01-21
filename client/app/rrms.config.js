@@ -10,7 +10,7 @@
 
         var prevRoute;
 
-        $rootScope.$on('$routeChangeStart', function (a, b) {
+        $rootScope.$on('$routeChangeSuccess', function (a, b) {
             if (b && b.$$route && b.$$route.originalPath) {
                 var route = b.$$route.originalPath;
 
@@ -49,7 +49,7 @@
                     }
                 }
                 //in case configuration file is found and user try to access directly yo error page, redirect to default path
-                else if (route === '/configuration-error' && __env && __env.found){
+                else if (route === '/configuration-error' && __env && __env.varsFound){
                     navigationSrv.goTo(navigationSrv.DEFAULT_PATH);
                 }
             }
@@ -57,8 +57,8 @@
 
         //triggered when a new token was retrieved since the old one expired, so we need to refresh the last requested
         //view, since it wasn't resolved due to the forbidden backend response
-        $rootScope.$on('REFRESHED_TOKEN', function () {
-            navigationSrv.goTo(prevRoute);
+        $rootScope.$on('UNAUTHORIZED_BACKWARD', function () {
+            navigationSrv.goTo(navigationSrv.DEFAULT_PATH);
         });
 
     };

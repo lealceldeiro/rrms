@@ -8,8 +8,8 @@ var loginSrv = function ($http, systemSrv, baseSrv, sessionSrv, $rootScope) {
     var vm = this;
 
     var url = systemSrv.APIAbsoluteUrl;
-    var userVar = systemSrv.userAuthFlag;
-    var passVar = systemSrv.passwordAuthFlag;
+    var userVar = systemSrv.auth_login_user_req;
+    var passVar = systemSrv.auth_login_password_req;
 
     vm.service = {
         siteTile: '',
@@ -25,7 +25,7 @@ var loginSrv = function ($http, systemSrv, baseSrv, sessionSrv, $rootScope) {
                 if (e) {
                     sessionSrv.setSecurityToken(systemSrv.getAuthToken());
                     sessionSrv.setSecurityRefreshToken(systemSrv.getAuthRefreshToken());
-                    $rootScope.$broadcast('REFRESHED_TOKEN');
+                    $rootScope.$broadcast('UNAUTHORIZED_BACKWARD');
                 }
             }
         )
@@ -44,8 +44,8 @@ var loginSrv = function ($http, systemSrv, baseSrv, sessionSrv, $rootScope) {
     function _doRefreshToken() {
         var req = {
             method: 'POST',
-            url: systemSrv.BaseUrl + '/oauth/access_token?' + systemSrv.newTokenRequesterFlag + "=" +
-            systemSrv.itemRefreshTokenFlag + "&" + systemSrv.itemRefreshTokenFlag + "=" + sessionSrv.securityRefreshToken(),
+            url: systemSrv.base_url_req + '/oauth/access_token?' + systemSrv.auth_new_token_requester_req + "=" +
+            systemSrv.item_refresh_token_req_resp + "&" + systemSrv.item_refresh_token_req_resp + "=" + sessionSrv.securityRefreshToken(),
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
@@ -56,7 +56,7 @@ var loginSrv = function ($http, systemSrv, baseSrv, sessionSrv, $rootScope) {
 
     function fnDoLogout() {
         var h = {};
-        h[systemSrv.headerUnAuthTokenFlag] = sessionSrv.securityToken();
+        h[systemSrv.header_un_auth_token_req] = sessionSrv.securityToken();
         var req = {
             method: 'GET',
             url: url + "logout",

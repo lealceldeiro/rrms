@@ -53,18 +53,18 @@
                     <li class="ubicaciones">
                         <a href="" data-ng-click="sCtrl.go('/ubicaciones')"><span class="glyphicon glyphicon-map-marker"></span> Ubicaciones</a>
                     </li>
-                    <li class="acciones-por-roles dropdown">
+                    <li class="acciones-por-roles dropdown" data-ng-show="::sCtrl.show.settings()">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                             <span class="glyphicon glyphicon-tasks"></span> Ajustes <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            <li class="usuarios">
+                            <li class="usuarios" data-ng-show="::sCtrl.show.readUser()">
                                 <a href="" data-ng-click="sCtrl.go('/usuarios')"><span class="glyphicon glyphicon-user"></span> Usuarios</a>
                             </li>
-                            <li class="roles">
+                            <li class="roles" data-ng-show="::sCtrl.show.readRole()">
                                 <a href="" data-ng-click="sCtrl.go('/roles')"><span class="glyphicon glyphicon-bullhorn"></span> Roles</a>
                             </li>
-                            <li class="permisos">
+                            <li class="permisos" data-ng-show="::sCtrl.show.readPermission()">
                                 <a href="" data-ng-click="sCtrl.go('/permisos')"><span class="glyphicon glyphicon-th-large"></span> Permisos</a>
                             </li>
                         </ul>

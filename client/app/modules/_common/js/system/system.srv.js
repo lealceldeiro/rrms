@@ -8,59 +8,75 @@
         var systemSrv = function (__env, notificationSrv) {
             var self = this;
 
-            self.service = {
-                //api
-                BaseUrl:
-                    (__env.api.BaseUrl !== '<your_api_base_url>')? __env.api.BaseUrl || 'http://127.0.0.1' : 'http://127.0.0.1',
-                ApiUrl:
-                    (__env.api.ApiRelativeUrl !== '<your_api_relative_url>')? __env.api.ApiRelativeUrl || '/api/' : '/api/',
-                successFlag:
-                    (__env.api.successFlag !== '<your_api_success_flag>')? __env.api.successFlag || 'success' : 'success',
-                errorMessageFlag:
-                    (__env.api.errorMessageFlag !== '<your_api_error_message_flag>')? __env.api.errorMessageFlag || 'errorMessage' : 'errorMessage',
-                successMessageFlag:
-                    (__env.api.successMessageFlag !== '<your_api_success_message_flag>')? __env.api.successMessageFlag || 'successMessage' : 'successMessage',
-                totalCountFlag:
-                    (__env.api.totalCountFlag !== '<your_api_total_count_flag>')? __env.api.totalCountFlag || 'total' : 'total',
-                itemsFlag:
-                    (__env.api.itemsFlag !== '<your_api_items_flag>')? __env.api.itemsFlag || 'items' : 'items',
-                itemFlag:
-                    (__env.api.itemFlag !== '<your_api_item_flag>')? __env.api.itemFlag || 'item' : 'item',
+            //region configVars
+            var a = __env.api['base_url_req'];
+            var b = __env.api['api_relative_url_req'];
+            var c = __env.api['success_resp'];
+            var d = __env.api['error_message_resp'];
+            var e = __env.api['success_message_resp'];
+            var f = __env.api['total_count_resp'];
+            var g = __env.api['items_resp'];
+            var h = __env.api['item_resp'];
+            var i = __env.api['header_auth_token_req'];
+            var j = __env.api['header_un_auth_token_req'];
+            var k = __env.api['header_auth_bearer_req'];
+            var l = __env.api['item_token_resp'];
+            var m = __env.api['item_refresh_token_req_resp'];
+            var n = __env.api['auth_new_token_requester_req'];
+            var o = __env.api['auth_login_user_req'];
+            var p = __env.api['auth_login_password_req'];
+            var q = __env.api['auth_user_resp'];
+            var r = __env.api['auth_permissions_resp'];
+            var s = __env.api['unauthorized_code_resp'];
+            //endregion
 
-                //auth
-                headerAuthTokenFlag:
-                    (__env.api.headerAuthTokenFlag !== '<your_api_header_token_flag>')? __env.api.headerAuthTokenFlag
-                        || 'Authorization' : 'Authorization',
-                headerUnAuthTokenFlag:
-                    (__env.api.headerUnAuthTokenFlag !== '<your_api_header_unAuth_flag>')? __env.api.headerUnAuthTokenFlag
-                        || 'X-Auth-Token' : 'X-Auth-Token',
-                headerAuthBearerFlag:
-                    (__env.api.headerAuthBearerFlag !== '<your_api_header_auth_bearer_flag>')? __env.api.headerAuthBearerFlag
-                        || 'Bearer ' : 'Bearer ', //important the space at the end of the text
-                itemTokenFlag:
-                    (__env.api.itemTokenFlag !== '<your_api_item_token_flag>')? __env.api.itemTokenFlag
-                        || 'access_token' : 'access_token',
-                itemRefreshTokenFlag:
-                    (__env.api.itemRefreshTokenFlag !== '<your_api_item_refresh_token_flag>')? __env.api.itemRefreshTokenFlag
-                        || 'refresh_token' : 'refresh_token',
-                newTokenRequesterFlag:
-                    (__env.api.newTokenRequesterFlag !== '<your_api_new_token_requester_flag>')? __env.api.newTokenRequesterFlag
-                        || 'grant_type' : 'grant_type',
-                userAuthFlag:
-                    (__env.api.userAuthFlag !== '<your_api_user_login_flag>')? __env.api.userAuthFlag
-                        || 'usrnm' : 'usrnm',
-                passwordAuthFlag:
-                    (__env.api.passwordAuthFlag !== '<your_api_password_login_flag>')? __env.api.passwordAuthFlag
-                        || 'pswrd' : 'pswrd',
-                userAuthResponseFlag:
-                    (__env.api.userAuthResponseFlag !== '<your_user_auth_response_flag>')? __env.api.userAuthResponseFlag
-                        || 'username' : 'username',
-                authPermissionsFlag:
-                    (__env.api.authPermissionsFlag !== '<your_auth_permissions_flag>')? __env.api.authPermissionsFlag
-                        || 'permissions' : 'permissions',
-                unauthorizedResponseCodeFlag:
-                    (__env.api.unauthorizedResponseCodeFlag !== '<your_user_auth_response_flag>')? __env.api.unauthorizedResponseCodeFlag
-                        || 401 : 401,
+            self.service = {
+                //regions PERMISSIONS
+                grant: {
+                    MANAGE_USER:        __env.permissions.MANAGE_USER       || "MANAGE_USER",
+                    CREATE_USER:        __env.permissions.CREATE_USER       || "CREATE_USER",
+                    READ_USER:          __env.permissions.READ_USER         || "READ_USER",
+                    UPDATE_USER:        __env.permissions.UPDATE_USER       || "UPDATE_USER",
+                    DELETE_USER:        __env.permissions.DELETE_USER       || "DELETE_USER",
+
+                    MANAGE_ROLE:        __env.permissions.MANAGE_ROLE       || "MANAGE_ROLE",
+                    CREATE_ROLE:        __env.permissions.CREATE_ROLE       || "CREATE_ROLE",
+                    READ_ROLE:          __env.permissions.READ_ROLE         || "READ_ROLE",
+                    UPDATE_ROLE:        __env.permissions.UPDATE_ROLE       || "UPDATE_ROLE",
+                    DELETE_ROLE:        __env.permissions.DELETE_ROLE       || "DELETE_ROLE",
+
+                    MANAGE_PERMISSION:  __env.permissions.MANAGE_PERMISSION || "MANAGE_PERMISSION",
+                    CREATE_PERMISSION:  __env.permissions.CREATE_PERMISSION || "CREATE_PERMISSION",
+                    READ_PERMISSION:    __env.permissions.READ_PERMISSION   || "READ_PERMISSION",
+                    UPDATE_PERMISSION:  __env.permissions.UPDATE_PERMISSION || "UPDATE_PERMISSION",
+                    DELETE_PERMISSION:  __env.permissions.DELETE_PERMISSION || "DELETE_PERMISSION"
+                },
+                //endregion
+
+
+                //region configVars
+                base_url_req:                   (a !== '<base_url>')                        ? a || 'http://127.0.0.1/rrmsrest'   : 'http://127.0.0.1/rrmsrest',
+                api_relative_url_req:           (b !== '<relative_url>')                    ? b || '/api/'              : '/api/',
+                header_auth_token_req:          (i !== '<header_auth_token>')               ? i || 'Authorization'      : 'Authorization',
+                header_un_auth_token_req:       (j !== '<header_unAuth>')                   ? j || 'X-Auth-Token'       : 'X-Auth-Token',
+                header_auth_bearer_req:         (k !== '<header_auth_bearer>')              ? k                         : 'Bearer', //important the space at the end of the text
+                auth_new_token_requester_req:   (n !== '<auth_new_token_requester>')        ? n || 'grant_type'         : 'grant_type',
+                auth_login_user_req:            (o !== '<auth_login_user>')                 ? o || 'usrnm'              : 'usrnm',
+                auth_login_password_req:        (p !== '<auth_login_password>')             ? p || 'pswrd'              : 'pswrd',
+
+                item_refresh_token_req_resp:    (m !== '<item_refresh_token>')              ? m || 'refresh_token'      : 'refresh_token',
+
+                success_resp:                   (c !== '<success>')                         ? c || 'success'             : 'success',
+                error_message_resp:             (d !== '<error_message>')                   ? d || 'errorMessage'       : 'errorMessage',
+                success_message_resp:           (e !== '<success_message>')                 ? e || 'successMessage'     : 'successMessage',
+                total_count_resp:               (f !== '<total_count>')                     ? f || 'total'              : 'total',
+                items_resp:                     (g !== '<items>')                           ? g || 'items'              : 'items',
+                item_resp:                      (h !== '<item>')                            ? h || 'item'               : 'item',
+                item_token_resp:                (l !== '<item_token>')                      ? l || 'access_token'       : 'access_token',
+                auth_user_resp:                 (q !== '<auth_user_response>')              ? q || 'username'           : 'username',
+                auth_permissions_resp:          (r !== '<auth_permissions>')                ? r || 'permissions'        : 'permissions',
+                unauthorized_code_resp:         (s !== '<unauthorized_response_code_flag>') ? s || 401                  : 401,
+                //endregion
 
                 // accessible from outside, but not recommended to do so, internal service usage
                 apiMessage: {},
@@ -87,7 +103,7 @@
                 gtAuthPermissions: fnGetAuthPermissions
             };
 
-            self.service.APIAbsoluteUrl = self.service.BaseUrl + self.service.ApiUrl;
+            self.service.APIAbsoluteUrl = self.service.base_url_req + self.service.api_relative_url_req;
 
             return self.service;
 
@@ -106,11 +122,11 @@
             function fnEvaluateResponseData(data, storeKey, notifyOnSuccess, notifyOnUnSuccess, callback) {
                 validate(storeKey);
                 if (data) {
-                    if (data[self.service.successFlag]) {
-                        self.service.apiMessage[storeKey] = data[self.service.successMessageFlag] || notificationSrv.utilText.successfulOperation.es;
-                        self.service.apiTotalCount[storeKey] = data[self.service.totalCountFlag];
-                        self.service.apiItems[storeKey] = data[self.service.itemsFlag];
-                        self.service.apiItem[storeKey] = data[self.service.itemFlag];
+                    if (data[self.service.success_resp]) {
+                        self.service.apiMessage[storeKey] = data[self.service.success_message_resp] || notificationSrv.utilText.successfulOperation.es;
+                        self.service.apiTotalCount[storeKey] = data[self.service.total_count_resp];
+                        self.service.apiItems[storeKey] = data[self.service.items_resp];
+                        self.service.apiItem[storeKey] = data[self.service.item_resp];
                         if (notifyOnSuccess) {
                             notificationSrv.showNotif(self.service.apiMessage[storeKey], notificationSrv.utilText.titleSuccess.es,
                                 notificationSrv.type.SUCCESS);
@@ -119,7 +135,7 @@
                         return true
                     }
                     else {
-                        self.service.apiMessage[storeKey] = data[self.service.errorMessageFlag] || notificationSrv.utilText.unSuccessfulOperation.es;
+                        self.service.apiMessage[storeKey] = data[self.service.error_message_resp] || notificationSrv.utilText.unSuccessfulOperation.es;
 
                         if (notifyOnUnSuccess) {
                             notificationSrv.showNotif(self.service.apiMessage[storeKey], notificationSrv.utilText.titleError.es,
@@ -151,11 +167,11 @@
              */
             function fnEvaluateAuthenticationData(data, notifyOnSuccess, notifyOnUnSuccess, callback) {
                 if (data) {
-                    if (data[self.service.itemTokenFlag]) {
-                        self.service.userAuthResponse = data[self.service.userAuthResponseFlag];
-                        self.service.itemToken = data[self.service.itemTokenFlag];
-                        self.service.itemRefreshToken = data[self.service.itemRefreshTokenFlag];
-                        self.service.authPermissions = data[self.service.authPermissionsFlag];
+                    if (data[self.service.item_token_resp]) {
+                        self.service.userAuthResponse = data[self.service.auth_user_resp];
+                        self.service.itemToken = data[self.service.item_token_resp];
+                        self.service.itemRefreshToken = data[self.service.item_refresh_token_req_resp];
+                        self.service.authPermissions = data[self.service.auth_permissions_resp];
                         if (notifyOnSuccess) {
                             //todo
                         }
