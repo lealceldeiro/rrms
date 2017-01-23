@@ -10,6 +10,8 @@
         var vm = this;
 
         vm.wizard = {
+            loginEntity: fnGetLoginEntity,
+
             init: fnInit,
 
             logout: fnLogout,
@@ -79,6 +81,10 @@
 
         function goTo(r) {
             navigationSrv.goTo(r);
+        }
+
+        function fnGetLoginEntity() {
+            return sessionSrv.loginEntity();
         }
 
     };

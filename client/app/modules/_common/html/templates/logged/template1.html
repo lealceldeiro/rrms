@@ -5,14 +5,20 @@
             <div class="white-text">
                 <img class="mrg-l-25 mrg-t-5" alt="Logo">
                 <span class="hidden-xs hidden-sm">&boxv;</span>
-                <span class="hidden-xs hidden-sm">Sistema de Gesti&oacute;n de Casas de Rentas</span>
+                <span class="hidden-xs hidden-sm">
+                    <span data-ng-bind="::sCtrl.loginEntity().name"></span>
+                    <!--
+                    <span class="hidden-xs hidden-sm">&boxv;</span>
+                    <small>Rent Room Management System</small>
+                    -->
+                </span>
             </div>
         </div>
         <div class="hidden-xs col-sm-6 col-md-6 col-lg-8 mrg-t-1">
             <div class="position-abs" data-ng-controller="notificationCtrl as nc" dynamic="nc.getNotificationHtml()">
             </div>
             <div class="pull-right">
-                <ul class="ul-menu mrg-t-4 mrg-r-25 z-index-1" data-ng-show="sCtrl.user.username || sCtrl.user.email">
+                <ul class="ul-menu mrg-t-4 mrg-r-25 z-index-1" data-ng-show="sCtrl.user.email || sCtrl.user.username">
                     <li class="dropdown">
                         <a href="" class="dropdown-toggle"
                            data-toggle="dropdown"

@@ -53,7 +53,6 @@
                 },
                 //endregion
 
-
                 //region configVars
                 base_url_req:                   (a !== '<base_url>')                        ? a || 'http://127.0.0.1/rrmsrest'   : 'http://127.0.0.1/rrmsrest',
                 api_relative_url_req:           (b !== '<relative_url>')                    ? b || '/api/'              : '/api/',

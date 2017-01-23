@@ -8,6 +8,7 @@
 
     var loginCtrl = function (indexSrv, sessionSrv, navigationSrv, systemSrv, loginSrv, ROUTE) {
         var vm = this;
+        const keyP = 'LOGIN__';
 
         vm.wizard = {
 
@@ -33,17 +34,29 @@
                     function (data) {
                         var e = systemSrv.evalAuth(data, false, false);
                         if (e) {
-                            sessionSrv.setCurrentUser({
-                                username: systemSrv.getAuthUser()
-                            });
+                            var key = "fnLogin" + keyP;
+                            loginSrv.getLoginEntity().then(
+                                function (data) {
+                                    var e2 = systemSrv.eval(data, key, false,  true);
+                                    if (e2) {
+                                        sessionSrv.setCurrentOwnedEntity(systemSrv.getItem(key));
+                                        navigationSrv.goTo(ROUTE.MAIN);
+                                    }
+                                }
+                            );
+
+                            sessionSrv.setCurrentUser({username: systemSrv.getAuthUser()});
                             sessionSrv.setPermissions(systemSrv.gtAuthPermissions());
                             sessionSrv.setSecurityToken(systemSrv.getAuthToken());
                             sessionSrv.setSecurityRefreshToken(systemSrv.getAuthRefreshToken());
-                            navigationSrv.goTo(ROUTE.MAIN);
                         }
                     }
                 );
             }
+        }
+
+        function _getCurrentEntity() {
+
         }
 
     };

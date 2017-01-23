@@ -15,7 +15,9 @@ var loginSrv = function ($http, systemSrv, baseSrv, sessionSrv, $rootScope) {
         siteTile: '',
 
         login: fnDoLogin,
-        logout: fnDoLogout
+        logout: fnDoLogout,
+
+        getLoginEntity: fnGetLoginEntity
     };
 
     $rootScope.$on('REFRESH_TOKEN', function () {
@@ -63,6 +65,11 @@ var loginSrv = function ($http, systemSrv, baseSrv, sessionSrv, $rootScope) {
             headers: h
         };
         return baseSrv.resolveDeferred($http(req));
+    }
+
+    function fnGetLoginEntity() {
+        var def = $http.get(url + "config/entity/last");
+        return baseSrv.resolveDeferred(def);
     }
 
 };

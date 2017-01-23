@@ -12,11 +12,13 @@ var sessionSrv = function (baseSrv, systemSrv, localStorageService) {
     const tokenKey =  lsPrefix + "AuthToken";
     const currentUKey =  lsPrefix + "CurrentUsr";
     const permissionsKey =  lsPrefix + "uPermissions";
+    const oEntityKey =  lsPrefix + "oCEntity";
 
     var sToken = null;
     var rToken = null;
     var currentUser = null;
     var permissions = null;
+    var ownedEntity = null; //house, enterprise, business, or any other over which the user has control over
 
     var logged;
 
@@ -31,6 +33,9 @@ var sessionSrv = function (baseSrv, systemSrv, localStorageService) {
 
         currentUser: fnGetCurrentUser,
         setCurrentUser: fnSetCurrentUser,
+
+        loginEntity: fnGetCurrentOwnedEntity,
+        setCurrentOwnedEntity: fnSetCurrentOwnedEntity,
 
         setPermissions: fnSetPermissions,
         getPermissions: fnGetPermissions,
@@ -81,11 +86,13 @@ var sessionSrv = function (baseSrv, systemSrv, localStorageService) {
         localStorageService.remove(refreshTKey);
         localStorageService.remove(currentUKey);
         localStorageService.remove(permissionsKey);
+        localStorageService.remove(oEntityKey);
 
         sToken = null;
         rToken = null;
         currentUser = null;
         permissions = null;
+        ownedEntity = null;
     }
 
 
@@ -123,6 +130,24 @@ var sessionSrv = function (baseSrv, systemSrv, localStorageService) {
             }
         }
         return currentUser;
+    }
+
+
+    function fnSetCurrentOwnedEntity(e) {
+        ownedEntity = e;
+        localStorageService.set(oEntityKey, ownedEntity);
+    }
+
+    function fnGetCurrentOwnedEntity() {
+        if (!ownedEntity) {
+            ownedEntity = localStorageService.get(oEntityKey);
+        }
+        else{
+            if(!localStorageService.get(oEntityKey)){
+                fnSetCurrentOwnedEntity(ownedEntity)
+            }
+        }
+        return ownedEntity;
     }
 
 
