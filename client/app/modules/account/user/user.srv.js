@@ -4,7 +4,7 @@
 
 'use strict';
 
-var f = function (systemSrv, $http, valueSrv, dataSrv, baseSrv) {
+var f = function (systemSrv, $http, valueSrv, baseSrv) {
     var self = this;
     var url = systemSrv.APIAbsoluteUrl + 'user/';
 
@@ -61,7 +61,7 @@ var f = function (systemSrv, $http, valueSrv, dataSrv, baseSrv) {
     }
 };
 
-f.$inject = ['systemSrv', '$http', 'valueSrv', 'dataSrv', 'baseSrv'];
+f.$inject = ['systemSrv', '$http', 'valueSrv', 'baseSrv'];
 
 angular.module('rrms')
     .service('userSrv', f);

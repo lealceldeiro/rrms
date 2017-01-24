@@ -6,7 +6,7 @@
 
 (function () {
 
-    var loginCtrl = function (indexSrv, sessionSrv, navigationSrv, systemSrv, loginSrv, ROUTE) {
+    var loginCtrl = function (indexSrv, sessionSrv, navigationSrv, systemSrv, loginSrv, ROUTE, blockSrv) {
         var vm = this;
         const keyP = 'LOGIN__';
 
@@ -30,6 +30,7 @@
 
         function fnLogin(form) {
             if (form && form.$valid) {
+                blockSrv.block();
                 loginSrv.login(vm.wizard.emailOrUsername, vm.wizard.password).then(
                     function (data) {
                         var e = systemSrv.evalAuth(data, false, false);
@@ -40,6 +41,7 @@
                                     var e2 = systemSrv.eval(data, key, false,  true);
                                     if (e2) {
                                         sessionSrv.setCurrentOwnedEntity(systemSrv.getItem(key));
+                                        blockSrv.unBlock();
                                         navigationSrv.goTo(ROUTE.MAIN);
                                     }
                                 }
@@ -55,13 +57,9 @@
             }
         }
 
-        function _getCurrentEntity() {
-
-        }
-
     };
 
-    loginCtrl.$inject = ['indexSrv', 'sessionSrv', 'navigationSrv', 'systemSrv', 'loginSrv', 'ROUTE'];
+    loginCtrl.$inject = ['indexSrv', 'sessionSrv', 'navigationSrv', 'systemSrv', 'loginSrv', 'ROUTE', 'blockSrv'];
 
     angular.module('rrms')
         .controller('loginCtrl', loginCtrl);

@@ -4,7 +4,7 @@
 
 'use strict';
 
-var roleSrv = function (systemSrv, $http, valueSrv, dataSrv, baseSrv) {
+var roleSrv = function (systemSrv, $http, valueSrv, baseSrv) {
     var self = this;
     var rolesUrl = systemSrv.APIAbsoluteUrl + 'role/';
 
@@ -67,7 +67,7 @@ var roleSrv = function (systemSrv, $http, valueSrv, dataSrv, baseSrv) {
     }
 };
 
-roleSrv.$inject = ['systemSrv', '$http', 'valueSrv', 'dataSrv', 'baseSrv'];
+roleSrv.$inject = ['systemSrv', '$http', 'valueSrv', 'baseSrv'];
 
 angular.module('rrms')
     .service('roleSrv', roleSrv);
