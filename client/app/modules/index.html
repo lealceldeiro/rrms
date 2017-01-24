@@ -32,7 +32,7 @@
 
 <div class="container-fluid">
     <div
-            data-ng-include="idxCtrl.isLogged() ? '_common/html/templates/logged/template1.html' :
+            data-ng-include="idxCtrl.logged ? '_common/html/templates/logged/template1.html' :
                  '_common/html/templates/notLogged/template1.html'"
     >
 
@@ -106,6 +106,10 @@
 
 <script src="account/permission/list/permission.list.ctrl.js"></script>
 <script src="account/permission/permission.srv.js"></script>
+
+<!--owned entity-->
+<script src="owned.entity/owned.entity.srv.js"></script>
+<script src="owned.entity/list/owned.entity.list.ctrl.js"></script>
 
 
 <!--**_components**-->

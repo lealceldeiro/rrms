@@ -71,6 +71,7 @@
         }
 
         function fnRemove(id) {
+            blockSrv.block();
             var fnKey = keyP + "fnRemove";
             userSrv.remove(id).then(
                 function (data) {
@@ -82,6 +83,7 @@
                             fnSearch();
                         }
                     }
+                    blockSrv.unBlock();
                 }
             )
         }

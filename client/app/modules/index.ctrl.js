@@ -11,12 +11,15 @@
 
         vm.wizard = {
             init: fnInit,
-            isLogged: fnIsLogged,
 
             siteTitle: fnSiteTitle
         };
 
         $scope.$watch(function () {return vm.wizard.siteTitle();},function (nVal, oVal) {});
+
+        $scope.$on('TRIGGER_ACTION_AUTH', function () {
+            vm.wizard.logged = sessionSrv.isLogged();
+        });
 
         vm.wizard.init();
 
@@ -25,14 +28,11 @@
         //fn
         function fnInit() {
             indexSrv.siteTile = 'Index';
+            vm.wizard.logged = sessionSrv.isLogged();
         }
 
         function fnSiteTitle() {
             return indexSrv.siteTile;
-        }
-
-        function fnIsLogged() {
-            return sessionSrv.isLogged();
         }
 
     };

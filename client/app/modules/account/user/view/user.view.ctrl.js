@@ -6,7 +6,7 @@
 
 (function () {
 
-    var f = function (ROUTE, indexSrv, userSrv, navigationSrv, notificationSrv, systemSrv) {
+    var f = function (ROUTE, indexSrv, userSrv, navigationSrv, notificationSrv, systemSrv, blockSrv, sessionSrv) {
         var vm = this;
         const keyP = 'USER_VIEW';
 
@@ -81,12 +81,14 @@
         }
 
         function _loadRoles(id) {
+            blockSrv.setIsLoading(vm.wizard.roles.loading, true);
+
             var fnKey2 = keyP + "_loadRoles";
             var offset = vm.wizard.roles.offset;
             var max = vm.wizard.roles.itemsPerPage;
+            var ent = sessionSrv.loginEntity();
 
-            vm.wizard.roles.loading = true;
-            userSrv.rolesByUser(id, offset, max).then(
+            userSrv.rolesByUser(id, ent ? ent.id : 0, offset, max).then(
                 function (data) {
                     vm.wizard.roles.loading = false;
                     var e = systemSrv.eval(data, fnKey2, false, true);
@@ -109,7 +111,7 @@
 
     };
 
-    f.$inject = ['ROUTE', 'indexSrv', 'userSrv', 'navigationSrv', 'notificationSrv', 'systemSrv'];
+    f.$inject = ['ROUTE', 'indexSrv', 'userSrv', 'navigationSrv', 'notificationSrv', 'systemSrv', 'blockSrv', 'sessionSrv'];
 
     angular.module('rrms')
         .controller('userViewCtrl', f);

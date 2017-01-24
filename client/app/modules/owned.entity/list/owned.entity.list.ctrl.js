@@ -1,17 +1,18 @@
 /**
- * Created by Asiel on 11/9/2016.
+ * Created by Asiel on 01/24/2016.
  */
 
 'use strict';
 
 (function () {
 
-    var roleListCtrl = function (indexSrv, systemSrv, roleSrv, navigationSrv, paginationSrv, ROUTE, searchSrv, blockSrv) {
+    var f = function (indexSrv, systemSrv, ownedEntitySrv, navigationSrv, paginationSrv, ROUTE, searchSrv, blockSrv,
+                      sessionSrv) {
         var vm = this;
-        const keyP = 'ROLE_LIST';
+        const keyP = 'OWNED_ENTITY_LIST';
 
         vm.wizard = {
-            roles: {
+            entities: {
                 all: []
             },
             init: fnInit,
@@ -30,27 +31,29 @@
 
         //fn
         function fnInit() {
-            indexSrv.siteTile = 'Roles';
+            indexSrv.siteTile = 'Casas';
             paginationSrv.resetPagination();
             vm.wizard.search();
         }
 
         function fnSearch() {
-            vm.wizard.roles.all = [];
+            vm.wizard.entities.all = [];
             var offset = paginationSrv.getOffset();
             var max = paginationSrv.getItemsPerPage();
 
             var fnKey = keyP + "fnSearch";
-            blockSrv.setIsLoading(vm.wizard.roles, true);
-            roleSrv.search(offset, max).then(
+            var u = sessionSrv.currentUser();
+            blockSrv.setIsLoading(vm.wizard.entities, true);
+
+            ownedEntitySrv.search(u ? u.id : 0, offset, max).then(
                 function (data) {
                     var e = systemSrv.eval(data, fnKey, false, true);
-                    blockSrv.setIsLoading(vm.wizard.roles);
+                    blockSrv.setIsLoading(vm.wizard.entities);
                     if (e) {
                         paginationSrv.setTotalItems(systemSrv.getTotal(fnKey));
                         var it = systemSrv.getItems(fnKey);
                         if (it) {
-                            vm.wizard.roles.all = it;
+                            vm.wizard.entities.all = it;
                         }
                     }
                 }
@@ -72,18 +75,16 @@
 
         function fnRemove(id) {
             var fnKey = keyP + "fnRemove";
-            blockSrv.block();
             roleSrv.remove(id).then(
                 function (data) {
                     var e = systemSrv.eval(data, fnKey, true, true);
                     if (e) {
-                        var idx = searchSrv.indexOf(vm.wizard.roles.all, 'id', id);
+                        var idx = searchSrv.indexOf(vm.wizard.entities.all, 'id', id);
                         if (idx !== -1) {
-                            vm.wizard.roles.all.splice(idx,1);
+                            vm.wizard.entities.all.splice(idx,1);
                             fnSearch();
                         }
                     }
-                    blockSrv.unBlock();
                 }
             )
         }
@@ -99,10 +100,10 @@
 
     };
 
-    roleListCtrl.$inject = ['indexSrv', 'systemSrv', 'roleSrv', 'navigationSrv', 'paginationSrv', 'ROUTE', 'searchSrv',
-        'blockSrv'];
+    f.$inject = ['indexSrv', 'systemSrv', 'ownedEntitySrv', 'navigationSrv', 'paginationSrv', 'ROUTE', 'searchSrv',
+        'blockSrv', 'sessionSrv'];
 
     angular.module('rrms')
-        .controller('roleListCtrl', roleListCtrl);
+        .controller('ownedEntityListCtrl', f);
 
 })();

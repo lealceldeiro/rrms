@@ -6,7 +6,7 @@
 
 (function () {
 
-    var roleViewCtrl = function (ROUTE, indexSrv, roleSrv, navigationSrv, notificationSrv, systemSrv) {
+    var roleViewCtrl = function (ROUTE, indexSrv, roleSrv, navigationSrv, notificationSrv, systemSrv, blockSrv) {
         var vm = this;
         const keyP = 'ROLE_VIEW';
 
@@ -87,10 +87,10 @@
             var offset = vm.wizard.permissions.offset;
             var max = vm.wizard.permissions.itemsPerPage;
 
-            vm.wizard.permissions.loading = true;
+            blockSrv.setIsLoading(vm.wizard.permissions.loading,true);
             roleSrv.permissionsByUser(id, offset, max).then(
                 function (data) {
-                    vm.wizard.permissions.loading = false;
+                    blockSrv.setIsLoading(vm.wizard.permissions.loading);
                     var e = systemSrv.eval(data, fnKey2, false, true);
                     if (e) {
                         vm.wizard.permissions.all = systemSrv.getItems(fnKey2);
@@ -112,7 +112,7 @@
 
     };
 
-    roleViewCtrl.$inject = ['ROUTE', 'indexSrv', 'roleSrv', 'navigationSrv', 'notificationSrv', 'systemSrv'];
+    roleViewCtrl.$inject = ['ROUTE', 'indexSrv', 'roleSrv', 'navigationSrv', 'notificationSrv', 'systemSrv', 'blockSrv'];
 
     angular.module('rrms')
         .controller('roleViewCtrl', roleViewCtrl);

@@ -6,12 +6,10 @@
 
 (function () {
 
-    var sessionCtrl = function (sessionSrv, navigationSrv, ROUTE, systemSrv) {
+    var sessionCtrl = function (sessionSrv, navigationSrv, ROUTE, systemSrv, $rootScope) {
         var vm = this;
 
         vm.wizard = {
-            loginEntity: fnGetLoginEntity,
-
             init: fnInit,
 
             logout: fnLogout,
@@ -20,9 +18,9 @@
 
         vm.wizard.init();
 
+        //region show/hiders
         var p = vm.wizard.permissions;
         var up = systemSrv.grant;
-        //region show/hiders
         vm.wizard.show = {
             settings: function () {
                 return !(p.indexOf(up.READ_USER) === -1 && p.indexOf(up.READ_ROLE) === -1 && p.indexOf(up.READ_PERMISSION) === -1)
@@ -55,8 +53,8 @@
         function fnInit() {
             if (sessionSrv.isLogged()) {
                 vm.wizard.user = sessionSrv.currentUser();
+                vm.wizard.oEntity = sessionSrv.loginEntity();
                 vm.wizard.permissions = sessionSrv.getPermissions();
-
 
                 navigationSrv.goTo(navigationSrv.DEFAULT_PATH)
             }
@@ -67,6 +65,7 @@
 
         function fnLogout() {
             sessionSrv.clearSession();
+            $rootScope.$broadcast('TRIGGER_ACTION_AUTH');
             navigationSrv.goTo(ROUTE.LOGIN);
 
             /*loginSrv.logout().then(
@@ -83,13 +82,9 @@
             navigationSrv.goTo(r);
         }
 
-        function fnGetLoginEntity() {
-            return sessionSrv.loginEntity();
-        }
-
     };
 
-    sessionCtrl.$inject = ['sessionSrv', 'navigationSrv', 'ROUTE', 'systemSrv'];
+    sessionCtrl.$inject = ['sessionSrv', 'navigationSrv', 'ROUTE', 'systemSrv', '$rootScope'];
 
     angular.module('rrms')
         .controller('sessionCtrl', sessionCtrl);

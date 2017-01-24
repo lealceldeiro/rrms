@@ -6,9 +6,11 @@
 
 (function () {
 
-    var loginCtrl = function (indexSrv, sessionSrv, navigationSrv, systemSrv, loginSrv, ROUTE, blockSrv) {
+    var loginCtrl = function (indexSrv, sessionSrv, navigationSrv, systemSrv, loginSrv, ROUTE, blockSrv, userSrv, $rootScope) {
         var vm = this;
         const keyP = 'LOGIN__';
+
+        var m = 0, total = 2;
 
         vm.wizard = {
 
@@ -40,14 +42,23 @@
                                 function (data) {
                                     var e2 = systemSrv.eval(data, key, false,  true);
                                     if (e2) {
+                                        _moveToMain();
                                         sessionSrv.setCurrentOwnedEntity(systemSrv.getItem(key));
-                                        blockSrv.unBlock();
-                                        navigationSrv.goTo(ROUTE.MAIN);
                                     }
                                 }
                             );
 
-                            sessionSrv.setCurrentUser({username: systemSrv.getAuthUser()});
+                            var key2 = "fnLogin-getByUsername" + keyP;
+                            userSrv.getByUsername(systemSrv.getAuthUser()).then(
+                                function (data) {
+                                    var e2 = systemSrv.eval(data, key2);
+                                    if (e2) {
+                                        _moveToMain();
+                                        sessionSrv.setCurrentUser(systemSrv.getItem(key2));
+                                    }
+                                }
+                            );
+
                             sessionSrv.setPermissions(systemSrv.gtAuthPermissions());
                             sessionSrv.setSecurityToken(systemSrv.getAuthToken());
                             sessionSrv.setSecurityRefreshToken(systemSrv.getAuthRefreshToken());
@@ -57,9 +68,19 @@
             }
         }
 
+        function _moveToMain() {
+            if (++m >= total) {
+                m = 0;
+                $rootScope.$broadcast('TRIGGER_ACTION_AUTH');
+                navigationSrv.goTo(ROUTE.MAIN);
+                blockSrv.unBlock();
+            }
+        }
+
     };
 
-    loginCtrl.$inject = ['indexSrv', 'sessionSrv', 'navigationSrv', 'systemSrv', 'loginSrv', 'ROUTE', 'blockSrv'];
+    loginCtrl.$inject = ['indexSrv', 'sessionSrv', 'navigationSrv', 'systemSrv', 'loginSrv', 'ROUTE', 'blockSrv',
+        'userSrv', '$rootScope'];
 
     angular.module('rrms')
         .controller('loginCtrl', loginCtrl);

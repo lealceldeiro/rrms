@@ -6,7 +6,7 @@
 
 (function () {
 
-    var f = function (indexSrv, userSrv, navigationSrv, ROUTE, systemSrv, notificationSrv, roleSrv, blockSrv) {
+    var f = function (indexSrv, userSrv, navigationSrv, ROUTE, systemSrv, notificationSrv, roleSrv, blockSrv, sessionSrv) {
         var vm = this;
         const keyP = 'USER_EDIT';
 
@@ -77,13 +77,15 @@
 
         function fnSave(form) {
             if (form && form.$valid) {
+                var le = sessionSrv.loginEntity();
                 blockSrv.block();
                 var params = {
                     username : vm.wizard.entity.username,
                     name : vm.wizard.entity.name,
                     email : vm.wizard.entity.email,
                     password : vm.wizard.entity.password,
-                    roles: []
+                    roles: [],
+                    entity: le ? le.id : 0
                 };
                 var fnKey = keyP + "fnSave";
                 angular.forEach(vm.wizard.roles.selected, function (element) {
@@ -125,7 +127,9 @@
             vm.wizard.roles.all = [];
             var fnKey = keyP + "_loadRolesInitial";
 
-            userSrv.rolesByUser(id, vm.wizard.roles.offset, vm.wizard.roles.max).then(
+            var ent = sessionSrv.loginEntity();
+
+            userSrv.rolesByUser(id, ent ? ent.id : 0, vm.wizard.roles.offset, vm.wizard.roles.max).then(
                 function (data) {
                     var fnKey2 = fnKey + "2";
                     var e = systemSrv.eval(data, fnKey2, false, true);
@@ -161,7 +165,7 @@
     };
 
     f.$inject = ['indexSrv', 'userSrv', 'navigationSrv', 'ROUTE', 'systemSrv', 'notificationSrv', 'roleSrv',
-        'blockSrv'];
+        'blockSrv', 'sessionSrv'];
 
     angular.module('rrms')
         .controller('userEditCtrl', f);
