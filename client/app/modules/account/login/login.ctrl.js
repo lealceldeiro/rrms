@@ -10,7 +10,7 @@
         var vm = this;
         const keyP = 'LOGIN__';
 
-        var m = 0, total = 2;
+        var m = 0, m2 = 0, total = 2, total2 = 2;
 
         vm.wizard = {
 
@@ -45,6 +45,9 @@
                                         _moveToMain();
                                         sessionSrv.setCurrentOwnedEntity(systemSrv.getItem(key));
                                     }
+                                    else{
+                                        _unblockS();
+                                    }
                                 }
                             );
 
@@ -56,12 +59,18 @@
                                         _moveToMain();
                                         sessionSrv.setCurrentUser(systemSrv.getItem(key2));
                                     }
+                                    else{
+                                        _unblockS();
+                                    }
                                 }
                             );
 
                             sessionSrv.setPermissions(systemSrv.gtAuthPermissions());
                             sessionSrv.setSecurityToken(systemSrv.getAuthToken());
                             sessionSrv.setSecurityRefreshToken(systemSrv.getAuthRefreshToken());
+                        }
+                        else{
+                            blockSrv.unBlock();
                         }
                     }
                 );
@@ -73,6 +82,12 @@
                 m = 0;
                 $rootScope.$broadcast('TRIGGER_ACTION_AUTH');
                 navigationSrv.goTo(ROUTE.MAIN);
+                blockSrv.unBlock();
+            }
+        }
+
+        function _unblockS() {
+            if (++m2 >= total2) {
                 blockSrv.unBlock();
             }
         }

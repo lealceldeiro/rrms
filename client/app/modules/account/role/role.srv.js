@@ -10,6 +10,7 @@ var roleSrv = function (systemSrv, $http, valueSrv, baseSrv) {
 
     self.service = {
         search: fnSearch,
+        searchAll: fnSearchAll,
         show: fnShow,
         remove: fnRemove,
         save: fnSave,
@@ -20,13 +21,29 @@ var roleSrv = function (systemSrv, $http, valueSrv, baseSrv) {
     return self.service;
 
     /**
-     * Search for role
+     * Search for roles of this user and owned entity
+     * @param uid Logged user's id
+     * @param eid Active Owned Entity's id
      * @param offset offset for paging
      * @param max max offset for paging
      * @param criteria criteria for searching
      * @returns {*} Promise
      */
-    function fnSearch(offset, max, criteria) {
+    function fnSearch(uid, eid, offset, max, criteria) {
+        var params = baseSrv.getParams(offset, max, criteria);
+
+        var def =  $http.get(rolesUrl + uid + "/" + eid + "/" + params);
+        return baseSrv.resolveDeferred(def);
+    }
+
+    /**
+     * Search for roles
+     * @param offset offset for paging
+     * @param max max offset for paging
+     * @param criteria criteria for searching
+     * @returns {*} Promise
+     */
+    function fnSearchAll(offset, max, criteria) {
         var params = baseSrv.getParams(offset, max, criteria);
 
         var def =  $http.get(rolesUrl + params);

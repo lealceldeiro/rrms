@@ -10,6 +10,7 @@ var f = function (systemSrv, $http, valueSrv, baseSrv) {
 
     self.service = {
         search: fnSearch,
+        searchAll: fnSearchAll,
         show: fnShow,
         getByUsername: fnGetByUsername,
         remove: fnRemove,
@@ -21,7 +22,14 @@ var f = function (systemSrv, $http, valueSrv, baseSrv) {
 
     return self.service;
 
-    function fnSearch(offset, max, criteria) {
+    function fnSearch(eid, offset, max, criteria) {
+        var params = baseSrv.getParams(offset, max, criteria);
+
+        var def = $http.get(url + "entity/" + eid + "/" + params);
+        return baseSrv.resolveDeferred(def);
+    }
+
+    function fnSearchAll(offset, max, criteria) {
         var params = baseSrv.getParams(offset, max, criteria);
 
         var def = $http.get(url + params);

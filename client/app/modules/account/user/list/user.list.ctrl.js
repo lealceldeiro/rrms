@@ -6,7 +6,7 @@
 
 (function () {
 
-    var f = function (indexSrv, systemSrv, userSrv, navigationSrv, paginationSrv, ROUTE, searchSrv, blockSrv) {
+    var f = function (indexSrv, systemSrv, userSrv, navigationSrv, paginationSrv, ROUTE, searchSrv, blockSrv, sessionSrv) {
         var vm = this;
         const keyP = 'USER_LIST';
 
@@ -18,10 +18,13 @@
 
             changePage: fnChangePage,
             search: fnSearch,
+            searchAll: fnSearchAll,
             view: fnView,
             remove: fnRemove,
             new: fnNew,
-            edit: fnEdit
+            edit: fnEdit,
+
+            searchByPageChange: fnSearchByPageChange
         };
 
         vm.wizard.init();
@@ -36,23 +39,43 @@
         }
 
         function fnSearch() {
+            blockSrv.setIsLoading(vm.wizard.entities, true);
+
             vm.wizard.entities.all = [];
             var offset = paginationSrv.getOffset();
             var max = paginationSrv.getItemsPerPage();
-
             var fnKey = keyP + "fnSearch";
+            var ent = sessionSrv.loginEntity();
 
-            blockSrv.setIsLoading(vm.wizard.entities, true);
-            userSrv.search(offset, max).then(
+            userSrv.search(ent ? ent.id : 0, offset, max).then(
                 function (data) {
                     var e = systemSrv.eval(data, fnKey, false, true);
                     blockSrv.setIsLoading(vm.wizard.entities);
                     if (e) {
                         paginationSrv.setTotalItems(systemSrv.getTotal(fnKey));
-                        var it = systemSrv.getItems(fnKey);
-                        if (it) {
-                            vm.wizard.entities.all = it;
-                        }
+                        vm.wizard.entities.all = systemSrv.getItems(fnKey);
+                        vm.wizard.entities.allLoaded = false;
+                    }
+                }
+            );
+        }
+
+        function fnSearchAll() {
+            blockSrv.setIsLoading(vm.wizard.entities, true);
+
+            vm.wizard.entities.all = [];
+            var offset = paginationSrv.getOffset();
+            var max = paginationSrv.getItemsPerPage();
+            var fnKey = keyP + "fnSearchAll";
+
+            userSrv.searchAll(offset, max).then(
+                function (data) {
+                    var e = systemSrv.eval(data, fnKey, false, true);
+                    blockSrv.setIsLoading(vm.wizard.entities);
+                    if (e) {
+                        paginationSrv.setTotalItems(systemSrv.getTotal(fnKey));
+                        vm.wizard.entities.all = systemSrv.getItems(fnKey);
+                        vm.wizard.entities.allLoaded = true;
                     }
                 }
             );
@@ -94,12 +117,17 @@
 
         function fnChangePage(newPageNumber) {
             paginationSrv.moveTo(newPageNumber);
-            vm.wizard.search();
+            fnSearchByPageChange();
+        }
+
+        function fnSearchByPageChange() {
+            vm.wizard.entities.allLoaded? fnSearchAll() : fnSearch();
         }
 
     };
 
-    f.$inject = ['indexSrv', 'systemSrv', 'userSrv', 'navigationSrv', 'paginationSrv', 'ROUTE', 'searchSrv', 'blockSrv'];
+    f.$inject = ['indexSrv', 'systemSrv', 'userSrv', 'navigationSrv', 'paginationSrv', 'ROUTE', 'searchSrv', 'blockSrv',
+        'sessionSrv'];
 
     angular.module('rrms')
         .controller('userListCtrl', f);

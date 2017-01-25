@@ -6,6 +6,6 @@
     <select name="itemsPerPageSelect" id="ipps" class="pull-left"
             data-ng-model="pc.itemsPerPage.options.selected"
             data-ng-options="it.value as it.label for it in pc.itemsPerPage.options.all"
-            data-ng-change="pc.setItemsPerPage(); vm.search()"
+            data-ng-change="pc.setItemsPerPage(); vm.searchByPageChange()"
     ></select>
 </div>

@@ -16,5 +16,5 @@ var App = function () {
 
 }();
 
-/*Inicia la aplicación cuando la página carga*/
+//init app when page load
 $(document).ready(App.init);

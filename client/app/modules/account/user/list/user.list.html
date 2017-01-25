@@ -16,7 +16,14 @@
 
 <table class="table table-responsive table-striped table-hover table-bordered" id="roleListTable">
     <thead>
-    <th style="width: 10%"></th>
+    <th style="width: 10%" class="text-center">
+        <span data-toggle="tooltip" data-placement="right" title="Ver todos"
+              class="glyphicon glyphicon-transfer hand-pointer" aria-hidden="true" data-ng-click="vm.searchAll()"
+              data-ng-hide="vm.entities.allLoaded"></span>
+        <span data-toggle="tooltip" title="Solo en esta casa"
+              class="glyphicon glyphicon-arrow-left hand-pointer" aria-hidden="true" data-ng-click="vm.search()"
+              data-ng-show="vm.entities.allLoaded"></span>
+    </th>
     <th style="width: 20%">Username</th>
     <th style="width: 45%">Name</th>
     <th style="width: 25%">Email</th>
@@ -55,3 +62,7 @@
     <div class="rrms-screen-loader" data-screen-type="2">
     </div>
 </div>
+
+<script>
+    loadTooltip()
+</script>

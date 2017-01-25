@@ -6,7 +6,8 @@
 
 (function () {
 
-    var roleListCtrl = function (indexSrv, systemSrv, roleSrv, navigationSrv, paginationSrv, ROUTE, searchSrv, blockSrv) {
+    var roleListCtrl = function (indexSrv, systemSrv, roleSrv, navigationSrv, paginationSrv, ROUTE, searchSrv, blockSrv,
+                                 sessionSrv) {
         var vm = this;
         const keyP = 'ROLE_LIST';
 
@@ -18,10 +19,13 @@
 
             changePage: fnChangePage,
             search: fnSearch,
+            searchAll: fnSearchAll,
             view: fnView,
             remove: fnRemove,
             new: fnNew,
-            edit: fnEdit
+            edit: fnEdit,
+
+            searchByPageChange: fnSearchByPageChange
         };
 
         vm.wizard.init();
@@ -36,26 +40,47 @@
         }
 
         function fnSearch() {
+            blockSrv.setIsLoading(vm.wizard.roles, true);
             vm.wizard.roles.all = [];
             var offset = paginationSrv.getOffset();
             var max = paginationSrv.getItemsPerPage();
+            var ent = sessionSrv.loginEntity();
+            var u = sessionSrv.currentUser();
 
             var fnKey = keyP + "fnSearch";
-            blockSrv.setIsLoading(vm.wizard.roles, true);
-            roleSrv.search(offset, max).then(
+            roleSrv.search(u ? u.id : 0, ent ? ent.id : 0, offset, max).then(
                 function (data) {
                     var e = systemSrv.eval(data, fnKey, false, true);
                     blockSrv.setIsLoading(vm.wizard.roles);
                     if (e) {
                         paginationSrv.setTotalItems(systemSrv.getTotal(fnKey));
-                        var it = systemSrv.getItems(fnKey);
-                        if (it) {
-                            vm.wizard.roles.all = it;
-                        }
+                        vm.wizard.roles.all = systemSrv.getItems(fnKey);
+                        vm.wizard.roles.allLoaded = false;
                     }
                 }
             )
 
+        }
+
+        function fnSearchAll() {
+            blockSrv.setIsLoading(vm.wizard.roles, true);
+
+            vm.wizard.roles.all = [];
+            var offset = paginationSrv.getOffset();
+            var max = paginationSrv.getItemsPerPage();
+            var fnKey = keyP + "fnSearchAll";
+
+            roleSrv.searchAll(offset, max).then(
+                function (data) {
+                    var e = systemSrv.eval(data, fnKey, false, true);
+                    blockSrv.setIsLoading(vm.wizard.roles);
+                    if (e) {
+                        paginationSrv.setTotalItems(systemSrv.getTotal(fnKey));
+                        vm.wizard.roles.all = systemSrv.getItems(fnKey);
+                        vm.wizard.roles.allLoaded = true;
+                    }
+                }
+            );
         }
 
         function fnEdit(id) {
@@ -94,13 +119,18 @@
 
         function fnChangePage(newPageNumber) {
             paginationSrv.moveTo(newPageNumber);
-            vm.wizard.search();
+            fnSearchByPageChange();
+        }
+
+
+        function fnSearchByPageChange() {
+            vm.wizard.roles.allLoaded? fnSearchAll() : fnSearch();
         }
 
     };
 
     roleListCtrl.$inject = ['indexSrv', 'systemSrv', 'roleSrv', 'navigationSrv', 'paginationSrv', 'ROUTE', 'searchSrv',
-        'blockSrv'];
+        'blockSrv', 'sessionSrv'];
 
     angular.module('rrms')
         .controller('roleListCtrl', roleListCtrl);

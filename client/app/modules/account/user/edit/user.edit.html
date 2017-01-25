@@ -49,24 +49,34 @@
                 </div>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    <label class="control-label">Roles</label>
-                    <ui-select multiple ng-model="vm.roles.selected" name="roles"
-                               ng-keypress="vm.setIsSearching(true)"
-                               on-select="vm.setIsSearching(false)">
-                        <ui-select-match placeholder=" Seleccione los roles">
-                            <span data-ng-bind="$item.label"></span>
-                        </ui-select-match>
-                        <ui-select-choices repeat="item in vm.roles.all"
-                                           refresh="vm.searchRoles($select.search)"
-                                           refresh-delay="500">
-                            <span data-ng-bind="item.label"></span>
-                            <br/>
-                            <small>
-                                <span data-ng-bind="item.description | trimmer:20:'...'"></span>
-                            </small>
-                        </ui-select-choices>
-                    </ui-select>
+                <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                    <div class="form-group">
+                        <label class="control-label">Roles&nbsp;(Casa Actual)</label>
+                        <ui-select multiple ng-model="vm.roles.selected" name="roles"
+                                   ng-keypress="vm.setIsSearching(true)"
+                                   on-select="vm.setIsSearching(false)">
+                            <ui-select-match placeholder=" Seleccione los roles">
+                                <span data-ng-bind="$item.label"></span>
+                            </ui-select-match>
+                            <ui-select-choices repeat="item in vm.roles.all"
+                                               refresh="vm.searchRoles($select.search)"
+                                               refresh-delay="500">
+                                <span data-ng-bind="item.label"></span>
+                                <br/>
+                                <small>
+                                    <span data-ng-bind="item.description | trimmer:20:'...'"></span>
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 mrg-top-12-pc hand-pointer">
+                    <span data-toggle="tooltip" data-placement="right" title="Ver todos"
+                          class="glyphicon glyphicon-transfer" aria-hidden="true" data-ng-click="vm.searchAllRoles()"
+                          data-ng-hide="vm.roles.allLoaded"></span>
+                    <span data-toggle="tooltip" title="Solo en esta casa"
+                          class="glyphicon glyphicon-arrow-left" aria-hidden="true" data-ng-click="vm.loadRoles()"
+                          data-ng-show="vm.roles.allLoaded"></span>
                 </div>
             </div>
         </div>
@@ -87,3 +97,7 @@
         </div>
     </div>
 </div>
+
+<script>
+    loadTooltip()
+</script>
