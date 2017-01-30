@@ -105,7 +105,7 @@
                         var idx = searchSrv.indexOf(vm.wizard.roles.all, 'id', id);
                         if (idx !== -1) {
                             vm.wizard.roles.all.splice(idx,1);
-                            fnSearch();
+                            fnSearchByPageChange();
                         }
                     }
                     blockSrv.unBlock();

@@ -6,7 +6,8 @@
 
 (function () {
 
-    var f = function (indexSrv, systemSrv, userSrv, navigationSrv, paginationSrv, ROUTE, searchSrv, blockSrv, sessionSrv) {
+    var f = function (indexSrv, systemSrv, userSrv, navigationSrv, paginationSrv, ROUTE, searchSrv, blockSrv, sessionSrv,
+                      $rootScope) {
         var vm = this;
         const keyP = 'USER_LIST';
 
@@ -102,8 +103,15 @@
                     if (e) {
                         var idx = searchSrv.indexOf(vm.wizard.entities.all, 'id', id);
                         if (idx !== -1) {
-                            vm.wizard.entities.all.splice(idx,1);
-                            fnSearch();
+                            var us = sessionSrv.currentUser();
+                            if (us && us.id == id) {
+                                sessionSrv.clearSession();
+                                $rootScope.$broadcast('TRIGGER_ACTION_AUTH');
+                                navigationSrv.goTo(ROUTE.LOGIN);
+                            }
+                            else {
+                                fnSearchByPageChange();
+                            }
                         }
                     }
                     blockSrv.unBlock();
@@ -127,7 +135,7 @@
     };
 
     f.$inject = ['indexSrv', 'systemSrv', 'userSrv', 'navigationSrv', 'paginationSrv', 'ROUTE', 'searchSrv', 'blockSrv',
-        'sessionSrv'];
+        'sessionSrv', '$rootScope'];
 
     angular.module('rrms')
         .controller('userListCtrl', f);

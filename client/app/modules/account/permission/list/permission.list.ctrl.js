@@ -17,7 +17,9 @@
             init: fnInit,
 
             changePage: fnChangePage,
-            search: fnSearch
+            search: fnSearch,
+
+            searchByPageChange: fnSearchByPageChange
         };
 
         vm.wizard.init();
@@ -57,6 +59,10 @@
         function fnChangePage(newPageNumber) {
             paginationSrv.moveTo(newPageNumber);
             vm.wizard.search();
+        }
+
+        function fnSearchByPageChange() {
+            fnSearch();
         }
 
     };
