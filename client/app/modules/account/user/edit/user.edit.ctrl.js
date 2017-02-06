@@ -16,6 +16,8 @@
         vm.wizard = {
             entity: {},
 
+            entityData: null,
+
             roles: {
 
                 allLoaded: false,
@@ -66,6 +68,7 @@
         }
 
         function fnLoadData(id) {
+            blockSrv.setIsLoading(vm.wizard.entityData,true);
             var fnKey = keyP + "fnLoadData";
             //get info
             userSrv.show(id).then(
@@ -74,6 +77,7 @@
                     if (e) {
                         vm.wizard.entity = systemSrv.getItem(fnKey);
                     }
+                    blockSrv.setIsLoading(vm.wizard.entityData);
                 }
             );
             _loadRolesInitial(id);

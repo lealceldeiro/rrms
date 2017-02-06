@@ -1,5 +1,5 @@
 <div class="center-block blocked-3-styled">
-    <form data-ng-show="vm.entity" role="form" name="viewRoleForm">
+    <form data-ng-show="vm.entity" role="form" name="viewUserForm">
 
         <div class="row">
             <div class="form-group">
@@ -76,7 +76,7 @@
         </div>
     </form>
 
-    <div data-ng-hide="vm.entity">
+    <div data-ng-show="vm.entityData.loading">
         <div class="rrms-screen-loader" data-screen-type="2">
         </div>
     </div>

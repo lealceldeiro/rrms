@@ -13,6 +13,8 @@
         vm.wizard = {
             entity: null,
 
+            entityData: null,
+
             roles: {
                 itemsPerPage: 5,
                 total: 0,
@@ -47,6 +49,7 @@
         }
 
         function fnLoadData(id) {
+            blockSrv.setIsLoading(vm.wizard.entityData,true);
             var fnKey = keyP + "fnLoadData1";
             //get info
             userSrv.show(id).then(
@@ -55,6 +58,7 @@
                     if (e) {
                         vm.wizard.entity = systemSrv.getItem(fnKey);
                     }
+                    blockSrv.setIsLoading(vm.wizard.entityData);
                 }
             );
             _loadRoles(id);
@@ -81,7 +85,7 @@
         }
 
         function _loadRoles(id) {
-            blockSrv.setIsLoading(vm.wizard.roles.loading, true);
+            blockSrv.setIsLoading(vm.wizard.roles, true);
 
             var fnKey2 = keyP + "_loadRoles";
             var offset = vm.wizard.roles.offset;
@@ -90,12 +94,12 @@
 
             userSrv.rolesByUser(id, ent ? ent.id : 0, offset, max).then(
                 function (data) {
-                    vm.wizard.roles.loading = false;
                     var e = systemSrv.eval(data, fnKey2, false, true);
                     if (e) {
                         vm.wizard.roles.all = systemSrv.getItems(fnKey2);
                         vm.wizard.roles.total = systemSrv.getTotal(fnKey2);
                     }
+                    blockSrv.setIsLoading(vm.wizard.roles);
                 }
             )
         }

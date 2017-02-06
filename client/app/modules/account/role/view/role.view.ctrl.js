@@ -13,6 +13,7 @@
         vm.wizard = {
             role: null,
 
+            roleData: null,
 
             permissions: {
                 itemsPerPage: 5,
@@ -48,6 +49,7 @@
         }
 
         function fnLoadData(id) {
+            blockSrv.setIsLoading(vm.wizard.roleData,true);
             var fnKey = keyP + "fnLoadData";
             //get info
             roleSrv.show(id).then(
@@ -56,6 +58,7 @@
                     if (e) {
                         vm.wizard.role = systemSrv.getItem(fnKey);
                     }
+                    blockSrv.setIsLoading(vm.wizard.roleData);
                 }
             );
 
@@ -87,10 +90,10 @@
             var offset = vm.wizard.permissions.offset;
             var max = vm.wizard.permissions.itemsPerPage;
 
-            blockSrv.setIsLoading(vm.wizard.permissions.loading,true);
+            blockSrv.setIsLoading(vm.wizard.permissions,true);
             roleSrv.permissionsByUser(id, offset, max).then(
                 function (data) {
-                    blockSrv.setIsLoading(vm.wizard.permissions.loading);
+                    blockSrv.setIsLoading(vm.wizard.permissions);
                     var e = systemSrv.eval(data, fnKey2, false, true);
                     if (e) {
                         vm.wizard.permissions.all = systemSrv.getItems(fnKey2);

@@ -15,6 +15,8 @@
         vm.wizard = {
             role: {},
 
+            roleData: null,
+
             permissions: {
 
                 offset: 0,
@@ -61,6 +63,7 @@
         }
 
         function fnLoadData(id) {
+            blockSrv.setIsLoading(vm.wizard.roleData,true);
             var fnKey = keyP + "fnLoadData";
             //get info
             roleSrv.show(id).then(
@@ -69,6 +72,7 @@
                     if (e) {
                         vm.wizard.role = systemSrv.getItem(fnKey);
                     }
+                    blockSrv.setIsLoading(vm.wizard.roleData);
                 }
             );
             _loadPermissionsInitial(id);
